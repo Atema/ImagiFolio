@@ -9,24 +9,24 @@ datasource db {
 }
 
 model User {
-  id               String            @id @default(uuid()) @db.Uuid
-  username         String
-  displayName      String
-  email            String
-  password         String
-  ownAlbums        Album[]
+  id          String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  username    String
+  displayName String
+  email       String
+  password    String
+  ownAlbums   Album[]
 }
 
 model Album {
-  id          String            @id @default(uuid()) @db.Uuid
-  name        String
-  ownerId     String            @db.Uuid
-  owner       User              @relation(fields: [ownerId], references: [id])
-  pictures    Picture[]
+  id       String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name     String
+  ownerId  String    @db.Uuid
+  owner    User      @relation(fields: [ownerId], references: [id])
+  pictures Picture[]
 }
 
 model Picture {
-  id      String @id @default(uuid()) @db.Uuid
+  id      String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   albumId String @db.Uuid
   album   Album  @relation(fields: [albumId], references: [id])
 }
