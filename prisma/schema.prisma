@@ -7,3 +7,41 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id               String            @id @default(uuid()) @db.Uuid
+  username         String
+  displayName      String
+  email            String
+  password         String
+  albumPermissions AlbumPermission[]
+}
+
+model Album {
+  id          String            @id @default(uuid()) @db.Uuid
+  name        String
+  pictures    Picture[]
+  permissions AlbumPermission[]
+}
+
+enum AlbumPermissionType {
+  OWNER
+  EDITOR
+  VIEWER
+}
+
+model AlbumPermission {
+  albumId String              @db.Uuid
+  album   Album               @relation(fields: [albumId], references: [id])
+  userId  String              @db.Uuid
+  user    User                @relation(fields: [userId], references: [id])
+  type    AlbumPermissionType
+
+  @@id([albumId, userId])
+}
+
+model Picture {
+  id      String @id @default(uuid()) @db.Uuid
+  albumId String @db.Uuid
+  album   Album  @relation(fields: [albumId], references: [id])
+}
