@@ -21,10 +21,9 @@ export default async function AlbumPage({
   if (!album) return notFound();
 
   return (
-    <main>
+    <main className="2xl:container mx-auto px-2 md:px-4">
       <Link href="/">Go back to home</Link>
-      <h1>Album: {album.name}</h1>
-      <h2>Pictures:</h2>
+      <h1 className="text-4xl">Album: {album.name}</h1>
       <ul>
         {album.pictures.map((pic) => (
           <li key={pic.id}>
