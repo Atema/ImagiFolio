@@ -1,5 +1,6 @@
 import { randomBytes, scrypt as scryptCb, timingSafeEqual } from "node:crypto";
 import { promisify } from "node:util";
+import prisma from "./prisma/client";
 const scrypt = promisify(scryptCb);
 
 /**
@@ -24,4 +25,16 @@ export async function checkPasswordHash(password: string, storedHash: Buffer) {
   const storedSalt = storedHash.subarray(1, 17);
   const calculatedHash = await hashPassword(password, storedSalt);
   return timingSafeEqual(storedHash, calculatedHash);
+}
+
+export async function checkUserLogin(username: string, password: string) {
+  const user = await prisma.user.findUnique({
+    select: { id: true, password: true },
+    where: { username },
+  });
+
+  if (!(user && (await checkPasswordHash(password, user.password))))
+    return null;
+
+  return user.id;
 }

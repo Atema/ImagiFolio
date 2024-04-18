@@ -10,7 +10,7 @@ datasource db {
 
 model User {
   id          String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  username    String
+  username    String  @unique
   displayName String
   email       String
   password    Bytes
