@@ -10,7 +10,7 @@
     "lint": "next lint"
   },
   "prisma": {
-    "seed": "node --loader tsx src/db/seed.ts"
+    "seed": "node --loader tsx src/db/prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "5.12.1",

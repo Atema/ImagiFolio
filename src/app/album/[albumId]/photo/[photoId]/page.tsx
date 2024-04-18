@@ -1,5 +1,5 @@
 import Link from "next/link";
-import prisma from "@/db/prisma";
+import prisma from "@/db/prisma/client";
 import { notFound } from "next/navigation";
 
 type PhotoPageProps = {

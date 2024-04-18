@@ -1,6 +1,5 @@
-import { PrismaClient } from "./generated";
-const prisma = new PrismaClient();
 import { generate } from "random-words";
+import prisma from "./client";
 
 async function main() {
   const user = await prisma.user.create({
