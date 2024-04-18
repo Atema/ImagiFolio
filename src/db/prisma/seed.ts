@@ -1,14 +1,15 @@
 import { generate } from "random-words";
 import prisma from "./client";
-import { hashPassword } from "../user";
 
 async function main() {
   const user = await prisma.user.create({
     data: {
-      username: "atema",
-      displayName: "Martijn Atema",
       email: "martijn@atema.one",
-      password: await hashPassword("myVerySecretPassword"),
+      displayName: "Martijn Atema",
+      password: Buffer.from(
+        "002a8c129aa8e605bdd19bdbb2eb8cb0326f4c51c38545b900df4277df5a910211f8b5bc2c9c05623d1f980cdb11108796ed5d68e0a99d9ea2e5da5c43a08c1290ec89246ea953a9c0219b7cba8cdcae93",
+        "hex"
+      ),
     },
   });
 

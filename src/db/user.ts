@@ -27,10 +27,10 @@ export async function checkPasswordHash(password: string, storedHash: Buffer) {
   return timingSafeEqual(storedHash, calculatedHash);
 }
 
-export async function checkUserLogin(username: string, password: string) {
+export async function checkUserLogin(email: string, password: string) {
   const user = await prisma.user.findUnique({
     select: { id: true, password: true },
-    where: { username },
+    where: { email },
   });
 
   if (!(user && (await checkPasswordHash(password, user.password))))

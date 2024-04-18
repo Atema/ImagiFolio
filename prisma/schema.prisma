@@ -10,9 +10,8 @@ datasource db {
 
 model User {
   id          String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  username    String  @unique
+  email       String  @unique
   displayName String
-  email       String
   password    Bytes
   ownAlbums   Album[]
 }
