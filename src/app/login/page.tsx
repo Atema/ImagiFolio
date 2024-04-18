@@ -1,3 +1,4 @@
+import { createSession } from "@/actions/session";
 import { checkUserLogin } from "@/db/user";
 import { redirect } from "next/navigation";
 
@@ -9,7 +10,10 @@ async function authenticateUser(formData: FormData) {
 
   const id = await checkUserLogin(email, password);
 
-  if (id) return redirect("/");
+  if (!id) return "ERROR";
+
+  await createSession({ userId: id });
+  return redirect("/");
 }
 
 export default async function LoginPage() {
