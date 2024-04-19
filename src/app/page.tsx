@@ -11,9 +11,27 @@ async function logoutUser() {
 }
 
 async function getAlbums() {
-  return await prisma.album.findMany({
-    include: { photos: { orderBy: { dateTaken: "desc" }, take: 1 } },
-  });
+  const [albums, lastPhotos] = await Promise.all([
+    prisma.album.findMany({
+      orderBy: { name: "asc" },
+      include: { photos: { orderBy: { dateTaken: "asc" }, take: 1 } },
+    }),
+    prisma.album.findMany({
+      orderBy: { name: "asc" },
+      select: {
+        id: true,
+        photos: {
+          orderBy: { dateTaken: "desc" },
+          take: 1,
+        },
+      },
+    }),
+  ]);
+
+  return albums.map((album, i) => ({
+    ...album,
+    photos: [...album.photos, ...lastPhotos[i].photos],
+  }));
 }
 
 export default async function HomePage() {
@@ -25,7 +43,7 @@ export default async function HomePage() {
       <form action={logoutUser}>
         <button type="submit">Log out</button>
       </form>
-      <AlbumList albums={albums} />
+      <AlbumList showDates albums={albums} />
     </main>
   );
 }

@@ -34,14 +34,17 @@ async function main() {
   );
 
   await Promise.all(
-    albums.map(({ id: albumId }) =>
-      prisma.photo.createMany({
+    albums.map(({ id: albumId }) => {
+      const startStamp = Math.random() * Date.now();
+      const duration = Math.random() * 1000 * 3600 * 24 * 70;
+
+      return prisma.photo.createMany({
         data: Array.from(Array(100), () => ({
           albumId,
-          dateTaken: new Date(Math.random() * Date.now()),
+          dateTaken: new Date(startStamp + duration * Math.random()),
         })),
-      })
-    )
+      });
+    })
   );
 }
 
