@@ -4,6 +4,21 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { getImageUrl } from "@/utils/images/image-url";
 
+async function getPhotoAndAlbum(photoId: string, albumId: string) {
+  const [photo, album] = await Promise.all([
+    prisma.picture.findUnique({
+      where: { id: photoId },
+    }),
+    prisma.album.findUnique({
+      where: { id: albumId },
+    }),
+  ]);
+
+  if (!photo || !album) return notFound();
+
+  return { photo, album };
+}
+
 type PhotoPageProps = {
   params: {
     albumId: string;
@@ -11,20 +26,26 @@ type PhotoPageProps = {
   };
 };
 
+export async function generateMetadata({
+  params: { albumId, photoId },
+}: PhotoPageProps) {
+  const { photo, album } = await getPhotoAndAlbum(photoId, albumId);
+
+  return {
+    title: `${album.name} - ImagiFolio`,
+  };
+}
+
 export default async function PhotoPage({
   params: { albumId, photoId },
 }: PhotoPageProps) {
-  const album = await prisma.picture.findUnique({
-    where: { id: photoId },
-  });
-
-  if (!album) return notFound();
+  const { photo, album } = await getPhotoAndAlbum(photoId, albumId);
 
   return (
     <main>
-      <Link href={`/album/${albumId}`}>Go back to album</Link>
-      <h1>Picture: {album.id}</h1>
-      <Image src={getImageUrl(photoId)} width="800" height="600" alt="" />
+      <Link href={`/album/${album.id}`}>Go back to album</Link>
+      <h1>Picture: {photo.id}</h1>
+      <Image src={getImageUrl(photo.id)} width="800" height="600" alt="" />
     </main>
   );
 }
