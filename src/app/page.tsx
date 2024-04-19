@@ -2,6 +2,7 @@ import Link from "next/link";
 import prisma from "@/db/prisma/client";
 import { deleteSession } from "@/actions/session";
 import { redirect } from "next/navigation";
+import AlbumList from "@/components/album-list/AlbumList";
 
 async function logoutUser() {
   "use server";
@@ -9,8 +10,12 @@ async function logoutUser() {
   redirect("/login");
 }
 
+async function getAlbums() {
+  return await prisma.album.findMany({ include: { pictures: { take: 1 } } });
+}
+
 export default async function HomePage() {
-  const albums = await prisma.album.findMany();
+  const albums = await getAlbums();
 
   return (
     <main className="2xl:container mx-auto px-2 md:px-4">
@@ -18,13 +23,7 @@ export default async function HomePage() {
       <form action={logoutUser}>
         <button type="submit">Log out</button>
       </form>
-      <ul>
-        {albums.map((album) => (
-          <li key={album.id}>
-            <Link href={`/album/${album.id}`}>{album.name}</Link>
-          </li>
-        ))}
-      </ul>
+      <AlbumList albums={albums} />
     </main>
   );
 }
