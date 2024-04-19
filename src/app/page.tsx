@@ -11,7 +11,9 @@ async function logoutUser() {
 }
 
 async function getAlbums() {
-  return await prisma.album.findMany({ include: { pictures: { take: 1 } } });
+  return await prisma.album.findMany({
+    include: { photos: { orderBy: { dateTaken: "desc" }, take: 1 } },
+  });
 }
 
 export default async function HomePage() {

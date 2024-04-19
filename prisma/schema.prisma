@@ -17,15 +17,16 @@ model User {
 }
 
 model Album {
-  id       String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name     String
-  ownerId  String    @db.Uuid
-  owner    User      @relation(fields: [ownerId], references: [id])
-  pictures Picture[]
+  id      String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name    String
+  ownerId String  @db.Uuid
+  owner   User    @relation(fields: [ownerId], references: [id])
+  photos  Photo[]
 }
 
-model Picture {
-  id      String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  albumId String @db.Uuid
-  album   Album  @relation(fields: [albumId], references: [id])
+model Photo {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  albumId   String   @db.Uuid
+  album     Album    @relation(fields: [albumId], references: [id])
+  dateTaken DateTime
 }

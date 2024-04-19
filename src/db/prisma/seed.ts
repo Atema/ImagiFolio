@@ -35,9 +35,10 @@ async function main() {
 
   await Promise.all(
     albums.map(({ id: albumId }) =>
-      prisma.picture.createMany({
+      prisma.photo.createMany({
         data: Array.from(Array(100), () => ({
           albumId,
+          dateTaken: new Date(Math.random() * Date.now()),
         })),
       })
     )

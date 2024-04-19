@@ -6,7 +6,7 @@ import { getImageUrl } from "@/utils/images/image-url";
 
 async function getPhotoAndAlbum(photoId: string, albumId: string) {
   const [photo, album] = await Promise.all([
-    prisma.picture.findUnique({
+    prisma.photo.findUnique({
       where: { id: photoId },
     }),
     prisma.album.findUnique({
@@ -44,7 +44,7 @@ export default async function PhotoPage({
   return (
     <main>
       <Link href={`/album/${album.id}`}>Go back to album</Link>
-      <h1>Picture: {photo.id}</h1>
+      <h1>Photo: {photo.id}</h1>
       <Image src={getImageUrl(photo.id)} width="800" height="600" alt="" />
     </main>
   );

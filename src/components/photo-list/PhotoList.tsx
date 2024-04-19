@@ -1,11 +1,11 @@
-import { Picture } from "@/db/prisma/generated";
+import { Photo } from "@/db/prisma/generated";
 import { getImageUrl } from "@/utils/images/image-url";
 import Image from "next/image";
 import Link from "next/link";
 
 export type PhotoListProps = {
   baseUrl: string;
-  photos: Picture[];
+  photos: Photo[];
 };
 
 export default function PhotoList(props: PhotoListProps) {

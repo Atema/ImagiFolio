@@ -7,7 +7,7 @@ import { notFound } from "next/navigation";
 async function getAlbum(id: string) {
   return await prisma.album.findUnique({
     where: { id },
-    include: { pictures: true },
+    include: { photos: { orderBy: { dateTaken: "desc" } } },
   });
 }
 
@@ -40,7 +40,7 @@ export default async function AlbumPage({
     <main className="2xl:container mx-auto px-2 md:px-4">
       <Link href="/">Go back to home</Link>
       <h1 className="text-4xl">Album: {album.name}</h1>
-      <PhotoList baseUrl={`/album/${albumId}`} photos={album.pictures} />
+      <PhotoList baseUrl={`/album/${albumId}`} photos={album.photos} />
     </main>
   );
 }
