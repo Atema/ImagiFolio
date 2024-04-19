@@ -3,11 +3,13 @@ import { InputHTMLAttributes } from "react";
 
 export type InputFieldProps = {
   label: string;
-  errors: string[] | undefined;
+  stateNum?: number;
+  errors?: string[];
 } & InputHTMLAttributes<HTMLInputElement>;
 
 export default function InputField({
   label,
+  stateNum,
   errors,
   ...inputProps
 }: InputFieldProps) {
@@ -33,7 +35,7 @@ export default function InputField({
         />
       </div>
       {hasErrors && (
-        <div className="mt-1 text-red-700 dark:text-red-300">
+        <div key={stateNum} className="mt-1 animate-shake text-red-700 dark:text-red-300">
           {errors.join("; ")}
         </div>
       )}

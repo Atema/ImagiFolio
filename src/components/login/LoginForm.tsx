@@ -8,7 +8,7 @@ import InputField from "../basic/InputField";
 export type LoginFormProps = {};
 
 export default function LoginForm({}: LoginFormProps) {
-  const [state, action] = useFormState(loginUser, {});
+  const [state, action] = useFormState(loginUser, { num: 0 });
   const { pending } = useFormStatus();
 
   return (
@@ -19,6 +19,7 @@ export default function LoginForm({}: LoginFormProps) {
         type="email"
         label="Email address"
         placeholder="user@example.com"
+        stateNum={state.num}
         errors={state.fieldErrors?.email}
         required
       />
@@ -27,11 +28,15 @@ export default function LoginForm({}: LoginFormProps) {
         type="password"
         label="Password"
         placeholder="••••••••••"
+        stateNum={state.num}
         errors={state.fieldErrors?.password}
         required
       />
       {state.formErrors?.map((error, i) => (
-        <p key={i} className="text-sm leading-6 text-red-700 dark:text-red-300">
+        <p
+          key={`${state.num}-${i}`}
+          className="text-sm leading-6 text-red-700 dark:text-red-300 animate-shake"
+        >
           {error}
         </p>
       ))}
