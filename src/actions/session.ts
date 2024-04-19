@@ -1,5 +1,6 @@
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 const secretKey = Buffer.from(process.env.SESSION_SECRET as string, "utf-8"); // TODO: Check existence;
 
@@ -36,4 +37,8 @@ export async function getSession() {
   } catch (_) {
     return null;
   }
+}
+
+export async function deleteSession() {
+  cookies().delete("if_session");
 }
