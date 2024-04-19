@@ -4,7 +4,7 @@ import { checkUserLogin } from "@/db/user";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { zfd } from "zod-form-data";
-import { createSession } from "./session";
+import { createSession, deleteSession } from "./session";
 
 const loginUserSchema = zfd.formData({
   email: zfd.text(z.string().email()),
@@ -35,4 +35,10 @@ export async function loginUser(
 
   await createSession({ userId: id });
   return redirect("/");
+}
+
+export async function logoutUser() {
+  "use server";
+  deleteSession();
+  redirect("/login");
 }

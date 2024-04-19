@@ -1,12 +1,5 @@
-import { deleteSession } from "@/actions/session";
+import { logoutUser } from "@/actions/auth";
 import Link from "next/link";
-import { redirect } from "next/navigation";
-
-async function logoutUser() {
-  "use server";
-  deleteSession();
-  redirect("/login");
-}
 
 type OrganisingLayoutProps = {
   children: React.ReactNode;
