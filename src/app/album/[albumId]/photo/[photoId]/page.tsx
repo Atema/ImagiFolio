@@ -1,6 +1,8 @@
 import Link from "next/link";
 import prisma from "@/db/prisma/client";
 import { notFound } from "next/navigation";
+import Image from "next/image";
+import { getImageUrl } from "@/utils/images/image-url";
 
 type PhotoPageProps = {
   params: {
@@ -22,6 +24,7 @@ export default async function PhotoPage({
     <main>
       <Link href={`/album/${albumId}`}>Go back to album</Link>
       <h1>Picture: {album.id}</h1>
+      <Image src={getImageUrl(photoId)} width="800" height="600" alt="" />
     </main>
   );
 }
