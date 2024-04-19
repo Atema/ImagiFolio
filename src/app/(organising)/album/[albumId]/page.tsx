@@ -2,7 +2,6 @@ import PhotoList from "@/components/photo-list/PhotoList";
 import prisma from "@/db/prisma/client";
 import dateRangeString from "@/utils/date-time/dateRangeString";
 import { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
 async function getAlbum(id: string) {
@@ -40,8 +39,7 @@ export default async function AlbumPage({
   const album = await getAlbum(albumId);
 
   return (
-    <main className="2xl:container mx-auto px-2 md:px-4">
-      <Link href="/">Go back to home</Link>
+    <>
       <p className="text-sm">
         {dateRangeString(
           album.photos[0].dateTaken,
@@ -49,8 +47,8 @@ export default async function AlbumPage({
           "long"
         )}
       </p>
-      <h1 className="text-3xl mb-8">{album.name}</h1>
+      <h1 className="text-3xl mb-4">{album.name}</h1>
       <PhotoList baseUrl={`/album/${albumId}`} photos={album.photos} />
-    </main>
+    </>
   );
 }
