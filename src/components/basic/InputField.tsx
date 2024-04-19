@@ -21,9 +21,9 @@ export default function InputField(props: InputFieldProps) {
           className={cx(
             "block w-full rounded-md py-1.5",
             "text-sm leading-6",
-            "bg-neutral-200 dark:bg-neutral-800 shadow-sm",
+            "bg-neutral-100 dark:bg-neutral-800 shadow-sm",
             "placeholder:text-neutral-600 placeholder:dark:text-neutral-500",
-            "border-0 ring-1 ring-inset ring-neutral-400 dark:ring-neutral-600",
+            "border-0 ring-1 ring-inset ring-neutral-300 dark:ring-neutral-600",
             "focus:ring-2 focus:ring-inset focus:ring-purple-800"
           )}
         />
