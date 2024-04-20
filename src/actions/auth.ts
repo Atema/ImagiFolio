@@ -34,11 +34,11 @@ export async function loginUser(
     };
 
   await createSession({ userId: id });
-  return redirect("/");
+  redirect("/");
 }
 
-export async function logoutUser() {
+export async function logoutUser(): Promise<never> {
   "use server";
-  deleteSession();
+  await deleteSession();
   redirect("/login");
 }

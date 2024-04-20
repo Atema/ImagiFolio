@@ -1,5 +1,17 @@
-import { logoutUser } from "@/actions/auth";
-import Link from "next/link";
+import { getSession } from "@/actions/session";
+import NavBar from "@/components/nav-bar/NavBar";
+import { getUser } from "@/db/user";
+import { redirect } from "next/navigation";
+
+async function getCurrentUser() {
+  const userId = (await getSession())?.userId;
+  if (!userId) redirect("/login");
+
+  const user = await getUser(userId);
+  if (!user) redirect("/login");
+
+  return user;
+}
 
 type OrganisingLayoutProps = {
   children: React.ReactNode;
@@ -10,16 +22,7 @@ export default async function OrganisingLayout({
 }: OrganisingLayoutProps) {
   return (
     <>
-      <div className="w-full py-4 border-b border-neutral-200 dark:border-neutral-800 mb-8">
-        <nav className="2xl:container 2xl:mx-auto px-2 md:px-4 flex flex-row">
-          <div className="flex-grow">
-            <Link href="/">ImagiFolio</Link>
-          </div>
-          <form action={logoutUser} className="">
-            <button type="submit">Log out</button>
-          </form>
-        </nav>
-      </div>
+      <NavBar userName={(await getCurrentUser()).displayName} />
       <main className="2xl:container mx-auto px-2 md:px-4">{children}</main>
     </>
   );

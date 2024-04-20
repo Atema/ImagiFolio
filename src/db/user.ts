@@ -38,3 +38,10 @@ export async function checkUserLogin(email: string, password: string) {
 
   return user.id;
 }
+
+export async function getUser(id: string) {
+  return await prisma.user.findUnique({
+    where: { id },
+    select: { displayName: true },
+  });
+}
