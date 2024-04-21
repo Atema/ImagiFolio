@@ -25,14 +25,18 @@ model Album {
 }
 
 model Photo {
-  id               String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  albumId          String   @db.Uuid
-  album            Album    @relation(fields: [albumId], references: [id])
-  dateTaken        DateTime
-  metaCamera       String?
-  metaLens         String?
-  metaFocalLength  Float?
-  metaShutterSpeed Float?
-  metaAperture     Float?
-  metaISO          Float?
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  albumId   String   @db.Uuid
+  album     Album    @relation(fields: [albumId], references: [id])
+  dateTaken DateTime
+  camera    String?
+  lens      String?
+  focal     Float?
+  shutter   Float?
+  aperture  Float?
+  iso       Float?
+  width     Int
+  height    Int
+  lat       Float?
+  long      Float?
 }

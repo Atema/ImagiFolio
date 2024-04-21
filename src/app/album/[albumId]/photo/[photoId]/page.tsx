@@ -1,15 +1,9 @@
+import PhotoInfo from "@/components/photo/PhotoInfo";
 import { getPhoto } from "@/db/photo";
 import { getImageUrl } from "@/utils/images/image-url";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-
-type PhotoPageProps = {
-  params: {
-    albumId: string;
-    photoId: string;
-  };
-};
 
 export async function generateMetadata({
   params: { albumId, photoId },
@@ -20,6 +14,13 @@ export async function generateMetadata({
     title: `${photo.album.name} - ImagiFolio`,
   };
 }
+
+type PhotoPageProps = {
+  params: {
+    albumId: string;
+    photoId: string;
+  };
+};
 
 export default async function PhotoPage({
   params: { albumId, photoId },
@@ -54,26 +55,7 @@ export default async function PhotoPage({
           )}
         </li>
       </ul>
-      <h2 className="text-xl">Metadata</h2>
-      <ul className="ml-4 list-disc list-inside">
-        <li>Date taken: {photo.dateTaken.toLocaleString()}</li>
-        {photo.metaCamera && <li>Camera model: {photo.metaCamera}</li>}
-        {photo.metaLens && <li>Lens model: {photo.metaLens}</li>}
-        {photo.metaFocalLength && (
-          <li>Focal length: {photo.metaFocalLength} mm</li>
-        )}
-        {photo.metaShutterSpeed && (
-          <li>
-            Shutter speed:{" "}
-            {photo.metaShutterSpeed < 1
-              ? `1/${1 / photo.metaShutterSpeed}`
-              : photo.metaShutterSpeed}{" "}
-            s
-          </li>
-        )}
-        {photo.metaAperture && <li>Aperture: f/{photo.metaAperture}</li>}
-        {photo.metaISO && <li>ISO: {photo.metaISO}</li>}
-      </ul>
+      <PhotoInfo photo={photo} />
       <h2 className="text-xl">Picture</h2>
       <Image src={getImageUrl(photo.id)} width="800" height="600" alt="" />
     </main>

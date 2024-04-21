@@ -62,12 +62,16 @@ async function main() {
             ({
               albumId,
               dateTaken: new Date(startStamp + randomInt(duration)),
-              metaCamera: randomFrom(cameras),
-              metaLens: randomFrom(lenses),
-              metaFocalLength: randomFrom(focalLengths),
-              metaShutterSpeed: randomFrom(shutterSpeeds),
-              metaAperture: randomFrom(apertures),
-              metaISO: randomFrom(isos),
+              camera: randomFrom(cameras),
+              lens: randomFrom(lenses),
+              focal: randomFrom(focalLengths),
+              shutter: randomFrom(shutterSpeeds),
+              aperture: randomFrom(apertures),
+              iso: randomFrom(isos),
+              width: randomInt(1000, 10000),
+              height: randomInt(1000, 10000),
+              lat: Math.random() * 180 - 90,
+              long: Math.random() * 360 - 180,
             }) satisfies Prisma.PhotoCreateManyInput
         ),
       });
