@@ -27,13 +27,15 @@ export default async function AlbumPage({
 
   return (
     <>
-      <p className="text-sm">
-        {dateRangeString(
-          album.photos[0].dateTaken,
-          album.photos[album.photos.length - 1].dateTaken,
-          "long"
-        )}
-      </p>
+      {album.photos[0] && (
+        <p className="text-sm">
+          {dateRangeString(
+            album.photos[0].dateTaken,
+            album.photos[album.photos.length - 1].dateTaken,
+            "long"
+          )}
+        </p>
+      )}
       <h1 className="text-3xl mb-4">{album.name}</h1>
       <PhotoList baseUrl={`/album/${albumId}`} photos={album.photos} />
     </>

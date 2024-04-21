@@ -15,14 +15,18 @@ export default function AlbumList({ showDates, albums }: AlbumListProps) {
       {albums.map((album) => (
         <Link key={album.id} href={`/album/${album.id}`}>
           <div className="group text-sm">
-            <div className="aspect-4/3 relative group-hover:brightness-90">
-              <Image
-                src={getImageUrl(album.photos[0].id)}
-                unoptimized
-                fill
-                alt=""
-                className="object-cover rounded-xl shadow"
-              />
+            <div className="aspect-4/3 relative group-hover:brightness-90 rounded-xl">
+              {!album.photos[0] ? (
+                <div className="size-full bg-neutral-300 dark:bg-neutral-600 rounded-xl shadow"></div>
+              ) : (
+                <Image
+                  src={getImageUrl(album.photos[0].id)}
+                  unoptimized
+                  fill
+                  alt=""
+                  className="object-cover rounded-xl shadow"
+                />
+              )}
             </div>
             <div className="mt-2">{album.name}</div>
             {showDates && (
