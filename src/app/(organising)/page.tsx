@@ -1,3 +1,4 @@
+import AddAlbumButton from "@/components/album-list/AddAlbumButton";
 import AlbumList from "@/components/album-list/AlbumList";
 import { getAlbumList } from "@/db/album";
 
@@ -6,7 +7,10 @@ export default async function HomePage() {
 
   return (
     <>
-      <h1 className="text-3xl mb-4">Albums</h1>
+      <div className="flex mb-4">
+        <h1 className="flex-grow text-3xl">Albums</h1>
+        <AddAlbumButton />
+      </div>
       <AlbumList showDates albums={albums} />
     </>
   );
