@@ -14,13 +14,13 @@ const UserMenu: React.FC<UserMenuProps> = ({ displayName }) => {
       <DropdownMenu.Trigger asChild>
         <button className="focus:outline-0">{displayName}</button>
       </DropdownMenu.Trigger>
-
+      
       <DropdownMenu.Content
         arrowPadding={5}
         sideOffset={5}
         className={cx(
           "min-w-40 border rounded-md mx-2 py-2 text-sm z-50",
-          "bg-white dark:bg-neutral-900 border-neutral-100 dark:border-neutral-800"
+          "bg-white dark:bg-neutral-900 border-neutral-100 dark:border-neutral-800 shadow-md"
         )}
       >
         <form>
