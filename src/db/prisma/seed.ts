@@ -1,5 +1,22 @@
+import { randomInt } from "node:crypto";
 import { generate } from "random-words";
 import prisma from "./client";
+import { Prisma } from "./generated";
+
+function randomFrom<T>(arr: T[]) {
+  return arr[randomInt(arr.length)];
+}
+
+const cameras = ["Canon EOS 80D", "Sony a660", "Xiaomi Mi 8", null];
+const lenses = [
+  "Canon EF-S 17-55mm f/2.8",
+  "Sigma 105mm DG Macro HSM f/2.8",
+  null,
+];
+const focalLengths = [17, 22.4, 38.5, null];
+const isos = [100, 200, 400, 800, null];
+const apertures = [2.8, 4.5, 7.1, null];
+const shutterSpeeds = [1, 0.00625, 0.00025, null];
 
 async function main() {
   const user = await prisma.user.create({
@@ -35,14 +52,24 @@ async function main() {
 
   await Promise.all(
     albums.map(({ id: albumId }) => {
-      const startStamp = Math.random() * Date.now();
-      const duration = Math.random() * 1000 * 3600 * 24 * 70;
+      const startStamp = randomInt(Date.now());
+      const duration = randomInt(1000 * 3600 * 24 * 70);
 
       return prisma.photo.createMany({
-        data: Array.from(Array(100), () => ({
-          albumId,
-          dateTaken: new Date(startStamp + duration * Math.random()),
-        })),
+        data: Array.from(
+          Array(100),
+          () =>
+            ({
+              albumId,
+              dateTaken: new Date(startStamp + randomInt(duration)),
+              metaCamera: randomFrom(cameras),
+              metaLens: randomFrom(lenses),
+              metaFocalLength: randomFrom(focalLengths),
+              metaShutterSpeed: randomFrom(shutterSpeeds),
+              metaAperture: randomFrom(apertures),
+              metaISO: randomFrom(isos),
+            }) satisfies Prisma.PhotoCreateManyInput
+        ),
       });
     })
   );
