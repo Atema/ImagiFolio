@@ -1,19 +1,8 @@
 import PhotoList from "@/components/photo-list/PhotoList";
-import prisma from "@/db/prisma/client";
+import { getAlbum } from "@/db/album";
 import dateRangeString from "@/utils/date-time/dateRangeString";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-
-async function getAlbum(id: string) {
-  const album = await prisma.album.findUnique({
-    where: { id },
-    include: { photos: { orderBy: { dateTaken: "asc" } } },
-  });
-
-  if (!album) return notFound();
-
-  return album;
-}
 
 type AlbumPageProps = {
   params: {
@@ -24,9 +13,7 @@ type AlbumPageProps = {
 export async function generateMetadata({
   params: { albumId },
 }: AlbumPageProps): Promise<Metadata> {
-  const album = await getAlbum(albumId);
-
-  if (!album) return notFound();
+  const album = (await getAlbum(albumId)) ?? notFound();
 
   return {
     title: `${album.name} - ImagiFolio`,
@@ -36,7 +23,7 @@ export async function generateMetadata({
 export default async function AlbumPage({
   params: { albumId },
 }: AlbumPageProps) {
-  const album = await getAlbum(albumId);
+  const album = (await getAlbum(albumId)) ?? notFound();
 
   return (
     <>

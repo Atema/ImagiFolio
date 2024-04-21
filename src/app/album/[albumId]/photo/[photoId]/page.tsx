@@ -1,23 +1,8 @@
-import Link from "next/link";
-import prisma from "@/db/prisma/client";
-import { notFound } from "next/navigation";
-import Image from "next/image";
+import { getPhoto } from "@/db/photo";
 import { getImageUrl } from "@/utils/images/image-url";
-
-async function getPhotoAndAlbum(photoId: string, albumId: string) {
-  const [photo, album] = await Promise.all([
-    prisma.photo.findUnique({
-      where: { id: photoId },
-    }),
-    prisma.album.findUnique({
-      where: { id: albumId },
-    }),
-  ]);
-
-  if (!photo || !album) return notFound();
-
-  return { photo, album };
-}
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 
 type PhotoPageProps = {
   params: {
@@ -29,23 +14,45 @@ type PhotoPageProps = {
 export async function generateMetadata({
   params: { albumId, photoId },
 }: PhotoPageProps) {
-  const { photo, album } = await getPhotoAndAlbum(photoId, albumId);
+  const { photo } = (await getPhoto(photoId, albumId)) ?? notFound();
 
   return {
-    title: `${album.name} - ImagiFolio`,
+    title: `${photo.album.name} - ImagiFolio`,
   };
 }
 
 export default async function PhotoPage({
   params: { albumId, photoId },
 }: PhotoPageProps) {
-  const { photo, album } = await getPhotoAndAlbum(photoId, albumId);
+  const { photo, prevPhoto, nextPhoto } =
+    (await getPhoto(photoId, albumId)) ?? notFound();
 
   return (
     <main>
-      <Link href={`/album/${album.id}`}>Go back to album</Link>
+      <Link href={`/album/${photo.albumId}`}>Go back to album</Link>
       <h1>Photo: {photo.id}</h1>
+      <p>Date taken: {photo.dateTaken.toLocaleString()}</p>
       <Image src={getImageUrl(photo.id)} width="800" height="600" alt="" />
+      <p>
+        <span>Previous: </span>
+        {prevPhoto ? (
+          <Link href={`/album/${photo.albumId}/photo/${prevPhoto.id}`}>
+            {prevPhoto.id}
+          </Link>
+        ) : (
+          "None"
+        )}
+      </p>
+      <p>
+        <span>Next: </span>
+        {nextPhoto ? (
+          <Link href={`/album/${photo.albumId}/photo/${nextPhoto.id}`}>
+            {nextPhoto.id}
+          </Link>
+        ) : (
+          "None"
+        )}
+      </p>
     </main>
   );
 }
