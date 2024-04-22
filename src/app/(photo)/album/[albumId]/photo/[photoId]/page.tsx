@@ -2,15 +2,9 @@ import PhotoView from "@/components/photo/PhotoView";
 import { getPhoto } from "@/db/photo";
 import { notFound } from "next/navigation";
 
-export async function generateMetadata({
-  params: { albumId, photoId },
-}: PhotoPageProps) {
-  const { photo } = (await getPhoto(photoId, albumId)) ?? notFound();
-
-  return {
-    title: `${photo.album.name} - ImagiFolio`,
-  };
-}
+export const metadata = {
+  title: "Photo - ImagiFolio",
+};
 
 type PhotoPageProps = {
   params: {

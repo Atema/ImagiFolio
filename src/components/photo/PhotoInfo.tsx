@@ -1,4 +1,5 @@
 import { Photo } from "@/db/prisma/generated";
+import { Cross2Icon } from "@radix-ui/react-icons";
 import { FC, ReactNode } from "react";
 
 type PhotoInfoItemProps = {
@@ -12,10 +13,6 @@ const PhotoInfoItem: FC<PhotoInfoItemProps> = ({ name, children }) => (
     <div className="space-x-4">{children}</div>
   </div>
 );
-
-type PhotoInfoProps = {
-  photo: Photo;
-};
 
 const coordToDeg = (num: number, type: "lat" | "long") => {
   let dir;
@@ -34,10 +31,22 @@ const coordToDeg = (num: number, type: "lat" | "long") => {
   return `${deg}°${min}'${sec.toFixed(1)}" ${dir}`;
 };
 
-const PhotoInfo: FC<PhotoInfoProps> = ({ photo }) => {
+type PhotoInfoProps = {
+  photo: Photo;
+  onClose: () => void;
+};
+
+const PhotoInfo: FC<PhotoInfoProps> = ({ photo, onClose }) => {
   return (
     <div className="w-72 text-sm space-y-4 p-6">
-      <h2 className="text-2xl">Info</h2>
+      <div className="flex flex-row items-center">
+        <h2 className="text-2xl flex-grow">Info</h2>
+
+        <button onClick={onClose}>
+          <Cross2Icon className="size-6" />
+        </button>
+      </div>
+
       <PhotoInfoItem name="Date">
         {photo.dateTaken.toLocaleString("en-GB", {
           year: "numeric",

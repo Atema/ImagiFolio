@@ -2,11 +2,18 @@
 
 import { usePhotoInfoOpen } from "@/context/PhotoInfoOpen";
 import { Photo } from "@/db/prisma/generated";
+import cx from "@/utils/class-names/cx";
 import { getImageUrl } from "@/utils/images/image-url";
+import {
+  ArrowLeftIcon,
+  DotsVerticalIcon,
+  InfoCircledIcon,
+} from "@radix-ui/react-icons";
 import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
 import PhotoInfo from "./PhotoInfo";
+import PhotoNavigation from "./PhotoNavigation";
 
 type PhotoViewProps = {
   photo: Photo;
@@ -24,24 +31,36 @@ const PhotoView: FC<PhotoViewProps> = ({
   const [infoOpen, setInfoOpen] = usePhotoInfoOpen();
 
   return (
-    <div className="h-screen flex flex-row">
+    <div className="h-screen flex flex-row" onKeyUp={(e) => console.dir(e)}>
       <div className="flex-grow flex flex-col">
-        <div className="space-x-8">
-          <Link href={backHref}>Back</Link>
-          {prevHref && <Link href={prevHref}>Previous</Link>}
-          {nextHref && <Link href={nextHref}>Next</Link>}
-          <button onClick={() => setInfoOpen(!infoOpen)}>Info</button>
-        </div>
-        <div className="bg-black flex-grow relative">
+        <div className="bg-black text-white flex-grow relative">
+          <div
+            className={cx(
+              "absolute z-20 w-full p-4 space-x-6 flex items-center justify-end",
+              "bg-gradient-to-b from-black/40 to-transparent"
+            )}
+          >
+            <Link href={backHref}>
+              <ArrowLeftIcon className="size-8" />
+            </Link>
+            <div className="flex-grow" />
+            <button onClick={() => setInfoOpen(!infoOpen)}>
+              <InfoCircledIcon className="size-8" />
+            </button>
+            <DotsVerticalIcon className="size-8 peer" />
+          </div>
+          <PhotoNavigation prevHref={prevHref} nextHref={nextHref} />
           <Image
             src={getImageUrl(photo.id)}
-            alt=""
+            alt="Photo"
             fill
             className="object-contain"
           />
         </div>
       </div>
-      {infoOpen && <PhotoInfo photo={photo} />}
+      {infoOpen && (
+        <PhotoInfo photo={photo} onClose={() => setInfoOpen(false)} />
+      )}
     </div>
   );
 };
