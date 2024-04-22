@@ -4,21 +4,32 @@ import cx from "@/utils/class-names/cx";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { FC, ReactNode } from "react";
-import Button from "./Button";
-import InputField from "./InputField";
-import { addAlbum } from "@/actions/album";
 import HoverIcon from "./HoverIcon";
 
 type DialogBoxProps = {
   trigger: ReactNode;
+  hoverIconTrigger?: boolean;
   title: string;
   children: ReactNode;
 };
 
-const DialogBox: FC<DialogBoxProps> = ({ trigger, title, children }) => {
+const DialogBox: FC<DialogBoxProps> = ({
+  trigger,
+  hoverIconTrigger,
+  title,
+  children,
+}) => {
   return (
     <Dialog.Root>
-      <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
+      {hoverIconTrigger ? (
+        <HoverIcon>
+          <Dialog.Trigger asChild className="block">
+            {trigger}
+          </Dialog.Trigger>
+        </HoverIcon>
+      ) : (
+        <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
+      )}
 
       <Dialog.Overlay className="bg-black bg-opacity-40 fixed inset-0 z-40" />
 

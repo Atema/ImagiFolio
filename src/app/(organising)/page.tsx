@@ -7,7 +7,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <div className="flex mb-4">
+      <div className="flex mb-4 items-center">
         <h1 className="flex-grow text-3xl">Albums</h1>
         <AddAlbumDialog />
       </div>
