@@ -45,6 +45,7 @@ export default function LoginForm({}: LoginFormProps) {
         type="submit"
         label="Sign in"
         disabled={pending}
+        className="w-full"
       />
     </form>
   );

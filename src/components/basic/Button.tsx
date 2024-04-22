@@ -15,10 +15,11 @@ export default function Button({
     <button
       {...buttonProps}
       className={cx(
-        "block w-full rounded-md py-1.5",
+        "block rounded-md px-4 py-1.5",
         "text-sm leading-6 text-white",
         "bg-purple-800 hover:bg-purple-900 shadow-sm",
-        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-800"
+        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-800",
+        buttonProps.className
       )}
     >
       {label}

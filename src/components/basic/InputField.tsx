@@ -30,12 +30,16 @@ export default function InputField({
             hasErrors
               ? "ring-red-700 dark:ring-red-300"
               : "ring-neutral-300 dark:ring-neutral-600",
-            "focus:ring-2 focus:ring-inset focus:ring-purple-800"
+            "focus:ring-2 focus:ring-inset focus:ring-purple-800",
+            inputProps.className
           )}
         />
       </div>
       {hasErrors && (
-        <div key={stateNum} className="mt-1 animate-shake text-red-700 dark:text-red-300">
+        <div
+          key={stateNum}
+          className="mt-1 animate-shake text-red-700 dark:text-red-300"
+        >
           {errors.join("; ")}
         </div>
       )}
