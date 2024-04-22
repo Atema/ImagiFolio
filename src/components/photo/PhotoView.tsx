@@ -12,6 +12,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
+import HoverIcon from "../basic/HoverIcon";
 import PhotoInfo from "./PhotoInfo";
 import PhotoNavigation from "./PhotoNavigation";
 
@@ -40,14 +41,20 @@ const PhotoView: FC<PhotoViewProps> = ({
               "bg-gradient-to-b from-black/40 to-transparent"
             )}
           >
-            <Link href={backHref}>
-              <ArrowLeftIcon className="size-8" />
-            </Link>
+            <HoverIcon white>
+              <Link href={backHref}>
+                <ArrowLeftIcon className="size-8" />
+              </Link>
+            </HoverIcon>
             <div className="flex-grow" />
-            <button onClick={() => setInfoOpen(!infoOpen)}>
-              <InfoCircledIcon className="size-8" />
-            </button>
-            <DotsVerticalIcon className="size-8 peer" />
+            <HoverIcon white>
+              <button onClick={() => setInfoOpen(!infoOpen)} className="block">
+                <InfoCircledIcon className="size-8" />
+              </button>
+            </HoverIcon>
+            <HoverIcon white>
+              <DotsVerticalIcon className="size-8" />
+            </HoverIcon>
           </div>
           <PhotoNavigation prevHref={prevHref} nextHref={nextHref} />
           <Image

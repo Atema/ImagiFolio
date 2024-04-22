@@ -7,6 +7,7 @@ import { FC } from "react";
 import Button from "../basic/Button";
 import InputField from "../basic/InputField";
 import { addAlbum } from "@/actions/album";
+import HoverIcon from "../basic/HoverIcon";
 
 type AddAlbumButtonProps = {};
 
@@ -28,8 +29,10 @@ const AddAlbumButton: FC<AddAlbumButtonProps> = ({}) => {
       >
         <div className="flex">
           <Dialog.Title className="text-xl flex-grow">Add album</Dialog.Title>
-          <Dialog.Close className="">
-            <Cross2Icon className="size-6" />
+          <Dialog.Close>
+            <HoverIcon>
+              <Cross2Icon className="size-6" />
+            </HoverIcon>
           </Dialog.Close>
         </div>
         <form action={addAlbum} className="space-y-4">

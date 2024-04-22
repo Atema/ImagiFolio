@@ -1,6 +1,7 @@
 import { Photo } from "@/db/prisma/generated";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { FC, ReactNode } from "react";
+import HoverIcon from "../basic/HoverIcon";
 
 type PhotoInfoItemProps = {
   name: string;
@@ -42,9 +43,11 @@ const PhotoInfo: FC<PhotoInfoProps> = ({ photo, onClose }) => {
       <div className="flex flex-row items-center">
         <h2 className="text-2xl flex-grow">Info</h2>
 
-        <button onClick={onClose}>
-          <Cross2Icon className="size-6" />
-        </button>
+        <HoverIcon>
+          <button onClick={onClose} className="block">
+            <Cross2Icon className="size-6" />
+          </button>
+        </HoverIcon>
       </div>
 
       <PhotoInfoItem name="Date">
