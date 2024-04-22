@@ -38,7 +38,6 @@ export async function loginUser(
 }
 
 export async function logoutUser(): Promise<never> {
-  "use server";
   await deleteSession();
   redirect("/login");
 }

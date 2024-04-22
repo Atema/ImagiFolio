@@ -1,4 +1,4 @@
-import { getSession } from "@/actions/session";
+import { deleteSession, getSession } from "@/actions/session";
 import NavBar from "@/components/nav-bar/NavBar";
 import { getUser } from "@/db/user";
 import { redirect } from "next/navigation";
@@ -8,7 +8,7 @@ async function getCurrentUser() {
   if (!userId) redirect("/login");
 
   const user = await getUser(userId);
-  if (!user) redirect("/login");
+  if (!user) redirect("/logout");
 
   return user;
 }
