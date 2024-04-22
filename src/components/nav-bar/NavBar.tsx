@@ -1,5 +1,5 @@
 import Link from "next/link";
-import UserMenu from "./UserMenu";
+import Menu from "../basic/Menu";
 
 export type NavBarProps = {
   userName: string;
@@ -13,7 +13,16 @@ export default function NavBar({ userName }: NavBarProps) {
           <div className="flex-grow">
             <Link href="/">ImagiFolio</Link>
           </div>
-          <UserMenu displayName={userName} />
+
+          <Menu
+            trigger={<button className="focus:outline-0">{userName}</button>}
+          >
+            {/* TODO: Re-add when have settings page
+            <Link href="/settings">Settings</Link>
+            --- 
+            */}
+            <Link href="/logout">Sign out</Link>
+          </Menu>
         </nav>
       </div>
     </>
