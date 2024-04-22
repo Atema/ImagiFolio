@@ -3,20 +3,22 @@
 import cx from "@/utils/class-names/cx";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
-import { FC } from "react";
-import Button from "../basic/Button";
-import InputField from "../basic/InputField";
+import { FC, ReactNode } from "react";
+import Button from "./Button";
+import InputField from "./InputField";
 import { addAlbum } from "@/actions/album";
-import HoverIcon from "../basic/HoverIcon";
+import HoverIcon from "./HoverIcon";
 
-type AddAlbumButtonProps = {};
+type DialogBoxProps = {
+  trigger: ReactNode;
+  title: string;
+  children: ReactNode;
+};
 
-const AddAlbumButton: FC<AddAlbumButtonProps> = ({}) => {
+const DialogBox: FC<DialogBoxProps> = ({ trigger, title, children }) => {
   return (
     <Dialog.Root>
-      <Dialog.Trigger asChild>
-        <button>Add album</button>
-      </Dialog.Trigger>
+      <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
 
       <Dialog.Overlay className="bg-black bg-opacity-40 fixed inset-0 z-40" />
 
@@ -28,20 +30,17 @@ const AddAlbumButton: FC<AddAlbumButtonProps> = ({}) => {
         )}
       >
         <div className="flex">
-          <Dialog.Title className="text-xl flex-grow">Add album</Dialog.Title>
+          <Dialog.Title className="text-xl flex-grow">{title}</Dialog.Title>
           <Dialog.Close>
             <HoverIcon>
               <Cross2Icon className="size-6" />
             </HoverIcon>
           </Dialog.Close>
         </div>
-        <form action={addAlbum} className="space-y-4">
-          <InputField label="Name" name="name" required />
-          <Button styleType="primary" label="Add" type="submit" />
-        </form>
+        {children}
       </Dialog.Content>
     </Dialog.Root>
   );
 };
 
-export default AddAlbumButton;
+export default DialogBox;
