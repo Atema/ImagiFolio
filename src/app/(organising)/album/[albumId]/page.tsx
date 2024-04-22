@@ -1,6 +1,8 @@
+import HoverIcon from "@/components/basic/HoverIcon";
 import PhotoList from "@/components/photo-list/PhotoList";
 import { getAlbum } from "@/db/album";
 import dateRangeString from "@/utils/date-time/dateRangeString";
+import { GearIcon, UploadIcon } from "@radix-ui/react-icons";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -27,16 +29,26 @@ export default async function AlbumPage({
 
   return (
     <>
-      {album.photos[0] && (
-        <p className="text-sm">
-          {dateRangeString(
-            album.photos[0].dateTaken,
-            album.photos[album.photos.length - 1].dateTaken,
-            "long"
+      <div className="flex flex-row items-center mb-4 space-x-6 pr-2">
+        <div className="flex-grow">
+          {album.photos[0] && (
+            <p className="text-sm text-neutral-400 dark:text-neutral-500">
+              {dateRangeString(
+                album.photos[0].dateTaken,
+                album.photos[album.photos.length - 1].dateTaken,
+                "long"
+              )}
+            </p>
           )}
-        </p>
-      )}
-      <h1 className="text-3xl mb-4">{album.name}</h1>
+          <h1 className="text-3xl">{album.name}</h1>
+        </div>
+        <HoverIcon>
+          <UploadIcon className="size-8" />
+        </HoverIcon>
+        <HoverIcon>
+          <GearIcon className="size-8" />
+        </HoverIcon>
+      </div>
       <PhotoList baseUrl={`/album/${albumId}`} photos={album.photos} />
     </>
   );
