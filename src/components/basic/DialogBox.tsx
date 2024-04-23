@@ -48,13 +48,13 @@ const DialogBox: FC<DialogBoxProps> = ({
             "border rounded-xl min-w-80 max-w-full p-4 space-y-4"
           )}
         >
-          <div className="flex">
+          <div className="flex items-center">
             <Dialog.Title className="text-xl flex-grow">{title}</Dialog.Title>
-            <Dialog.Close>
-              <HoverIcon>
+            <HoverIcon>
+              <Dialog.Close className="block">
                 <Cross2Icon className="size-6" />
-              </HoverIcon>
-            </Dialog.Close>
+              </Dialog.Close>
+            </HoverIcon>
           </div>
           {children}
         </Dialog.Content>
