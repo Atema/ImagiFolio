@@ -5,37 +5,28 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { zfd } from "zod-form-data";
 import { createSession, deleteSession } from "./session";
+import { SuccessErrorFormAction } from "./types";
 
 const loginUserSchema = zfd.formData({
   email: zfd.text(z.string().email()),
-  password: zfd.text(z.string({ description: "Password" })),
+  password: zfd.text(z.string()),
 });
 
-export type LoginFormState = { num: number } & Partial<
-  z.inferFlattenedErrors<typeof loginUserSchema>
->;
-
-export async function loginUser(
-  { num: count }: LoginFormState,
-  formData: FormData
-): Promise<LoginFormState> {
-  const parsed = await loginUserSchema.safeParseAsync(formData);
+export const loginUser: SuccessErrorFormAction = async (_, data) => {
+  const parsed = await loginUserSchema.safeParseAsync(data);
   if (!parsed.success)
-    return { num: count + 1, ...parsed.error.flatten() } as LoginFormState;
-
-  const { email, password } = parsed.data;
-
-  const id = await checkUserLogin(email, password);
-  if (!id)
     return {
-      num: count + 1,
-      formErrors: ["The email address or password is incorrect"],
-      fieldErrors: {},
+      error: "The entered data is invalid",
+      fullError: parsed.error.message,
     };
+
+  const id = await checkUserLogin(parsed.data.email, parsed.data.password);
+  if (!id) return { error: "The email address or password is incorrect" };
+
 
   await createSession({ userId: id });
   redirect("/");
-}
+};
 
 export async function logoutUser(): Promise<never> {
   await deleteSession();

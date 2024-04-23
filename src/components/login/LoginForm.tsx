@@ -1,14 +1,15 @@
 "use client";
 
 import { loginUser } from "@/actions/auth";
-import { useFormState, useFormStatus } from "react-dom";
+import { useAction } from "@/actions/types";
+import { useFormStatus } from "react-dom";
 import Button from "../basic/Button";
 import InputField from "../basic/InputField";
 
 export type LoginFormProps = {};
 
 export default function LoginForm({}: LoginFormProps) {
-  const [state, action] = useFormState(loginUser, { num: 0 });
+  const [error, action] = useAction(loginUser);
   const { pending } = useFormStatus();
 
   return (
@@ -19,8 +20,6 @@ export default function LoginForm({}: LoginFormProps) {
         type="email"
         label="Email address"
         placeholder="user@example.com"
-        stateNum={state.num}
-        errors={state.fieldErrors?.email}
         required
       />
       <InputField
@@ -28,18 +27,13 @@ export default function LoginForm({}: LoginFormProps) {
         type="password"
         label="Password"
         placeholder="••••••••••"
-        stateNum={state.num}
-        errors={state.fieldErrors?.password}
         required
       />
-      {state.formErrors?.map((error, i) => (
-        <p
-          key={`${state.num}-${i}`}
-          className="text-sm leading-6 text-red-700 dark:text-red-300 animate-shake"
-        >
+      {error && (
+        <p className="text-sm leading-6 text-red-700 dark:text-red-300">
           {error}
         </p>
-      ))}
+      )}
       <Button
         styleType="primary"
         type="submit"
