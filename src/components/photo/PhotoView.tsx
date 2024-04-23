@@ -17,6 +17,7 @@ import HoverIcon from "../basic/HoverIcon";
 import Menu from "../basic/Menu";
 import PhotoInfo from "./PhotoInfo";
 import PhotoNavigation from "./PhotoNavigation";
+import ConfirmationBox from "../basic/ConfirmationBox";
 
 type PhotoViewProps = {
   photo: Photo;
@@ -34,7 +35,7 @@ const PhotoView: FC<PhotoViewProps> = ({
   const [infoOpen, setInfoOpen] = usePhotoInfoOpen();
 
   return (
-    <div className="h-screen flex flex-row" onKeyUp={(e) => console.dir(e)}>
+    <div className="h-screen flex flex-row">
       <div className="flex-grow flex flex-col">
         <div className="bg-black text-white flex-grow relative">
           <div
@@ -61,14 +62,22 @@ const PhotoView: FC<PhotoViewProps> = ({
                 </button>
               }
               hoverIconTrigger
-              hiddenInfo={
-                <>
-                  <input type="hidden" name="id" value={photo.id} />
-                  <input type="hidden" name="albumId" value={photo.albumId} />
-                </>
-              }
             >
-              <button formAction={deletePhoto}>Delete photo</button>
+              <ConfirmationBox
+                trigger={
+                  <button className="w-full px-4 py-2 text-left">
+                    Delete photo
+                  </button>
+                }
+                title="Are you sure?"
+                description="The photo will be deleted permanently. This cannot be undone."
+                confirmText="Yes, delete"
+                action={deletePhoto}
+                hiddenFormData={{
+                  id: photo.id,
+                  albumId: photo.albumId,
+                }}
+              />
             </Menu>
           </div>
           <PhotoNavigation prevHref={prevHref} nextHref={nextHref} />

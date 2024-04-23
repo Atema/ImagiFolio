@@ -1,4 +1,4 @@
-import AlbumSettingsDialog from "@/components/album/EditAlbumDialog";
+import AlbumSettingsDialog from "@/components/album/AlbumSettingsDialog";
 import HoverIcon from "@/components/basic/HoverIcon";
 import PhotoList from "@/components/photo-list/PhotoList";
 import { getAlbum } from "@/db/album";

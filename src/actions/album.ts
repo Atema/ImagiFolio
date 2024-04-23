@@ -4,6 +4,7 @@ import prisma from "@/db/prisma/client";
 import { getSession } from "./session";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { SuccessErrorFormAction } from "./types";
 
 export const addAlbum = async (data: FormData) => {
   // FIXME: Add validation
@@ -48,13 +49,20 @@ export const updateAlbum = async (
   return { success: true };
 };
 
-export const deleteAlbum = async (data: FormData) => {
+export const deleteAlbum: SuccessErrorFormAction = async (_, data) => {
   // FIXME: Add validation
   const id = data.get("id") as string;
 
-  await prisma.album.delete({
-    where: { id },
-  });
+  try {
+    await prisma.album.delete({
+      where: { id },
+    });
+  } catch (e) {
+    console.error(e);
+    return {
+      error: "The album could not be deleted",
+    };
+  }
 
   redirect("/");
 };

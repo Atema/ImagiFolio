@@ -2,17 +2,26 @@
 
 import prisma from "@/db/prisma/client";
 import { redirect } from "next/navigation";
+import { SuccessErrorFormAction } from "./types";
 
-export const deletePhoto = async (data: FormData) => {
+export const deletePhoto: SuccessErrorFormAction = async (_, data) => {
+  // FIXME: Validate data
+
   const id = data.get("id") as string;
   const albumId = data.get("albumId") as string;
 
-  await prisma.photo.delete({
-    where: {
-      id,
-      albumId,
-    },
-  });
+  try {
+    await prisma.photo.delete({
+      where: {
+        id,
+        albumId,
+      },
+    });
+  } catch (e: unknown) {
+    return {
+      error: "The photo could not be deleted",
+    };
+  }
 
   redirect(`/album/${albumId}`);
 };

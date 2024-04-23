@@ -39,11 +39,11 @@ const DialogBox: FC<DialogBoxProps> = ({
       )}
 
       <Dialog.Portal>
-        <Dialog.Overlay className="bg-black bg-opacity-40 fixed inset-0 z-40" />
+        <Dialog.Overlay className="bg-black bg-opacity-40 fixed inset-0 z-30" />
 
         <Dialog.Content
           className={cx(
-            "z-50 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+            "z-40 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
             "bg-white dark:bg-neutral-900 border-neutral-100 dark:border-neutral-800 shadow-md",
             "border rounded-xl min-w-80 max-w-full p-4 space-y-4"
           )}

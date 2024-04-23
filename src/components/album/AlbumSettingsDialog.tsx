@@ -8,6 +8,7 @@ import Button from "../basic/Button";
 import DialogBox from "../basic/DialogBox";
 import InputField from "../basic/InputField";
 import { useFormState } from "react-dom";
+import ConfirmationBox from "../basic/ConfirmationBox";
 
 type AlbumSettingsDialogProps = {
   album: Album;
@@ -42,10 +43,13 @@ const AlbumSettingsDialog: FC<AlbumSettingsDialogProps> = ({ album }) => {
         />
         <div className="flex flex-row-reverse space-x-2 space-x-reverse">
           <Button styleType="primary" label="Save" type="submit" />
-          <Button
-            styleType="secondary"
-            label="Delete"
-            formAction={deleteAlbum}
+          <ConfirmationBox
+            title="Are you sure?"
+            description="The album and all of its photos will be deleted permanently. This cannot be undone."
+            confirmText="Yes, delete"
+            trigger={<Button styleType="secondary" label="Delete" />}
+            action={deleteAlbum}
+            hiddenFormData={{ id: album.id }}
           />
         </div>
       </form>
