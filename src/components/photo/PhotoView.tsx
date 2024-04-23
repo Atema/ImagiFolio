@@ -1,5 +1,6 @@
 "use client";
 
+import { deletePhoto } from "@/actions/photo";
 import { usePhotoInfoOpen } from "@/context/PhotoInfoOpen";
 import { Photo } from "@/db/prisma/generated";
 import cx from "@/utils/class-names/cx";
@@ -13,6 +14,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
 import HoverIcon from "../basic/HoverIcon";
+import Menu from "../basic/Menu";
 import PhotoInfo from "./PhotoInfo";
 import PhotoNavigation from "./PhotoNavigation";
 
@@ -52,9 +54,22 @@ const PhotoView: FC<PhotoViewProps> = ({
                 <InfoCircledIcon className="size-8" />
               </button>
             </HoverIcon>
-            <HoverIcon white>
-              <DotsVerticalIcon className="size-8" />
-            </HoverIcon>
+            <Menu
+              trigger={
+                <button>
+                  <DotsVerticalIcon className="size-8" />
+                </button>
+              }
+              hoverIconTrigger
+              hiddenInfo={
+                <>
+                  <input type="hidden" name="id" value={photo.id} />
+                  <input type="hidden" name="albumId" value={photo.albumId} />
+                </>
+              }
+            >
+              <button formAction={deletePhoto}>Delete photo</button>
+            </Menu>
           </div>
           <PhotoNavigation prevHref={prevHref} nextHref={nextHref} />
           <Image
