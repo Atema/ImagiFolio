@@ -13,11 +13,11 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
+import ConfirmationBox from "../basic/ConfirmationBox";
 import HoverIcon from "../basic/HoverIcon";
 import Menu from "../basic/Menu";
 import PhotoInfo from "./PhotoInfo";
 import PhotoNavigation from "./PhotoNavigation";
-import ConfirmationBox from "../basic/ConfirmationBox";
 
 type PhotoViewProps = {
   photo: Photo;

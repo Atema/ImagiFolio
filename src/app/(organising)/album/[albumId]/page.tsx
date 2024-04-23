@@ -3,7 +3,7 @@ import HoverIcon from "@/components/basic/HoverIcon";
 import PhotoList from "@/components/photo-list/PhotoList";
 import { getAlbum } from "@/db/album";
 import dateRangeString from "@/utils/date-time/dateRangeString";
-import { GearIcon, UploadIcon } from "@radix-ui/react-icons";
+import { UploadIcon } from "@radix-ui/react-icons";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 

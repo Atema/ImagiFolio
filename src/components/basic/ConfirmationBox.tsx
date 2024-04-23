@@ -1,10 +1,9 @@
 "use client";
 
-import { SuccessErrorFormAction } from "@/actions/types";
+import { SuccessErrorFormAction, useAction } from "@/actions/types";
 import cx from "@/utils/class-names/cx";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
-import { FC, ReactNode, useCallback, useEffect, useState } from "react";
-import { useFormState, useFormStatus } from "react-dom";
+import { FC, ReactNode, useState } from "react";
 import Button from "./Button";
 import HoverIcon from "./HoverIcon";
 
@@ -24,17 +23,13 @@ const ConfirmationBox: FC<ConfirmationBoxProps> = ({
   title,
   description,
   confirmText,
-  action,
+  action: propAction,
   hiddenFormData = {},
 }) => {
   const [open, setOpen] = useState(false);
-  const [formState, formAction] = useFormState(action, {});
-
-  const { pending } = useFormStatus();
-
-  useEffect(() => {
-    if (formState.success) setOpen(false);
-  }, [formState]);
+  const { action, pending, error } = useAction(propAction, () =>
+    setOpen(false)
+  );
 
   return (
     <AlertDialog.Root open={open} onOpenChange={setOpen}>
@@ -62,9 +57,9 @@ const ConfirmationBox: FC<ConfirmationBoxProps> = ({
             {description}
           </AlertDialog.Description>
 
-          {formState.error && (
+          {error && (
             <div className="text-sm text-red-700 dark:text-red-300">
-              {formState.error}
+              {error}
             </div>
           )}
 
@@ -76,7 +71,7 @@ const ConfirmationBox: FC<ConfirmationBoxProps> = ({
               disabled={pending}
             />
 
-            <form action={formAction}>
+            <form action={action}>
               {Object.entries(hiddenFormData).map(([name, value]) => (
                 <input type="hidden" key={name} name={name} value={value} />
               ))}

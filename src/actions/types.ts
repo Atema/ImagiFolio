@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 
 export type SuccessErrorFormState = {
@@ -13,15 +13,20 @@ export type SuccessErrorFormAction = (
 ) => Promise<SuccessErrorFormState>;
 
 export const useAction = (
-  action: SuccessErrorFormAction,
+  actionFunc: SuccessErrorFormAction,
   onSuccess?: () => void
 ) => {
-  const [formState, formAction] = useFormState(action, {});
+  const [state, action] = useFormState(actionFunc, {});
+  const { pending } = useFormStatus();
 
   useEffect(() => {
-    if (formState.fullError) console.error(formState.fullError);
-    if (formState.success && onSuccess) onSuccess();
-  }, [formState, onSuccess]);
+    if (state.fullError) console.error(state.fullError);
+    if (state.success && onSuccess) onSuccess();
+  }, [state, onSuccess]);
 
-  return [formState.error, formAction] as const;
+  return {
+    error: state.error,
+    action,
+    pending,
+  } as const;
 };

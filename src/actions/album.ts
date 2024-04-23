@@ -23,14 +23,7 @@ export const addAlbum = async (data: FormData) => {
   redirect(`/album/${id}`);
 };
 
-type UpdateAlbumFormState = {
-  success?: true;
-};
-
-export const updateAlbum = async (
-  state: UpdateAlbumFormState,
-  data: FormData
-): Promise<UpdateAlbumFormState> => {
+export const updateAlbum: SuccessErrorFormAction = async (_, data) => {
   // FIXME: Add validation
   const id = data.get("id") as string;
   const name = data.get("name") as string;

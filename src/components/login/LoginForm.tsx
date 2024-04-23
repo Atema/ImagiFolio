@@ -2,15 +2,13 @@
 
 import { loginUser } from "@/actions/auth";
 import { useAction } from "@/actions/types";
-import { useFormStatus } from "react-dom";
 import Button from "../basic/Button";
 import InputField from "../basic/InputField";
 
 export type LoginFormProps = {};
 
 export default function LoginForm({}: LoginFormProps) {
-  const [error, action] = useAction(loginUser);
-  const { pending } = useFormStatus();
+  const { error, action, pending } = useAction(loginUser);
 
   return (
     <form action={action} className="space-y-6">

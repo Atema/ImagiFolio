@@ -1,4 +1,4 @@
-import { deleteSession, getSession } from "@/actions/session";
+import { getSession } from "@/actions/session";
 import NavBar from "@/components/nav-bar/NavBar";
 import { getUser } from "@/db/user";
 import { redirect } from "next/navigation";

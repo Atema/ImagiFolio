@@ -1,14 +1,14 @@
 "use client";
 
 import { deleteAlbum, updateAlbum } from "@/actions/album";
+import { useAction } from "@/actions/types";
 import { Album } from "@/db/prisma/generated";
 import { GearIcon } from "@radix-ui/react-icons";
-import { FC, useEffect, useRef } from "react";
+import { FC, useRef } from "react";
 import Button from "../basic/Button";
+import ConfirmationBox from "../basic/ConfirmationBox";
 import DialogBox from "../basic/DialogBox";
 import InputField from "../basic/InputField";
-import { useFormState } from "react-dom";
-import ConfirmationBox from "../basic/ConfirmationBox";
 
 type AlbumSettingsDialogProps = {
   album: Album;
@@ -16,11 +16,7 @@ type AlbumSettingsDialogProps = {
 
 const AlbumSettingsDialog: FC<AlbumSettingsDialogProps> = ({ album }) => {
   const closeRef = useRef(() => {});
-  const [updateAlbumState, updateAlbumAction] = useFormState(updateAlbum, {});
-
-  useEffect(() => {
-    if (updateAlbumState.success) closeRef.current();
-  }, [updateAlbumState]);
+  const { action } = useAction(updateAlbum, () => closeRef.current());
 
   return (
     <DialogBox
@@ -33,7 +29,7 @@ const AlbumSettingsDialog: FC<AlbumSettingsDialogProps> = ({ album }) => {
       title="Edit album"
       closeRef={closeRef}
     >
-      <form action={updateAlbumAction} className="space-y-4">
+      <form action={action} className="space-y-4">
         <input type="hidden" name="id" value={album.id} />
         <InputField
           label="Name"
