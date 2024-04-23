@@ -1,3 +1,4 @@
+import AlbumSettingsDialog from "@/components/album/EditAlbumDialog";
 import HoverIcon from "@/components/basic/HoverIcon";
 import PhotoList from "@/components/photo-list/PhotoList";
 import { getAlbum } from "@/db/album";
@@ -45,9 +46,7 @@ export default async function AlbumPage({
         <HoverIcon>
           <UploadIcon className="size-8" />
         </HoverIcon>
-        <HoverIcon>
-          <GearIcon className="size-8" />
-        </HoverIcon>
+        <AlbumSettingsDialog album={album} />
       </div>
       <PhotoList baseUrl={`/album/${albumId}`} photos={album.photos} />
     </>
