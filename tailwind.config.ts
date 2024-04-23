@@ -1,9 +1,10 @@
 import forms from "@tailwindcss/forms";
 import type { Config } from "tailwindcss";
+import radixColors from "tailwindcss-radix-colors";
 
 const config: Config = {
   content: ["./src/**/*.tsx"],
-  plugins: [forms],
+  plugins: [forms, radixColors],
   theme: {
     screens: {
       sm: "576px",

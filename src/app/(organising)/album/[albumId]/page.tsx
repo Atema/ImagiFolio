@@ -33,7 +33,7 @@ export default async function AlbumPage({
       <div className="flex flex-row items-center mb-4 space-x-6 pr-2">
         <div className="flex-grow">
           {album.photos[0] && (
-            <p className="text-sm text-neutral-400 dark:text-neutral-500">
+            <p className="text-sm text-gray-dim">
               {dateRangeString(
                 album.photos[0].dateTaken,
                 album.photos[album.photos.length - 1].dateTaken,

@@ -28,7 +28,7 @@ export default function LoginForm({}: LoginFormProps) {
         required
       />
       {error && (
-        <p className="text-sm leading-6 text-red-700 dark:text-red-300">
+        <p className="text-sm leading-6 text-red-dim">
           {error}
         </p>
       )}

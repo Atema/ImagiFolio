@@ -48,7 +48,7 @@ const ConfirmationBox: FC<ConfirmationBoxProps> = ({
         <AlertDialog.Content
           className={cx(
             "z-50 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
-            "bg-white dark:bg-neutral-900 border-neutral-100 dark:border-neutral-800 shadow-md",
+            "bg-gray-app border-gray-dim",
             "border rounded-xl min-w-80 max-w-full p-4 space-y-4"
           )}
         >
@@ -58,14 +58,14 @@ const ConfirmationBox: FC<ConfirmationBoxProps> = ({
           </AlertDialog.Description>
 
           {error && (
-            <div className="text-sm text-red-700 dark:text-red-300">
+            <div className="text-sm text-red-dim">
               {error}
             </div>
           )}
 
           <div className="flex space-x-2 justify-between">
             <Button
-              styleType="secondary"
+              styleType="ghost"
               label="Cancel"
               onClick={() => setOpen(false)}
               disabled={pending}
@@ -77,6 +77,7 @@ const ConfirmationBox: FC<ConfirmationBoxProps> = ({
               ))}
               <Button
                 styleType="primary"
+                styleColor="danger"
                 label={confirmText}
                 type="submit"
                 disabled={pending}

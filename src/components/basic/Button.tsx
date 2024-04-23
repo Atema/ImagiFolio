@@ -2,12 +2,25 @@ import cx from "@/utils/class-names/cx";
 import { ButtonHTMLAttributes } from "react";
 
 export type ButtonProps = {
-  styleType: "primary" | "secondary";
+  styleType: "primary" | "ghost";
+  styleColor?: "accent" | "danger";
   label: string;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
+const colorTable = {
+  primary: {
+    accent: "bg-plum-solid",
+    danger: "bg-red-solid",
+  },
+  ghost: {
+    accent: "text-plum-solid bg-plum-ghost",
+    danger: "text-red-solid bg-red-ghost",
+  },
+} as const;
+
 export default function Button({
   styleType,
+  styleColor = "accent",
   label,
   ...buttonProps
 }: ButtonProps) {
@@ -15,13 +28,9 @@ export default function Button({
     <button
       {...buttonProps}
       className={cx(
-        "block rounded-md px-4 py-1.5",
-        "text-sm leading-6 shadow-sm",
-        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-800",
-        styleType == "primary" &&
-          "text-white bg-purple-800 hover:bg-purple-900",
-        styleType == "secondary" &&
-          "text-neutral-600 bg-neutral-200 hover:bg-neutral-300 dark:text-neutral-400 dark:neutral-700 dark:hover:neutral-600",
+        "block rounded-md px-4 py-1.5 text-sm leading-6",
+        // "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-800",
+        colorTable[styleType][styleColor],
         buttonProps.className
       )}
     >
@@ -29,3 +38,5 @@ export default function Button({
     </button>
   );
 }
+
+// TODO: Styletype secondary

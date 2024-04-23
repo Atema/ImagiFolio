@@ -16,12 +16,7 @@ type RootLayoutProps = {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
-      <body
-        className={cx(
-          "bg-white dark:bg-neutral-900 text-neutral-950 dark:text-neutral-50",
-          inter.className
-        )}
-      >
+      <body className={cx("bg-gray-app text-gray-normal", inter.className)}>
         {children}
       </body>
     </html>

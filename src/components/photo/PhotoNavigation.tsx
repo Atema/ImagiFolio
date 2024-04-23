@@ -17,7 +17,7 @@ const Arrow: FC<ArrowProps> = ({ type, href }) =>
       <div
         className={cx(
           "absolute top-0 z-10 h-screen flex items-center",
-          "from-black/40 to-transparent",
+          "from-blacka-6 to-transparent",
           "opacity-0 hover:opacity-100 transition-opacity",
           type == "prev"
             ? "left-0 bg-gradient-to-r"

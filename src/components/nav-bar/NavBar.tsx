@@ -8,7 +8,7 @@ export type NavBarProps = {
 export default function NavBar({ userName }: NavBarProps) {
   return (
     <>
-      <div className="w-full py-4 border-b border-neutral-200 dark:border-neutral-800 mb-8">
+      <div className="w-full py-4 border-b border-gray-dim mb-8">
         <nav className="2xl:container 2xl:mx-auto px-2 md:px-4 flex flex-row">
           <div className="flex-grow">
             <Link href="/">ImagiFolio</Link>
@@ -21,7 +21,9 @@ export default function NavBar({ userName }: NavBarProps) {
             <Link href="/settings">Settings</Link>
             --- 
             */}
-            <Link href="/logout">Sign out</Link>
+            <Link className="block w-full px-4 py-2" href="/logout">
+              Sign out
+            </Link>
           </Menu>
         </nav>
       </div>

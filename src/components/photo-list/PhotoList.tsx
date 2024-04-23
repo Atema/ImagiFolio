@@ -19,7 +19,7 @@ export default function PhotoList(props: PhotoListProps) {
               unoptimized
               fill
               alt=""
-              className="object-cover shadow"
+              className="object-cover"
             />
           </div>
         </Link>

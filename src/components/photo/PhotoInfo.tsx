@@ -10,7 +10,7 @@ type PhotoInfoItemProps = {
 
 const PhotoInfoItem: FC<PhotoInfoItemProps> = ({ name, children }) => (
   <div>
-    <div className="text-neutral-500 dark:text-neutral-400">{name}</div>
+    <div className="text-gray-dim">{name}</div>
     <div className="space-x-4">{children}</div>
   </div>
 );
