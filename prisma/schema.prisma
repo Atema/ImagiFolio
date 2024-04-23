@@ -27,7 +27,7 @@ model Album {
 model Photo {
   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   albumId   String   @db.Uuid
-  album     Album    @relation(fields: [albumId], references: [id])
+  album     Album    @relation(fields: [albumId], references: [id], onDelete: Cascade)
   dateTaken DateTime
   camera    String?
   lens      String?
