@@ -44,7 +44,7 @@ const DialogBox: FC<DialogBoxProps> = ({
         <Dialog.Content
           className={cx(
             "z-40 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
-            "bg-gray-app border-gray-dim",
+            "bg-gray-app border-gray-dim shadow-md",
             "border rounded-xl min-w-80 max-w-full p-4 space-y-4"
           )}
         >

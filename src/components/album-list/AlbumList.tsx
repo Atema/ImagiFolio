@@ -19,7 +19,7 @@ export default function AlbumList({ showDates, albums }: AlbumListProps) {
             <div
               className={cx(
                 "aspect-4/3 relative group-hover:brightness-90 rounded-xl",
-                "bg-plum-4 dark:bg-plumdark-4"
+                "bg-plum-4 dark:bg-plumdark-4 shadow-md"
               )}
             >
               {album.photos[0] && (

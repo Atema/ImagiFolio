@@ -13,7 +13,7 @@ export default function PhotoList(props: PhotoListProps) {
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3">
       {props.photos.map((pic) => (
         <Link key={pic.id} href={`${props.baseUrl}/photo/${pic.id}`}>
-          <div className="aspect-4/3 relative hover:brightness-90">
+          <div className="aspect-4/3 relative hover:brightness-90 shadow-md">
             <Image
               src={getImageUrl(pic.id)}
               unoptimized

@@ -31,7 +31,7 @@ const Menu: React.FC<MenuProps> = ({ trigger, children, hoverIconTrigger }) => {
           sideOffset={5}
           className={cx(
             "min-w-40 border rounded-md mx-2 py-2 text-sm z-20",
-            "bg-gray-app border-gray-dim shadow shadow-black"
+            "bg-gray-app border-gray-dim shadow-md"
           )}
         >
           <DropdownMenu.Arrow className="fill-gray-6 dark:fill-graydark-6" />
