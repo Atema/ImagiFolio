@@ -19,7 +19,7 @@ export default function dateRangeString(
       startOpts.month = undefined;
 
       if (startDate.getDate() === endDate.getDate()) {
-        return startDate.toLocaleString("en-GB", startOpts);
+        return startDate.toLocaleString("en-GB", endOpts);
       }
     }
   }
