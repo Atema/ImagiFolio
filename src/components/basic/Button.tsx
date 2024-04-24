@@ -1,5 +1,5 @@
 import cx from "@/utils/class-names/cx";
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, forwardRef } from "react";
 
 export type ButtonProps = {
   styleType: "primary" | "ghost";
@@ -18,25 +18,26 @@ const colorTable = {
   },
 } as const;
 
-export default function Button({
-  styleType,
-  styleColor = "accent",
-  label,
-  ...buttonProps
-}: ButtonProps) {
-  return (
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    { styleType, styleColor = "accent", label, className, ...buttonProps },
+    ref
+  ) => (
     <button
       {...buttonProps}
       className={cx(
         "block rounded-md px-4 py-1.5 text-sm leading-6",
         // "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-800",
         colorTable[styleType][styleColor],
-        buttonProps.className
+        className
       )}
+      ref={ref}
     >
       {label}
     </button>
-  );
-}
+  )
+);
 
-// TODO: Styletype secondary
+Button.displayName = "Button";
+
+export default Button;

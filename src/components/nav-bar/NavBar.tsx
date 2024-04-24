@@ -21,9 +21,7 @@ export default function NavBar({ userName }: NavBarProps) {
             <Link href="/settings">Settings</Link>
             --- 
             */}
-            <Link className="block w-full px-4 py-2" href="/logout">
-              Sign out
-            </Link>
+            <Link href="/logout">Sign out</Link>
           </Menu>
         </nav>
       </div>

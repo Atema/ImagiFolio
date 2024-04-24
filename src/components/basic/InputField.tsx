@@ -1,13 +1,13 @@
 import cx from "@/utils/class-names/cx";
-import { InputHTMLAttributes } from "react";
+import { InputHTMLAttributes, forwardRef } from "react";
 
 export type InputFieldProps = {
   label: string;
   stateNum?: number;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-export default function InputField({ label, ...inputProps }: InputFieldProps) {
-  return (
+const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
+  ({ label, ...inputProps }, ref) => (
     <label className="block text-sm leading-6">
       <div className="text-gray-dim">{label}</div>
       <div className="mt-1">
@@ -21,8 +21,12 @@ export default function InputField({ label, ...inputProps }: InputFieldProps) {
             "focus:border-plum-7 dark:focus:border-plumdark-7",
             inputProps.className
           )}
+          ref={ref}
         />
       </div>
     </label>
-  );
-}
+  )
+);
+
+InputField.displayName = "InputField";
+export default InputField;

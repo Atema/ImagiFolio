@@ -64,11 +64,7 @@ const PhotoView: FC<PhotoViewProps> = ({
               hoverIconTrigger="white"
             >
               <ConfirmationBox
-                trigger={
-                  <button className="w-full px-4 py-2 text-left">
-                    Delete photo
-                  </button>
-                }
+                trigger={<button>Delete photo</button>}
                 title="Are you sure?"
                 description="The photo will be deleted permanently. This cannot be undone."
                 confirmText="Yes, delete"
