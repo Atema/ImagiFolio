@@ -1,10 +1,10 @@
+import prisma from "@/db/prisma/client";
 import exif from "exif-reader";
 import { randomUUID } from "node:crypto";
 import { copyFile, mkdir, rename } from "node:fs/promises";
+import { dirname } from "node:path";
 import sharp, { Sharp } from "sharp";
 import { FileVariation, getFilePath, getUploadPath } from "./file-paths";
-import { dirname } from "node:path";
-import prisma from "@/db/prisma/client";
 
 const convertPhotoVariation = async (
   variation: FileVariation,
@@ -48,6 +48,23 @@ export const processPhoto = async (albumId: string, uploadPath: string) => {
   const exifdata = metadata.exif && exif(metadata.exif);
   await rename(uploadPath, getFilePath("original", id));
 
+  const exifLat = exifdata?.GPSInfo?.GPSLatitude;
+  const exifLatRef = exifdata?.GPSInfo?.GPSLatitudeRef;
+  const exifLong = exifdata?.GPSInfo?.GPSLongitude;
+  const exifLongRef = exifdata?.GPSInfo?.GPSLongitudeRef;
+  let lat = null,
+    long = null;
+
+  if (exifLat && exifLatRef && exifLong && exifLongRef) {
+    lat =
+      (exifLatRef == "S" ? -1 : 1) *
+      (exifLat[0] + exifLat[1] / 60 + exifLat[2] / 3600);
+
+    long =
+      (exifLongRef == "W" ? -1 : 1) *
+      (exifLong[0] + exifLong[1] / 60 + exifLong[2] / 3600);
+  }
+
   await prisma.photo.create({
     data: {
       id,
@@ -66,6 +83,8 @@ export const processPhoto = async (albumId: string, uploadPath: string) => {
       shutter: exifdata?.Photo?.ExposureTime,
       aperture: exifdata?.Photo?.FNumber,
       iso: exifdata?.Photo?.ISOSpeedRatings,
+      lat,
+      long,
     },
   });
 };
