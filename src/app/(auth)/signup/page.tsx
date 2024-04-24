@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Sign up - ImagiFolio",
+  title: "Register - ImagiFolio",
 };
 
 export default async function SignupPage() {

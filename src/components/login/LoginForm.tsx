@@ -5,12 +5,12 @@ import { useAction } from "@/actions/types";
 import Link from "next/link";
 import Button from "../basic/Button";
 import InputField from "../basic/InputField";
+import { useSelectedLayoutSegment } from "next/navigation";
 
-export type LoginFormProps = {
-  signup: boolean;
-};
+export type LoginFormProps = {};
 
-export default function LoginForm({ signup }: LoginFormProps) {
+export default function LoginForm({}: LoginFormProps) {
+  const signup = useSelectedLayoutSegment() === "signup";
   let { error, action, pending, resetError } = useAction(loginUser);
 
   return (
