@@ -16,8 +16,10 @@ const convertPhotoVariation = async (
   return image.toFile(path);
 };
 
-const convertPhotoVariations = (image: Sharp, id: string) =>
-  Promise.all([
+const convertPhotoVariations = async (imageIn: Sharp, id: string) => {
+  const image = imageIn.rotate().jpeg({ progressive: true });
+
+  await Promise.all([
     convertPhotoVariation(
       "preview",
       id,
@@ -39,6 +41,7 @@ const convertPhotoVariations = (image: Sharp, id: string) =>
       image.clone().resize(20, 15, { fit: "cover" })
     ),
   ]);
+};
 
 export const processPhoto = async (albumId: string, uploadPath: string) => {
   const id = randomUUID();
