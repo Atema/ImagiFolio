@@ -39,6 +39,27 @@ export async function checkUserLogin(email: string, password: string) {
   return user.id;
 }
 
+export async function createUser(
+  email: string,
+  displayName: string,
+  password: string
+) {
+  try {
+    const user = await prisma.user.create({
+      data: {
+        email,
+        displayName,
+        password: await hashPassword(password),
+      },
+      select: { id: true, password: true },
+    });
+
+    return user.id;
+  } catch (err) {
+    return null;
+  }
+}
+
 export async function getUser(id: string) {
   return await prisma.user.findUnique({
     where: { id },

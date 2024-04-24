@@ -28,5 +28,8 @@ export const useAction = (
     error: state.error,
     action,
     pending,
+    resetError: () => {
+      state.error = "";
+    },
   } as const;
 };
