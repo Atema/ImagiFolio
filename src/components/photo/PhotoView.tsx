@@ -37,7 +37,7 @@ const PhotoView: FC<PhotoViewProps> = ({
   return (
     <div className="h-screen flex flex-row">
       <div className="flex-grow flex flex-col">
-        <div className="bg-black text-gray-solid flex-grow relative">
+        <div className="bg-black text-white flex-grow relative">
           <div
             className={cx(
               "absolute z-20 w-full p-4 space-x-6 flex items-center justify-end",
