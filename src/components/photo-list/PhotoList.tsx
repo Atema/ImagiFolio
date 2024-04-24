@@ -15,6 +15,8 @@ export default function PhotoList(props: PhotoListProps) {
           <div className="aspect-4/3 relative hover:brightness-90 shadow-md">
             <Image
               src={`/image/${pic.id}/thumbnail`}
+              placeholder="blur"
+              blurDataURL={`/image/${pic.id}/thumbnail-blur`}
               unoptimized
               fill
               alt=""

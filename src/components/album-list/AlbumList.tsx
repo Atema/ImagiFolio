@@ -24,6 +24,8 @@ export default function AlbumList({ showDates, albums }: AlbumListProps) {
               {album.photos[0] && (
                 <Image
                   src={`/image/${album.photos[0].id}/thumbnail`}
+                  placeholder="blur"
+                  blurDataURL={`/image/${album.photos[0].id}/thumbnail-blur`}
                   unoptimized
                   fill
                   alt=""
