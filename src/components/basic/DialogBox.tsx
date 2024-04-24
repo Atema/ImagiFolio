@@ -63,7 +63,7 @@ const DialogBox = forwardRef<HTMLButtonElement, DialogBoxProps>(
             <div className="flex items-center">
               <Dialog.Title className="text-xl flex-grow">{title}</Dialog.Title>
               <HoverIcon>
-                <Dialog.Close className="block">
+                <Dialog.Close className="block" tabIndex={-1}>
                   <Cross2Icon className="size-6" />
                 </Dialog.Close>
               </HoverIcon>
