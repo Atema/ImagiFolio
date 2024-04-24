@@ -29,6 +29,7 @@ model Photo {
   albumId   String   @db.Uuid
   album     Album    @relation(fields: [albumId], references: [id], onDelete: Cascade)
   dateTaken DateTime
+  color     Int
   camera    String?
   lens      String?
   focal     Float?

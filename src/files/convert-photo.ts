@@ -49,6 +49,7 @@ export const processPhoto = async (albumId: string, uploadPath: string) => {
   await convertPhotoVariations(image, id);
   const metadata = await image.metadata();
   const exifdata = metadata.exif && exif(metadata.exif);
+  const { dominant } = await image.stats();
   await rename(uploadPath, getFilePath("original", id));
 
   const exifLat = exifdata?.GPSInfo?.GPSLatitude;
@@ -78,6 +79,7 @@ export const processPhoto = async (albumId: string, uploadPath: string) => {
         exifdata?.Image?.DateTime ||
         exifdata?.Image?.DateTimeOriginal ||
         new Date(),
+      color: (dominant.r << 16) + (dominant.g << 8) + dominant.b,
       width: metadata.width!,
       height: metadata.height!,
       camera: exifdata?.Image?.Model,

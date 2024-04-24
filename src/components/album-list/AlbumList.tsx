@@ -20,6 +20,11 @@ export default function AlbumList({ showDates, albums }: AlbumListProps) {
                 "aspect-4/3 relative group-hover:brightness-90 rounded-xl",
                 "bg-plum-4 dark:bg-plumdark-4 shadow-md"
               )}
+              style={
+                album.photos[0] && {
+                  backgroundColor: `#${album.photos[0].color.toString(16).padStart(6, "0")}`,
+                }
+              }
             >
               {album.photos[0] && (
                 <Image
