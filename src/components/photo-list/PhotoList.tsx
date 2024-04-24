@@ -1,5 +1,4 @@
 import { Photo } from "@/db/prisma/generated";
-import { getImageUrl } from "@/utils/images/image-url";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -15,7 +14,7 @@ export default function PhotoList(props: PhotoListProps) {
         <Link key={pic.id} href={`${props.baseUrl}/photo/${pic.id}`}>
           <div className="aspect-4/3 relative hover:brightness-90 shadow-md">
             <Image
-              src={getImageUrl(pic.id)}
+              src={`/image/${pic.id}/thumbnail`}
               unoptimized
               fill
               alt=""

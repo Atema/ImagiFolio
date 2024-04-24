@@ -1,7 +1,6 @@
 import { Album, Photo } from "@/db/prisma/generated";
 import cx from "@/utils/class-names/cx";
 import dateRangeString from "@/utils/date-time/dateRangeString";
-import { getImageUrl } from "@/utils/images/image-url";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -24,7 +23,7 @@ export default function AlbumList({ showDates, albums }: AlbumListProps) {
             >
               {album.photos[0] && (
                 <Image
-                  src={getImageUrl(album.photos[0].id)}
+                  src={`/image/${album.photos[0].id}/thumbnail`}
                   unoptimized
                   fill
                   alt=""

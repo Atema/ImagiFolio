@@ -4,7 +4,6 @@ import { deletePhoto } from "@/actions/photo";
 import { usePhotoInfoOpen } from "@/context/PhotoInfoOpen";
 import { Photo } from "@/db/prisma/generated";
 import cx from "@/utils/class-names/cx";
-import { getImageUrl } from "@/utils/images/image-url";
 import {
   ArrowLeftIcon,
   DotsVerticalIcon,
@@ -78,7 +77,8 @@ const PhotoView: FC<PhotoViewProps> = ({
           </div>
           <PhotoNavigation prevHref={prevHref} nextHref={nextHref} />
           <Image
-            src={getImageUrl(photo.id)}
+            src={`/image/${photo.id}/preview`}
+            unoptimized
             alt="Photo"
             fill
             className="object-contain"
