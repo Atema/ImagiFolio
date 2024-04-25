@@ -38,7 +38,7 @@ type PhotoInfoProps = {
 };
 
 const PhotoInfo: FC<PhotoInfoProps> = ({ photo, onClose }) => (
-  <div className="w-72 text-sm space-y-4 p-6">
+  <div className="w-full sm:w-80 text-sm space-y-4 p-6">
     <div className="flex flex-row items-center">
       <h2 className="text-2xl flex-grow">Info</h2>
 
