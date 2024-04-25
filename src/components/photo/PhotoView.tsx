@@ -84,6 +84,7 @@ const PhotoView: FC<PhotoViewProps> = ({
           <PhotoNavigation prevHref={prevHref} nextHref={nextHref} />
           <Image
             src={`/image/${photo.id}/preview`}
+            priority
             unoptimized
             alt="Photo"
             fill
