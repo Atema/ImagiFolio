@@ -1,21 +1,19 @@
+import { AppPage } from "@/app/types";
 import PhotoView from "@/components/photo/PhotoView";
 import { getPhoto } from "@/db/photo";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { FC } from "react";
 
 export const metadata: Metadata = {
   title: "Photo - ImagiFolio",
 };
 
-type PhotoPageProps = {
-  params: {
-    albumId: string;
-    photoId: string;
-  };
+type PhotoPageParams = {
+  albumId: string;
+  photoId: string;
 };
 
-const PhotoPage: FC<PhotoPageProps> = async ({ params }) => {
+const PhotoPage: AppPage<PhotoPageParams> = async ({ params }) => {
   const { photo, prevPhoto, nextPhoto } =
     (await getPhoto(params.photoId, params.albumId)) ?? notFound();
 

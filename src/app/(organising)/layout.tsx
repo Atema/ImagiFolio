@@ -3,7 +3,7 @@ import Menu from "@/components/basic/Menu";
 import { getUser } from "@/db/user";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { FC, ReactNode } from "react";
+import { AppLayout } from "../types";
 
 const getCurrentUser = async () => {
   const userId = (await getSession())?.userId;
@@ -19,9 +19,7 @@ const getCurrentUser = async () => {
  * Layout for the organising group (overviews of photos and albums).
  * Renders a navigation bar and containerises its children as the main layout
  */
-const OrganisingGroupLayout: FC<{ children: ReactNode }> = async ({
-  children,
-}) => (
+const OrganisingGroupLayout: AppLayout = async ({ children }) => (
   <>
     <div className="w-full py-4 border-b border-gray-dim mb-8">
       <nav className="2xl:container 2xl:mx-auto px-2 md:px-4 flex flex-row">

@@ -6,19 +6,13 @@ import Button from "@/components/basic/Button";
 import InputField from "@/components/basic/InputField";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { FC, ReactNode } from "react";
-
-type AuthGroupLayoutProps = {
-  /** Child page (should not contain anything) */
-  children: ReactNode;
-};
+import { AppLayout } from "../types";
 
 /**
  * Layout for the auth routing group.
  * Renders a log in or sign up form, depending on the current route.
- * @param props See {@link AuthGroupLayoutProps}
  */
-const AuthGroupLayout: FC<AuthGroupLayoutProps> = ({ children }) => {
+const AuthGroupLayout: AppLayout = ({ children }) => {
   const signup = useSelectedLayoutSegment() === "signup";
   let { error, action, pending, resetError } = useAction(loginUser);
 

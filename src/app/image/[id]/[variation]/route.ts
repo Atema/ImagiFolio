@@ -1,3 +1,4 @@
+import { AppResponse } from "@/app/types";
 import prisma from "@/db/prisma/client";
 import { FileOriginal, FileVariation, getFilePath } from "@/files/file-paths";
 import { NextRequest, NextResponse } from "next/server";
@@ -21,14 +22,15 @@ const getFileStream = (path: string) => {
   });
 };
 
-type RouteResponse = {
-  params: {
-    id: string;
-    variation: FileOriginal | FileVariation;
-  };
-} & Response;
+type ImageRouteParams = {
+  id: string;
+  variation: FileOriginal | FileVariation;
+};
 
-export const GET = async (_req: NextRequest, { params }: RouteResponse) => {
+export const GET = async (
+  _req: NextRequest,
+  { params }: AppResponse<ImageRouteParams>,
+) => {
   try {
     const photo = await prisma.photo.findUniqueOrThrow({
       where: { id: params.id },

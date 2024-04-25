@@ -1,5 +1,5 @@
+import { AppPage } from "@/app/types";
 import { Metadata } from "next";
-import { FC } from "react";
 
 export const metadata: Metadata = {
   title: "Log in - ImagiFolio",
@@ -8,6 +8,6 @@ export const metadata: Metadata = {
 /**
  * Empty login page to make the route available
  */
-const LoginPage: FC<{}> = () => null;
+const LoginPage: AppPage = () => null;
 
 export default LoginPage;

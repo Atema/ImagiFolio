@@ -1,30 +1,23 @@
+import { AppPage, MetadataGenerator } from "@/app/types";
 import AlbumSettingsDialog from "@/components/album/AlbumSettingsDialog";
 import HoverIcon from "@/components/basic/HoverIcon";
 import PhotoList from "@/components/photo-list/PhotoList";
 import { getAlbum } from "@/db/album";
 import dateRangeString from "@/utils/date-time/dateRangeString";
 import { UploadIcon } from "@radix-ui/react-icons";
-import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { FC } from "react";
 
-type AlbumPageProps = {
-  params: {
-    albumId: string;
-  };
+type AlbumPageParams = {
+  albumId: string;
 };
 
-export const generateMetadata = async ({
+export const generateMetadata: MetadataGenerator<AlbumPageParams> = async ({
   params,
-}: AlbumPageProps): Promise<Metadata> => {
-  const album = (await getAlbum(params.albumId)) ?? notFound();
+}) => ({
+  title: `${((await getAlbum(params.albumId)) ?? notFound()).name} - ImagiFolio`,
+});
 
-  return {
-    title: `${album.name} - ImagiFolio`,
-  };
-};
-
-const AlbumPage: FC<AlbumPageProps> = async ({ params }) => {
+const AlbumPage: AppPage<AlbumPageParams> = async ({ params }) => {
   const album = (await getAlbum(params.albumId)) ?? notFound();
 
   return (
