@@ -20,8 +20,6 @@ const PhotoList: FC<PhotoListProps> = ({ baseUrl, photos }) => (
         >
           <Image
             src={`/image/${pic.id}/thumbnail`}
-            placeholder="blur"
-            blurDataURL={`/image/${pic.id}/thumbblur`}
             unoptimized
             fill
             alt=""

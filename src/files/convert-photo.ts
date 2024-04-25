@@ -9,8 +9,6 @@ import { FileVariation, getFilePath, getUploadPath } from "./file-paths";
 const photoVariations: [FileVariation, (img: Sharp) => Sharp][] = [
   ["preview", (img) => img.resize(2500, 2500, { fit: "inside" })],
   ["thumbnail", (img) => img.resize(400, 300, { fit: "cover" })],
-  ["blur", (img) => img.resize(25, 25, { fit: "inside" })],
-  ["thumbblur", (img) => img.resize(20, 15, { fit: "cover" })],
 ];
 
 const convertPhotoVariations = async (imageIn: Sharp, id: string) => {

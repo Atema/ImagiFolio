@@ -5,7 +5,7 @@ import { join } from "node:path";
 
 export type FileOriginal = "original";
 export type FileUpload = "upload";
-export type FileVariation = "preview" | "thumbnail" | "blur" | "thumbblur";
+export type FileVariation = "preview" | "thumbnail";
 
 const fileDir: { [key in FileOriginal | FileUpload | FileVariation]: string } =
   {
@@ -13,8 +13,6 @@ const fileDir: { [key in FileOriginal | FileUpload | FileVariation]: string } =
     original: getFirstEnv("IMAGE_DIR_ORIGINALS", "IMAGE_DIR"),
     preview: getFirstEnv("IMAGE_DIR_PREVIEWS", "IMAGE_DIR"),
     thumbnail: getFirstEnv("IMAGE_DIR_THUMBNAILS", "IMAGE_DIR"),
-    blur: getFirstEnv("IMAGE_DIR_THUMBNAILS", "IMAGE_DIR"),
-    thumbblur: getFirstEnv("IMAGE_DIR_THUMBNAILS", "IMAGE_DIR"),
   };
 
 export const getFilePath = (

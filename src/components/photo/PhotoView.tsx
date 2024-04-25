@@ -84,8 +84,6 @@ const PhotoView: FC<PhotoViewProps> = ({
           <PhotoNavigation prevHref={prevHref} nextHref={nextHref} />
           <Image
             src={`/image/${photo.id}/preview`}
-            // placeholder="blur"
-            // blurDataURL={`/image/${photo.id}/blur`}
             unoptimized
             alt="Photo"
             fill
