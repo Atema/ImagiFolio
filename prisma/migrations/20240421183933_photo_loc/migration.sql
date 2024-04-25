@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "Photo" ADD COLUMN     "lat" DOUBLE PRECISION,
-ADD COLUMN     "long" DOUBLE PRECISION;
