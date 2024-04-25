@@ -1,8 +1,8 @@
+import { getEnv } from "@/utils/environment/get-env";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
-const secretKey = Buffer.from(process.env.SESSION_SECRET as string, "utf-8"); // TODO: Check existence;
+const secretKey = Buffer.from(getEnv("SESSION_SECRET"), "utf-8");
 
 export type SessionData = {
   userId: string;
