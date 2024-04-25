@@ -20,12 +20,24 @@ import PhotoInfo from "./PhotoInfo";
 import PhotoNavigation from "./PhotoNavigation";
 
 type PhotoViewProps = {
+  /** The photo to show */
   photo: Photo;
+
+  /** URL back to the overview */
   backHref: string;
+
+  /** URL to the previous picture */
   prevHref?: string | null;
+
+  /** URL to the next picture */
   nextHref?: string | null;
 };
 
+/**
+ * View to show a photo, metadata and navigation to adjacent photos
+ * @component
+ * @param props See {@link PhotoViewProps}.
+ */
 const PhotoView: FC<PhotoViewProps> = ({
   photo,
   backHref,

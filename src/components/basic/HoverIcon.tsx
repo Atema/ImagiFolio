@@ -2,10 +2,19 @@ import cx from "@/utils/class-names/cx";
 import { ReactNode, forwardRef } from "react";
 
 type HoverIconProps = {
+  /** Components to render inside (the icon / icon button) */
   children: ReactNode;
+
+  /** Whether to use a white background instead of adaptive colour */
   white?: boolean;
 };
 
+/**
+ * A wrapping component for icons to show a background while hovering
+ * @component
+ * @param props See {@link HoverIconProps}.
+ * Reference will be passed to the division around the children elements
+ */
 const HoverIcon = forwardRef<HTMLDivElement, HoverIconProps>(
   ({ children, white }, ref) => (
     <div className="relative">
@@ -26,5 +35,4 @@ const HoverIcon = forwardRef<HTMLDivElement, HoverIconProps>(
 );
 
 HoverIcon.displayName = "HoverIcon";
-
 export default HoverIcon;

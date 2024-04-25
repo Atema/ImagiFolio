@@ -7,9 +7,11 @@ import Button from "../basic/Button";
 import DialogBox from "../basic/DialogBox";
 import InputField from "../basic/InputField";
 
-type AddAlbumDialogProps = {};
-
-const AddAlbumDialog: FC<AddAlbumDialogProps> = () => (
+/**
+ * Dialog box to create a new photo album
+ * @component
+ */
+const AddAlbumDialog: FC = () => (
   <DialogBox
     trigger={
       <button>

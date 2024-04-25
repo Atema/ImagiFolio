@@ -2,10 +2,16 @@ import cx from "@/utils/class-names/cx";
 import { InputHTMLAttributes, forwardRef } from "react";
 
 export type InputFieldProps = {
+  /** Label text to show with the input */
   label: string;
-  stateNum?: number;
 } & InputHTMLAttributes<HTMLInputElement>;
 
+/**
+ * A styled input field with label
+ * @component
+ * @param props See {@link InputFieldProps}.
+ * Reference and additional properties will be passed to the internal input element
+ */
 const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
   ({ label, ...inputProps }, ref) => (
     <label className="block text-sm leading-6">

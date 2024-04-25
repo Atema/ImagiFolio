@@ -11,9 +11,15 @@ import DialogBox from "../basic/DialogBox";
 import InputField from "../basic/InputField";
 
 type AlbumSettingsDialogProps = {
+  /** The album to change the settings of */
   album: Album;
 };
 
+/**
+ * Dialog to change the settings (name) of a photo album
+ * @component
+ * @param props See {@link AlbumSettingsDialogProps}.
+ */
 const AlbumSettingsDialog: FC<AlbumSettingsDialogProps> = ({ album }) => {
   const closeRef = useRef(() => {});
   const { action } = useAction(updateAlbum, () => closeRef.current());

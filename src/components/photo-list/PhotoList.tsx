@@ -4,10 +4,18 @@ import Link from "next/link";
 import { FC } from "react";
 
 export type PhotoListProps = {
+  /** Base URL, relative to which the photos are located */
   baseUrl: string;
+
+  /** List of photos to show */
   photos: Photo[];
 };
 
+/**
+ * Displays a styled list of photos
+ * @component
+ * @param props See {@link AlbumListProps}.
+ */
 const PhotoList: FC<PhotoListProps> = ({ baseUrl, photos }) => (
   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3">
     {photos.map((pic) => (

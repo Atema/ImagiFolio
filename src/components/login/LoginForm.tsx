@@ -8,9 +8,11 @@ import { FC } from "react";
 import Button from "../basic/Button";
 import InputField from "../basic/InputField";
 
-export type LoginFormProps = {};
-
-const LoginForm: FC<LoginFormProps> = ({}) => {
+/**
+ * Log in and sign up form, depending on the page
+ * @component
+ */
+const LoginForm: FC = () => {
   const signup = useSelectedLayoutSegment() === "signup";
   let { error, action, pending, resetError } = useAction(loginUser);
 

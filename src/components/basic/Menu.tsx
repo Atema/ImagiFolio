@@ -12,11 +12,22 @@ import {
 import HoverIcon from "./HoverIcon";
 
 export type MenuProps = {
+  /** Element to use as the trigger to open the dialog */
   trigger: ReactNode;
+
+  /** Children elements to render as menu items; "---" will render a separator */
   children: ReactNode;
+
+  /** Whether to wrap the trigger element in a (white?) {@link HoverIcon} */
   hoverIconTrigger?: boolean | "white";
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
+/**
+ * A styled dropdown menu
+ * @component
+ * @param props See {@link MenuProps}.
+ * Reference and additional properties will be passed to the trigger element
+ */
 const Menu = forwardRef<HTMLButtonElement, MenuProps>(
   ({ trigger, children, hoverIconTrigger, ...buttonProps }, ref) => {
     const [open, setOpen] = useState(false);
@@ -73,5 +84,4 @@ const Menu = forwardRef<HTMLButtonElement, MenuProps>(
 );
 
 Menu.displayName = "Menu";
-
 export default Menu;

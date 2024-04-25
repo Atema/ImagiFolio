@@ -8,15 +8,34 @@ import Button from "./Button";
 import HoverIcon from "./HoverIcon";
 
 type ConfirmationBoxProps = {
+  /** Element to use as the trigger to open the confirmation box */
   trigger: ReactNode;
+
+  /** Whether to wrap the trigger element in a {@link HoverIcon} */
   hoverIconTrigger?: boolean;
+
+  /** Title of the confirmation box */
   title: string;
+
+  /** Description to show in the confirmation box */
   description: string;
+
+  /** Text to display on the confirmation button */
   confirmText: string;
+
+  /** Server action to execute when clicking the confirmation button */
   action: SuccessErrorFormAction;
+
+  /** Additional data to add to the form as hidden input elements */
   hiddenFormData?: { [key: string]: string };
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
+/**
+ * A styled confirmation dialog to show before dangerous actions
+ * @component
+ * @param props See {@link ConfirmationBoxProps}.
+ * Reference and additional properties will be passed to the trigger element
+ */
 const ConfirmationBox = forwardRef<HTMLButtonElement, ConfirmationBoxProps>(
   (
     {
@@ -100,5 +119,4 @@ const ConfirmationBox = forwardRef<HTMLButtonElement, ConfirmationBoxProps>(
 );
 
 ConfirmationBox.displayName = "ConfirmationBox";
-
 export default ConfirmationBox;

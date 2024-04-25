@@ -7,10 +7,18 @@ import { useRouter } from "next/navigation";
 import { FC, useEffect } from "react";
 
 type ArrowProps = {
+  /** Direction and side of the arrow: left ("prev") or right ("next") */
   type: "prev" | "next";
+
+  /** URL that the arrow points to */
   href?: string | null;
 };
 
+/**
+ * Arrow that shows on top of image to navigate back or forth
+ * @component
+ * @param props See {@link ArrowProps}.
+ */
 const Arrow: FC<ArrowProps> = ({ type, href }) =>
   href && (
     <Link href={href} replace>
@@ -34,10 +42,18 @@ const Arrow: FC<ArrowProps> = ({ type, href }) =>
   );
 
 type PhotoNavigationProps = {
+  /** URL of the previous picture (if any) */
   prevHref?: string | null;
+
+  /** URL of the next picture (if any) */
   nextHref?: string | null;
 };
 
+/**
+ * Handles navigation between photos in the view using arrows and keyboard
+ * @component
+ * @param props See {@link PhotoNavigationProps}
+ */
 const PhotoNavigation: FC<PhotoNavigationProps> = ({ prevHref, nextHref }) => {
   const router = useRouter();
 

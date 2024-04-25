@@ -6,10 +6,18 @@ import Link from "next/link";
 import { FC } from "react";
 
 export type AlbumListProps = {
+  /** Whether to show date ranges in the list */
   showDates: boolean;
+
+  /** The albums to show, with their first and last photos included (if any) */
   albums: (Album & { photos: Photo[] })[];
 };
 
+/**
+ * Displays a styled list of photo albums
+ * @component
+ * @param props See {@link AlbumListProps}.
+ */
 const AlbumList: FC<AlbumListProps> = ({ showDates, albums }) => (
   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6">
     {albums.map((album) => (

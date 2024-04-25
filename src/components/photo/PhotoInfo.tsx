@@ -4,10 +4,18 @@ import { FC, ReactNode } from "react";
 import HoverIcon from "../basic/HoverIcon";
 
 type PhotoInfoItemProps = {
+  /** The label of the metadata item */
   name: string;
+
+  /** The value or values to show beneath the label */
   children: ReactNode;
 };
 
+/**
+ * A combination of label and values to show in the info list
+ * @component
+ * @param props See {@link PhotoInfoItemProps}.
+ */
 const PhotoInfoItem: FC<PhotoInfoItemProps> = ({ name, children }) => (
   <div>
     <div className="text-gray-dim">{name}</div>
@@ -15,6 +23,12 @@ const PhotoInfoItem: FC<PhotoInfoItemProps> = ({ name, children }) => (
   </div>
 );
 
+/**
+ * Converts coordinates in decimal degrees to a DMS format
+ * @param num Decimal degrees
+ * @param type Latitude ("lat") or longitude ("long")
+ * @returns A string with degrees, minutes, and seconds
+ */
 const coordToDeg = (num: number, type: "lat" | "long") => {
   let dir;
 
@@ -33,10 +47,18 @@ const coordToDeg = (num: number, type: "lat" | "long") => {
 };
 
 type PhotoInfoProps = {
+  /** The photo to show the info of */
   photo: Photo;
+
+  /** Event handler for the close button */
   onClose: () => void;
 };
 
+/**
+ * Component to show a list of metadata information about a photo
+ * @component
+ * @param props See {@link PhotoInfoProps}.
+ */
 const PhotoInfo: FC<PhotoInfoProps> = ({ photo, onClose }) => (
   <div className="w-full sm:w-80 text-sm space-y-4 p-6">
     <div className="flex flex-row items-center">

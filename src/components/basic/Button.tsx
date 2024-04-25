@@ -2,8 +2,13 @@ import cx from "@/utils/class-names/cx";
 import { ButtonHTMLAttributes, forwardRef } from "react";
 
 export type ButtonProps = {
+  /** General style of the button */
   styleType: "primary" | "ghost";
+
+  /** Colour of the button (default accent colour or other) */
   styleColor?: "accent" | "danger";
+
+  /** Text to show in the button */
   label: string;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
@@ -18,6 +23,12 @@ const colorTable = {
   },
 } as const;
 
+/**
+ * A styled button
+ * @component
+ * @param props See {@link Buttonprops}.
+ * Reference and additional properties will be passed to the internal button element
+ */
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     { styleType, styleColor = "accent", label, className, ...buttonProps },
@@ -39,5 +50,4 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 );
 
 Button.displayName = "Button";
-
 export default Button;

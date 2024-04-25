@@ -3,9 +3,15 @@ import Menu from "../basic/Menu";
 import { FC } from "react";
 
 export type NavBarProps = {
+  /** Display name of the current user */
   userName: string;
 };
 
+/**
+ * Navigation bar to show at the top of pages
+ * @component
+ * @param props See {@link NavBarProps}
+ */
 const NavBar: FC<NavBarProps> = ({ userName }) => (
   <>
     <div className="w-full py-4 border-b border-gray-dim mb-8">
