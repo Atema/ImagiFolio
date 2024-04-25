@@ -88,6 +88,9 @@ const PhotoInfo: FC<PhotoInfoProps> = ({ photo, onClose }) => (
         {photo.width} × {photo.height}
       </span>
     </PhotoInfoItem>
+    {photo.filename && (
+      <PhotoInfoItem name="Original filename">{photo.filename}</PhotoInfoItem>
+    )}
   </div>
 );
 
