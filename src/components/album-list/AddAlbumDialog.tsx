@@ -6,6 +6,7 @@ import { FC } from "react";
 import Button from "../basic/Button";
 import DialogBox from "../basic/DialogBox";
 import InputField from "../basic/InputField";
+import HoverIcon from "../basic/HoverIcon";
 
 /**
  * Dialog box to create a new photo album
@@ -14,11 +15,12 @@ import InputField from "../basic/InputField";
 const AddAlbumDialog: FC = () => (
   <DialogBox
     trigger={
-      <button>
-        <PlusIcon className="size-8" />
-      </button>
+      <HoverIcon>
+        <button>
+          <PlusIcon className="size-8" />
+        </button>
+      </HoverIcon>
     }
-    hoverIconTrigger
     title="Add album"
   >
     <form action={addAlbum} className="space-y-4">

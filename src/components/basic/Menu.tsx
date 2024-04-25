@@ -17,9 +17,6 @@ export type MenuProps = {
 
   /** Children elements to render as menu items; "---" will render a separator */
   children: ReactNode;
-
-  /** Whether to wrap the trigger element in a (white?) {@link HoverIcon} */
-  hoverIconTrigger?: boolean | "white";
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 /**
@@ -29,27 +26,14 @@ export type MenuProps = {
  * Reference and additional properties will be passed to the trigger element
  */
 const Menu = forwardRef<HTMLButtonElement, MenuProps>(
-  ({ trigger, children, hoverIconTrigger, ...buttonProps }, ref) => {
+  ({ trigger, children, ...buttonProps }, ref) => {
     const [open, setOpen] = useState(false);
 
     return (
       <DropdownMenu.Root open={open} onOpenChange={setOpen}>
-        {hoverIconTrigger ? (
-          <HoverIcon white={hoverIconTrigger == "white"}>
-            <DropdownMenu.Trigger
-              asChild
-              ref={ref}
-              className="block"
-              {...buttonProps}
-            >
-              {trigger}
-            </DropdownMenu.Trigger>
-          </HoverIcon>
-        ) : (
-          <DropdownMenu.Trigger asChild ref={ref} {...buttonProps}>
-            {trigger}
-          </DropdownMenu.Trigger>
-        )}
+        <DropdownMenu.Trigger asChild ref={ref} {...buttonProps}>
+          {trigger}
+        </DropdownMenu.Trigger>
 
         <DropdownMenu.Portal>
           <DropdownMenu.Content

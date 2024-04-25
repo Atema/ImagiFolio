@@ -17,9 +17,6 @@ type DialogBoxProps = {
   /** Element to use as the trigger to open the dialog */
   trigger: ReactNode;
 
-  /** Whether to wrap the trigger element in a {@link HoverIcon} */
-  hoverIconTrigger?: boolean;
-
   /** Title of the dialog */
   title: string;
 
@@ -37,10 +34,7 @@ type DialogBoxProps = {
  * Reference and additional properties will be passed to the trigger element
  */
 const DialogBox = forwardRef<HTMLButtonElement, DialogBoxProps>(
-  (
-    { trigger, hoverIconTrigger, title, children, closeRef, ...buttonProps },
-    ref,
-  ) => {
+  ({ trigger, title, children, closeRef, ...buttonProps }, ref) => {
     const [open, setOpen] = useState(false);
     useEffect(() => {
       if (closeRef) closeRef.current = () => setOpen(false);
@@ -48,22 +42,9 @@ const DialogBox = forwardRef<HTMLButtonElement, DialogBoxProps>(
 
     return (
       <Dialog.Root open={open} onOpenChange={setOpen}>
-        {hoverIconTrigger ? (
-          <HoverIcon>
-            <Dialog.Trigger
-              asChild
-              ref={ref}
-              className="block"
-              {...buttonProps}
-            >
-              {trigger}
-            </Dialog.Trigger>
-          </HoverIcon>
-        ) : (
-          <Dialog.Trigger asChild ref={ref} {...buttonProps}>
-            {trigger}
-          </Dialog.Trigger>
-        )}
+        <Dialog.Trigger asChild ref={ref} {...buttonProps}>
+          {trigger}
+        </Dialog.Trigger>
 
         <Dialog.Portal>
           <Dialog.Overlay className="bg-black bg-opacity-40 fixed inset-0 z-30" />
@@ -77,11 +58,13 @@ const DialogBox = forwardRef<HTMLButtonElement, DialogBoxProps>(
           >
             <div className="flex items-center">
               <Dialog.Title className="text-xl flex-grow">{title}</Dialog.Title>
-              <HoverIcon>
-                <Dialog.Close className="block" tabIndex={-1}>
-                  <Cross2Icon className="size-6" />
-                </Dialog.Close>
-              </HoverIcon>
+              <Dialog.Close tabIndex={-1} asChild>
+                <HoverIcon>
+                  <button>
+                    <Cross2Icon className="size-6" />
+                  </button>
+                </HoverIcon>
+              </Dialog.Close>
             </div>
             {children}
           </Dialog.Content>

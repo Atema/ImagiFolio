@@ -68,7 +68,7 @@ const PhotoView: FC<PhotoViewProps> = ({
             </HoverIcon>
             <div className="flex-grow" />
             <HoverIcon white>
-              <button onClick={() => setInfoOpen(!infoOpen)} className="block">
+              <button onClick={() => setInfoOpen(!infoOpen)}>
                 <InfoCircledIcon className="size-8" />
               </button>
             </HoverIcon>
@@ -79,11 +79,12 @@ const PhotoView: FC<PhotoViewProps> = ({
             </HoverIcon>
             <Menu
               trigger={
-                <button>
-                  <DotsVerticalIcon className="size-8" />
-                </button>
+                <HoverIcon white>
+                  <button>
+                    <DotsVerticalIcon className="size-8" />
+                  </button>
+                </HoverIcon>
               }
-              hoverIconTrigger="white"
             >
               <ConfirmationBox
                 trigger={<button>Delete photo</button>}

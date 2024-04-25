@@ -1,5 +1,6 @@
 import cx from "@/utils/class-names/cx";
-import { ReactNode, forwardRef } from "react";
+import { Slot } from "@radix-ui/react-slot";
+import { ButtonHTMLAttributes, ReactNode, forwardRef } from "react";
 
 type HoverIconProps = {
   /** Components to render inside (the icon / icon button) */
@@ -7,19 +8,25 @@ type HoverIconProps = {
 
   /** Whether to use a white background instead of adaptive colour */
   white?: boolean;
-};
+} & ButtonHTMLAttributes<HTMLButtonElement>;
 
 /**
  * A wrapping component for icons to show a background while hovering
  * @component
  * @param props See {@link HoverIconProps}.
- * Reference will be passed to the division around the children elements
+ * Reference and additional properties will be passed to the children element
  */
 const HoverIcon = forwardRef<HTMLDivElement, HoverIconProps>(
-  ({ children, white }, ref) => (
+  ({ children, white, ...buttonProps }, ref) => (
     <div className="relative">
-      <div className="peer" ref={ref}>
-        {children}
+      <div className="peer">
+        <Slot
+          ref={ref}
+          {...buttonProps}
+          className={cx("block", buttonProps.className)}
+        >
+          {children}
+        </Slot>
       </div>
       <div
         className={cx(

@@ -65,7 +65,7 @@ const PhotoInfo: FC<PhotoInfoProps> = ({ photo, onClose }) => (
       <h2 className="text-2xl flex-grow">Info</h2>
 
       <HoverIcon>
-        <button onClick={onClose} className="block">
+        <button onClick={onClose}>
           <Cross2Icon className="size-6" />
         </button>
       </HoverIcon>

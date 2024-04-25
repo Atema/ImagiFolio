@@ -8,6 +8,7 @@ import { FC, useRef } from "react";
 import Button from "../basic/Button";
 import ConfirmationBox from "../basic/ConfirmationBox";
 import DialogBox from "../basic/DialogBox";
+import HoverIcon from "../basic/HoverIcon";
 import InputField from "../basic/InputField";
 
 type AlbumSettingsDialogProps = {
@@ -27,11 +28,12 @@ const AlbumSettingsDialog: FC<AlbumSettingsDialogProps> = ({ album }) => {
   return (
     <DialogBox
       trigger={
-        <button>
-          <GearIcon className="size-8" />
-        </button>
+        <HoverIcon>
+          <button>
+            <GearIcon className="size-8" />
+          </button>
+        </HoverIcon>
       }
-      hoverIconTrigger
       title="Edit album"
       closeRef={closeRef}
     >

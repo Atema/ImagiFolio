@@ -11,9 +11,6 @@ type ConfirmationBoxProps = {
   /** Element to use as the trigger to open the confirmation box */
   trigger: ReactNode;
 
-  /** Whether to wrap the trigger element in a {@link HoverIcon} */
-  hoverIconTrigger?: boolean;
-
   /** Title of the confirmation box */
   title: string;
 
@@ -40,7 +37,6 @@ const ConfirmationBox = forwardRef<HTMLButtonElement, ConfirmationBoxProps>(
   (
     {
       trigger,
-      hoverIconTrigger,
       title,
       description,
       confirmText,
@@ -57,22 +53,9 @@ const ConfirmationBox = forwardRef<HTMLButtonElement, ConfirmationBoxProps>(
 
     return (
       <AlertDialog.Root open={open} onOpenChange={setOpen}>
-        {hoverIconTrigger ? (
-          <HoverIcon>
-            <AlertDialog.Trigger
-              asChild
-              ref={ref}
-              className="block"
-              {...buttonProps}
-            >
-              {trigger}
-            </AlertDialog.Trigger>
-          </HoverIcon>
-        ) : (
-          <AlertDialog.Trigger asChild ref={ref} {...buttonProps}>
-            {trigger}
-          </AlertDialog.Trigger>
-        )}
+        <AlertDialog.Trigger asChild ref={ref} {...buttonProps}>
+          {trigger}
+        </AlertDialog.Trigger>
 
         <AlertDialog.Portal>
           <AlertDialog.Overlay className="bg-black bg-opacity-40 fixed inset-0 z-40" />
