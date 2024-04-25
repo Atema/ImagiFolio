@@ -32,7 +32,7 @@ export const GET = async (_req: NextRequest, { params }: RouteResponse) => {
   try {
     const photo = await prisma.photo.findUniqueOrThrow({
       where: { id: params.id },
-      select: { format: true },
+      select: { format: true, filename: true },
     });
 
     const path = getFilePath(params.variation, params.id);
@@ -46,6 +46,10 @@ export const GET = async (_req: NextRequest, { params }: RouteResponse) => {
             ? `image/${photo.format}`
             : "image/jpeg",
         "content-length": "" + stats.size,
+        "content-disposition":
+          params.variation == "original"
+            ? `attachment; filename="${photo.filename || "Photo." + photo.format}"`
+            : "inline",
       }),
     });
   } catch (e) {

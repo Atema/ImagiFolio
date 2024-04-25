@@ -23,10 +23,12 @@ model Album {
   owner   User    @relation(fields: [ownerId], references: [id])
   photos  Photo[]
 }
+
 model Photo {
   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   albumId   String   @db.Uuid
   album     Album    @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  filename  String?
   format    String
   width     Int
   height    Int

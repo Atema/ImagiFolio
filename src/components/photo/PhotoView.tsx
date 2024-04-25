@@ -7,6 +7,7 @@ import cx from "@/utils/class-names/cx";
 import {
   ArrowLeftIcon,
   DotsVerticalIcon,
+  DownloadIcon,
   InfoCircledIcon,
 } from "@radix-ui/react-icons";
 import Image from "next/image";
@@ -54,6 +55,11 @@ const PhotoView: FC<PhotoViewProps> = ({
                 <InfoCircledIcon className="size-8" />
               </button>
             </HoverIcon>
+            <HoverIcon white>
+              <a href={`/image/${photo.id}/original`} target="_blank" download>
+                <DownloadIcon className="size-8" />
+              </a>
+            </HoverIcon>
             <Menu
               trigger={
                 <button>
@@ -78,8 +84,8 @@ const PhotoView: FC<PhotoViewProps> = ({
           <PhotoNavigation prevHref={prevHref} nextHref={nextHref} />
           <Image
             src={`/image/${photo.id}/preview`}
-            placeholder="blur"
-            blurDataURL={`/image/${photo.id}/blur`}
+            // placeholder="blur"
+            // blurDataURL={`/image/${photo.id}/blur`}
             unoptimized
             alt="Photo"
             fill

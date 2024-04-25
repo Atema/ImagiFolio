@@ -35,9 +35,11 @@ for (const album of albums) {
     await readdir(join(seedDir, album.name), { withFileTypes: true })
   )
     .filter((entry) => entry.isFile)
-    .map((entry) => join(entry.path, entry.name));
+    .map((entry) => entry.name);
 
   await Promise.all(
-    seedImages.map((image) => copyAndProcessPhoto(album.id, image)),
+    seedImages.map((image) =>
+      copyAndProcessPhoto(album.id, join(seedDir, album.name, image), image),
+    ),
   );
 }

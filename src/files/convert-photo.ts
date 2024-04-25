@@ -36,7 +36,11 @@ const convertPhotoVariations = async (imageIn: Sharp, id: string) => {
 
 const allowedTypes = ["jpeg", "png", "webp", "tiff", "gif", "heif"];
 
-export const processPhoto = async (albumId: string, uploadPath: string) => {
+export const processPhoto = async (
+  albumId: string,
+  uploadPath: string,
+  filename?: string,
+) => {
   try {
     const id = randomUUID();
     const image = sharp(uploadPath);
@@ -70,6 +74,7 @@ export const processPhoto = async (albumId: string, uploadPath: string) => {
       data: {
         id,
         albumId,
+        filename,
         format: metadata.format,
         width: metadata.width!,
         height: metadata.height!,
@@ -98,9 +103,13 @@ export const processPhoto = async (albumId: string, uploadPath: string) => {
   }
 };
 
-export const copyAndProcessPhoto = async (albumId: string, path: string) => {
+export const copyAndProcessPhoto = async (
+  albumId: string,
+  path: string,
+  filename?: string,
+) => {
   const uploadPath = getUploadPath();
   await mkdir(dirname(uploadPath), { recursive: true });
   await copyFile(path, uploadPath);
-  await processPhoto(albumId, uploadPath);
+  await processPhoto(albumId, uploadPath, filename);
 };
