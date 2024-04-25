@@ -21,7 +21,7 @@ export default function PhotoList(props: PhotoListProps) {
             <Image
               src={`/image/${pic.id}/thumbnail`}
               placeholder="blur"
-              blurDataURL={`/image/${pic.id}/thumbnail-blur`}
+              blurDataURL={`/image/${pic.id}/thumbblur`}
               unoptimized
               fill
               alt=""

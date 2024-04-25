@@ -1,4 +1,5 @@
-import { FileVariation, getFilePath } from "@/files/file-paths";
+import prisma from "@/db/prisma/client";
+import { FileOriginal, FileVariation, getFilePath } from "@/files/file-paths";
 import { NextRequest, NextResponse } from "next/server";
 import { createReadStream } from "node:fs";
 import { stat } from "node:fs/promises";
@@ -22,19 +23,27 @@ const getFileStream = (path: string) => {
 type RouteResponse = {
   params: {
     id: string;
-    variation: FileVariation;
+    variation: FileOriginal | FileVariation;
   };
 } & Response;
 
 export const GET = async (req: NextRequest, res: RouteResponse) => {
   try {
-    const path = getFilePath(res.params.variation, res.params.id);
+    const { id, variation } = res.params;
+
+    const photo = await prisma.photo.findUniqueOrThrow({
+      where: { id },
+      select: { format: true },
+    });
+
+    const path = getFilePath(variation, id);
     const stats = await stat(path);
     const stream = getFileStream(path);
 
     return new NextResponse(stream, {
       headers: new Headers({
-        "content-type": "image/jpeg",
+        "content-type":
+          variation == "original" ? `image/${photo.format}` : "image/jpeg",
         "content-length": "" + stats.size,
       }),
     });

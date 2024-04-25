@@ -36,18 +36,24 @@ const convertPhotoVariations = async (imageIn: Sharp, id: string) => {
       image.clone().resize(25, 25, { fit: "inside" })
     ),
     convertPhotoVariation(
-      "thumbnail-blur",
+      "thumbblur",
       id,
       image.clone().resize(20, 15, { fit: "cover" })
     ),
   ]);
 };
 
+const allowedTypes = ["jpeg", "png", "webp", "tiff", "gif", "heif"];
+
 export const processPhoto = async (albumId: string, uploadPath: string) => {
   const id = randomUUID();
   const image = sharp(uploadPath);
-  await convertPhotoVariations(image, id);
   const metadata = await image.metadata();
+
+  if (!metadata.format || !allowedTypes.includes(metadata.format))
+    throw new Error("Format not allowed");
+
+  await convertPhotoVariations(image, id);
   const exifdata = metadata.exif && exif(metadata.exif);
   const { dominant } = await image.stats();
   await rename(uploadPath, getFilePath("original", id));
@@ -73,6 +79,9 @@ export const processPhoto = async (albumId: string, uploadPath: string) => {
     data: {
       id,
       albumId,
+      format: metadata.format,
+      width: metadata.width!,
+      height: metadata.height!,
       dateTaken:
         exifdata?.Photo?.DateTimeOriginal ||
         exifdata?.Photo?.DateTimeDigitized ||
@@ -80,8 +89,6 @@ export const processPhoto = async (albumId: string, uploadPath: string) => {
         exifdata?.Image?.DateTimeOriginal ||
         new Date(),
       color: (dominant.r << 16) + (dominant.g << 8) + dominant.b,
-      width: metadata.width!,
-      height: metadata.height!,
       camera: exifdata?.Image?.Model,
       lens: exifdata?.Photo?.LensModel,
       focal: exifdata?.Photo?.FocalLength,
