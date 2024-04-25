@@ -1,8 +1,9 @@
 import AddAlbumDialog from "@/components/album-list/AddAlbumDialog";
 import AlbumList from "@/components/album-list/AlbumList";
 import { getAlbumList } from "@/db/album";
+import { FC } from "react";
 
-export default async function HomePage() {
+const HomePage: FC<{}> = async () => {
   const albums = await getAlbumList();
 
   return (
@@ -14,4 +15,6 @@ export default async function HomePage() {
       <AlbumList showDates albums={albums} />
     </>
   );
-}
+};
+
+export default HomePage;

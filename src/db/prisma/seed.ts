@@ -1,8 +1,8 @@
 import { copyAndProcessPhoto } from "@/files/convert-photo";
 import { readdir } from "node:fs/promises";
+import { join } from "node:path";
 import { hashPassword } from "../user";
 import prisma from "./client";
-import { join } from "node:path";
 
 const seedDir = process.env.SEED_IMAGE_DIR;
 if (!seedDir) process.exit();
@@ -26,8 +26,8 @@ const albums = await Promise.all(
         name,
         ownerId: admin.id,
       },
-    })
-  )
+    }),
+  ),
 );
 
 for (const album of albums) {
@@ -38,6 +38,6 @@ for (const album of albums) {
     .map((entry) => join(entry.path, entry.name));
 
   await Promise.all(
-    seedImages.map((image) => copyAndProcessPhoto(album.id, image))
+    seedImages.map((image) => copyAndProcessPhoto(album.id, image)),
   );
 }

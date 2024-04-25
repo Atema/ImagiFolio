@@ -1,8 +1,8 @@
-export default function dateRangeString(
+const dateRangeString = (
   startDate: Date,
   endDate: Date,
-  monthFormat: "long" | "short"
-) {
+  monthFormat: "long" | "short",
+) => {
   const startOpts: Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: monthFormat,
@@ -25,4 +25,6 @@ export default function dateRangeString(
   }
 
   return `${startDate.toLocaleString("en-GB", startOpts)} – ${endDate.toLocaleString("en-GB", endOpts)}`;
-}
+};
+
+export default dateRangeString;

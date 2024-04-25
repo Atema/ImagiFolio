@@ -22,13 +22,13 @@ const convertPhotoVariations = async (imageIn: Sharp, id: string) => {
         const path = getFilePath(variation, id);
         await mkdir(dirname(path), { recursive: true });
         return await convert(image.clone()).toFile(path);
-      })
+      }),
     );
   } catch (e) {
     await Promise.all(
       photoVariations.map(([variation]) =>
-        unlink(getFilePath(variation, id)).catch(() => {})
-      )
+        unlink(getFilePath(variation, id)).catch(() => {}),
+      ),
     );
     throw e;
   }

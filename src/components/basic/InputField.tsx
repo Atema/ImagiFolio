@@ -19,13 +19,13 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             "text-gray-12 dark:text-graydark-12 placeholder:text-gray-10 dark:placeholder:text-graydark-10",
             "border-gray-7 dark:border-graydark-7",
             "focus:border-plum-7 dark:focus:border-plumdark-7",
-            inputProps.className
+            inputProps.className,
           )}
           ref={ref}
         />
       </div>
     </label>
-  )
+  ),
 );
 
 InputField.displayName = "InputField";

@@ -19,7 +19,7 @@ const fileDir: { [key in FileOriginal | FileUpload | FileVariation]: string } =
 
 export const getFilePath = (
   type: FileOriginal | FileUpload | FileVariation,
-  id: string
+  id: string,
 ) => join(fileDir[type] || yeet("Invalid variation"), `${id}-${type}`);
 
 export const getUploadPath = () => getFilePath("upload", randomUUID());

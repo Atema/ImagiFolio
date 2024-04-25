@@ -3,13 +3,14 @@
 import { loginUser } from "@/actions/auth";
 import { useAction } from "@/actions/types";
 import Link from "next/link";
+import { useSelectedLayoutSegment } from "next/navigation";
+import { FC } from "react";
 import Button from "../basic/Button";
 import InputField from "../basic/InputField";
-import { useSelectedLayoutSegment } from "next/navigation";
 
 export type LoginFormProps = {};
 
-export default function LoginForm({}: LoginFormProps) {
+const LoginForm: FC<LoginFormProps> = ({}) => {
   const signup = useSelectedLayoutSegment() === "signup";
   let { error, action, pending, resetError } = useAction(loginUser);
 
@@ -72,4 +73,6 @@ export default function LoginForm({}: LoginFormProps) {
       </div>
     </form>
   );
-}
+};
+
+export default LoginForm;

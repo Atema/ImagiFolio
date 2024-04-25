@@ -9,12 +9,12 @@ export type SuccessErrorFormState = {
 
 export type SuccessErrorFormAction = (
   state: SuccessErrorFormState,
-  data: FormData
+  data: FormData,
 ) => Promise<SuccessErrorFormState>;
 
 export const useAction = (
   actionFunc: SuccessErrorFormAction,
-  onSuccess?: () => void
+  onSuccess?: () => void,
 ) => {
   const [state, action] = useFormState(actionFunc, {});
   const { pending } = useFormStatus();

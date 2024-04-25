@@ -2,6 +2,7 @@ import cx from "@/utils/class-names/cx";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { FC } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,12 +14,12 @@ type RootLayoutProps = {
   children: React.ReactNode;
 };
 
-export default function RootLayout({ children }: RootLayoutProps) {
-  return (
-    <html lang="en">
-      <body className={cx("bg-gray-app text-gray-normal", inter.className)}>
-        {children}
-      </body>
-    </html>
-  );
-}
+const RootLayout: FC<RootLayoutProps> = ({ children }) => (
+  <html lang="en">
+    <body className={cx("bg-gray-app text-gray-normal", inter.className)}>
+      {children}
+    </body>
+  </html>
+);
+
+export default RootLayout;

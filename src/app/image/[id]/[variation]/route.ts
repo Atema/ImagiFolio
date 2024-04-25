@@ -6,10 +6,11 @@ import { stat } from "node:fs/promises";
 
 const getFileStream = (path: string) => {
   const readStream = createReadStream(path);
+
   return new ReadableStream({
     start: (controller) => {
       readStream.on("data", (chunk: Buffer) =>
-        controller.enqueue(new Uint8Array(chunk))
+        controller.enqueue(new Uint8Array(chunk)),
       );
       readStream.on("end", () => controller.close());
       readStream.on("error", (error: unknown) => controller.error(error));
@@ -27,23 +28,23 @@ type RouteResponse = {
   };
 } & Response;
 
-export const GET = async (req: NextRequest, res: RouteResponse) => {
+export const GET = async (_req: NextRequest, { params }: RouteResponse) => {
   try {
-    const { id, variation } = res.params;
-
     const photo = await prisma.photo.findUniqueOrThrow({
-      where: { id },
+      where: { id: params.id },
       select: { format: true },
     });
 
-    const path = getFilePath(variation, id);
+    const path = getFilePath(params.variation, params.id);
     const stats = await stat(path);
     const stream = getFileStream(path);
 
     return new NextResponse(stream, {
       headers: new Headers({
         "content-type":
-          variation == "original" ? `image/${photo.format}` : "image/jpeg",
+          params.variation == "original"
+            ? `image/${photo.format}`
+            : "image/jpeg",
         "content-length": "" + stats.size,
       }),
     });

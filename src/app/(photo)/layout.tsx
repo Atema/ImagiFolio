@@ -5,8 +5,8 @@ type PhotoGroupLayoutProps = {
   children: ReactNode;
 };
 
-const PhotoGroupLayout: FC<PhotoGroupLayoutProps> = ({ children }) => {
-  return <PhotoInfoOpenProvider>{children}</PhotoInfoOpenProvider>;
-};
+const PhotoGroupLayout: FC<PhotoGroupLayoutProps> = ({ children }) => (
+  <PhotoInfoOpenProvider>{children}</PhotoInfoOpenProvider>
+);
 
 export default PhotoGroupLayout;

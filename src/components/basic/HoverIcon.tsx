@@ -18,11 +18,11 @@ const HoverIcon = forwardRef<HTMLDivElement, HoverIconProps>(
           "transition-colors duration-75",
           !white &&
             "peer-hover:bg-plum-4 dark:peer-hover:bg-plumdark-4 peer-active:bg-plum-5 dark:peer-active:bg-plumdark-5",
-          white && "peer-hover:bg-whitea-4"
+          white && "peer-hover:bg-whitea-4",
         )}
       />
     </div>
-  )
+  ),
 );
 
 HoverIcon.displayName = "HoverIcon";

@@ -1,13 +1,12 @@
 import prisma from "./prisma/client";
 
-export async function getAlbum(id: string) {
-  return await prisma.album.findUnique({
+export const getAlbum = async (id: string) =>
+  await prisma.album.findUnique({
     where: { id },
     include: { photos: { orderBy: { dateTaken: "asc" } } },
   });
-}
 
-export async function getAlbumList() {
+export const getAlbumList = async () => {
   const [albums, lastPhotos] = await Promise.all([
     prisma.album.findMany({
       orderBy: { name: "asc" },
@@ -29,4 +28,4 @@ export async function getAlbumList() {
     ...album,
     photos: [...album.photos, ...lastPhotos[i].photos],
   }));
-}
+};

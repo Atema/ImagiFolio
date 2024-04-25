@@ -2,8 +2,9 @@ import { getSession } from "@/actions/session";
 import NavBar from "@/components/nav-bar/NavBar";
 import { getUser } from "@/db/user";
 import { redirect } from "next/navigation";
+import { FC, ReactNode } from "react";
 
-async function getCurrentUser() {
+const getCurrentUser = async () => {
   const userId = (await getSession())?.userId;
   if (!userId) redirect("/login");
 
@@ -11,19 +12,19 @@ async function getCurrentUser() {
   if (!user) redirect("/logout");
 
   return user;
-}
-
-type OrganisingLayoutProps = {
-  children: React.ReactNode;
 };
 
-export default async function OrganisingLayout({
+type OrganisingGroupLayoutProps = {
+  children: ReactNode;
+};
+
+const OrganisingGroupLayout: FC<OrganisingGroupLayoutProps> = async ({
   children,
-}: OrganisingLayoutProps) {
-  return (
-    <>
-      <NavBar userName={(await getCurrentUser()).displayName} />
-      <main className="2xl:container mx-auto px-2 md:px-4">{children}</main>
-    </>
-  );
-}
+}) => (
+  <>
+    <NavBar userName={(await getCurrentUser()).displayName} />
+    <main className="2xl:container mx-auto px-2 md:px-4">{children}</main>
+  </>
+);
+
+export default OrganisingGroupLayout;

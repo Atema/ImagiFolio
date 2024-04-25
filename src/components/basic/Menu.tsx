@@ -45,7 +45,7 @@ const Menu = forwardRef<HTMLButtonElement, MenuProps>(
             sideOffset={5}
             className={cx(
               "min-w-40 border rounded-md mx-2 py-2 text-sm z-20",
-              "bg-gray-app border-gray-dim shadow-md"
+              "bg-gray-app border-gray-dim shadow-md",
             )}
           >
             <DropdownMenu.Arrow className="fill-gray-6 dark:fill-graydark-6" />
@@ -57,7 +57,7 @@ const Menu = forwardRef<HTMLButtonElement, MenuProps>(
                   asChild
                   className={cx(
                     "block w-full text-start px-4 py-2 focus:outline-0",
-                    "hover:bg-plum-3 dark:hover:bg-plumdark-3 focus:bg-plum-3 dark:focus:bg-plumdark-3"
+                    "hover:bg-plum-3 dark:hover:bg-plumdark-3 focus:bg-plum-3 dark:focus:bg-plumdark-3",
                   )}
                   onSelect={(e) => e.preventDefault()}
                 >
@@ -69,7 +69,7 @@ const Menu = forwardRef<HTMLButtonElement, MenuProps>(
         </DropdownMenu.Portal>
       </DropdownMenu.Root>
     );
-  }
+  },
 );
 
 Menu.displayName = "Menu";

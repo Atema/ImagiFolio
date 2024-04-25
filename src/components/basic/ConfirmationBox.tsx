@@ -29,11 +29,11 @@ const ConfirmationBox = forwardRef<HTMLButtonElement, ConfirmationBoxProps>(
       hiddenFormData = {},
       ...buttonProps
     },
-    ref
+    ref,
   ) => {
     const [open, setOpen] = useState(false);
     const { action, pending, error } = useAction(propAction, () =>
-      setOpen(false)
+      setOpen(false),
     );
 
     return (
@@ -61,7 +61,7 @@ const ConfirmationBox = forwardRef<HTMLButtonElement, ConfirmationBoxProps>(
             className={cx(
               "z-50 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
               "bg-gray-app border-gray-dim shadow-md",
-              "border rounded-xl min-w-80 max-w-full p-4 space-y-4"
+              "border rounded-xl min-w-80 max-w-full p-4 space-y-4",
             )}
           >
             <AlertDialog.Title className="text-xl">{title}</AlertDialog.Title>
@@ -96,7 +96,7 @@ const ConfirmationBox = forwardRef<HTMLButtonElement, ConfirmationBoxProps>(
         </AlertDialog.Portal>
       </AlertDialog.Root>
     );
-  }
+  },
 );
 
 ConfirmationBox.displayName = "ConfirmationBox";

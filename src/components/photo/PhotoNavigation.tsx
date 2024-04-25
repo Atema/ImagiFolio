@@ -21,7 +21,7 @@ const Arrow: FC<ArrowProps> = ({ type, href }) =>
           "opacity-0 hover:opacity-100 transition-opacity",
           type == "prev"
             ? "left-0 bg-gradient-to-r"
-            : "right-0 bg-gradient-to-l"
+            : "right-0 bg-gradient-to-l",
         )}
       >
         {type === "prev" ? (

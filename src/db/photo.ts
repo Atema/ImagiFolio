@@ -1,6 +1,6 @@
 import prisma from "./prisma/client";
 
-export async function getPhoto(photoId: string, albumId: string) {
+export const getPhoto = async (photoId: string, albumId: string) => {
   const [photo, prevPhoto, nextPhoto] = await Promise.all([
     prisma.photo.findUnique({
       where: { id: photoId, albumId },
@@ -29,4 +29,4 @@ export async function getPhoto(photoId: string, albumId: string) {
   if (!photo) return null;
 
   return { photo, prevPhoto, nextPhoto };
-}
+};

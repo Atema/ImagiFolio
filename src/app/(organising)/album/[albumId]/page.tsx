@@ -6,6 +6,7 @@ import dateRangeString from "@/utils/date-time/dateRangeString";
 import { UploadIcon } from "@radix-ui/react-icons";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { FC } from "react";
 
 type AlbumPageProps = {
   params: {
@@ -13,20 +14,18 @@ type AlbumPageProps = {
   };
 };
 
-export async function generateMetadata({
-  params: { albumId },
-}: AlbumPageProps): Promise<Metadata> {
-  const album = (await getAlbum(albumId)) ?? notFound();
+export const generateMetadata = async ({
+  params,
+}: AlbumPageProps): Promise<Metadata> => {
+  const album = (await getAlbum(params.albumId)) ?? notFound();
 
   return {
     title: `${album.name} - ImagiFolio`,
   };
-}
+};
 
-export default async function AlbumPage({
-  params: { albumId },
-}: AlbumPageProps) {
-  const album = (await getAlbum(albumId)) ?? notFound();
+const AlbumPage: FC<AlbumPageProps> = async ({ params }) => {
+  const album = (await getAlbum(params.albumId)) ?? notFound();
 
   return (
     <>
@@ -37,7 +36,7 @@ export default async function AlbumPage({
               {dateRangeString(
                 album.photos[0].dateTaken,
                 album.photos[album.photos.length - 1].dateTaken,
-                "long"
+                "long",
               )}
             </p>
           )}
@@ -48,7 +47,9 @@ export default async function AlbumPage({
         </HoverIcon>
         <AlbumSettingsDialog album={album} />
       </div>
-      <PhotoList baseUrl={`/album/${albumId}`} photos={album.photos} />
+      <PhotoList baseUrl={`/album/${album.id}`} photos={album.photos} />
     </>
   );
-}
+};
+
+export default AlbumPage;

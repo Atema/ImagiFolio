@@ -1,7 +1,7 @@
 import { getSession } from "@/actions/session";
 import { NextRequest, NextResponse } from "next/server";
 
-export default async function middleware(req: NextRequest) {
+const middleware = async (req: NextRequest) => {
   const path = req.nextUrl.pathname;
 
   const session = await getSession();
@@ -13,8 +13,10 @@ export default async function middleware(req: NextRequest) {
 
   if (publicPaths.includes(path) && session?.userId)
     return NextResponse.redirect(new URL("/", req.nextUrl));
-}
+};
+
+export default middleware;
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|icon\.).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|icon.).*)"],
 };

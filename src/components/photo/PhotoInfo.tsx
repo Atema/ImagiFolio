@@ -37,60 +37,58 @@ type PhotoInfoProps = {
   onClose: () => void;
 };
 
-const PhotoInfo: FC<PhotoInfoProps> = ({ photo, onClose }) => {
-  return (
-    <div className="w-72 text-sm space-y-4 p-6">
-      <div className="flex flex-row items-center">
-        <h2 className="text-2xl flex-grow">Info</h2>
+const PhotoInfo: FC<PhotoInfoProps> = ({ photo, onClose }) => (
+  <div className="w-72 text-sm space-y-4 p-6">
+    <div className="flex flex-row items-center">
+      <h2 className="text-2xl flex-grow">Info</h2>
 
-        <HoverIcon>
-          <button onClick={onClose} className="block">
-            <Cross2Icon className="size-6" />
-          </button>
-        </HoverIcon>
-      </div>
-
-      <PhotoInfoItem name="Date">
-        {photo.dateTaken.toLocaleString("en-GB", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          hour: "numeric",
-          minute: "2-digit",
-          second: "2-digit",
-        })}
-      </PhotoInfoItem>
-      {photo.lat && photo.long && (
-        <PhotoInfoItem name="Location">
-          <span>{coordToDeg(photo.lat, "lat")}</span>
-          <span>{coordToDeg(photo.long, "long")}</span>
-        </PhotoInfoItem>
-      )}
-      {photo.camera && (
-        <PhotoInfoItem name="Camera">{photo.camera}</PhotoInfoItem>
-      )}
-      {photo.lens && <PhotoInfoItem name="Lens">{photo.lens}</PhotoInfoItem>}
-      {(photo.focal || photo.shutter || photo.aperture || photo.iso) && (
-        <PhotoInfoItem name="Exposure">
-          {photo.focal !== null && <span>{photo.focal} mm</span>}
-          {photo.shutter !== null &&
-            (photo.shutter < 1 ? (
-              <span>1/{1 / photo.shutter} s</span>
-            ) : (
-              <span>{photo.shutter} s</span>
-            ))}
-          {photo.aperture !== null && <span>f/{photo.aperture}</span>}
-          {photo.iso !== null && <span>ISO {photo.iso}</span>}
-        </PhotoInfoItem>
-      )}
-      <PhotoInfoItem name="Size">
-        <span>{((photo.width * photo.height) / 1000000).toFixed(1)} MP</span>
-        <span>
-          {photo.width} × {photo.height}
-        </span>
-      </PhotoInfoItem>
+      <HoverIcon>
+        <button onClick={onClose} className="block">
+          <Cross2Icon className="size-6" />
+        </button>
+      </HoverIcon>
     </div>
-  );
-};
+
+    <PhotoInfoItem name="Date">
+      {photo.dateTaken.toLocaleString("en-GB", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        second: "2-digit",
+      })}
+    </PhotoInfoItem>
+    {photo.lat && photo.long && (
+      <PhotoInfoItem name="Location">
+        <span>{coordToDeg(photo.lat, "lat")}</span>
+        <span>{coordToDeg(photo.long, "long")}</span>
+      </PhotoInfoItem>
+    )}
+    {photo.camera && (
+      <PhotoInfoItem name="Camera">{photo.camera}</PhotoInfoItem>
+    )}
+    {photo.lens && <PhotoInfoItem name="Lens">{photo.lens}</PhotoInfoItem>}
+    {(photo.focal || photo.shutter || photo.aperture || photo.iso) && (
+      <PhotoInfoItem name="Exposure">
+        {photo.focal !== null && <span>{photo.focal} mm</span>}
+        {photo.shutter !== null &&
+          (photo.shutter < 1 ? (
+            <span>1/{1 / photo.shutter} s</span>
+          ) : (
+            <span>{photo.shutter} s</span>
+          ))}
+        {photo.aperture !== null && <span>f/{photo.aperture}</span>}
+        {photo.iso !== null && <span>ISO {photo.iso}</span>}
+      </PhotoInfoItem>
+    )}
+    <PhotoInfoItem name="Size">
+      <span>{((photo.width * photo.height) / 1000000).toFixed(1)} MP</span>
+      <span>
+        {photo.width} × {photo.height}
+      </span>
+    </PhotoInfoItem>
+  </div>
+);
 
 export default PhotoInfo;

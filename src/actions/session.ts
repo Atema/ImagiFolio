@@ -8,7 +8,7 @@ export type SessionData = {
   userId: string;
 };
 
-export async function createSession(payload: SessionData) {
+export const createSession = async (payload: SessionData) => {
   const jwt = await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
@@ -22,9 +22,9 @@ export async function createSession(payload: SessionData) {
     sameSite: "lax",
     path: "/",
   });
-}
+};
 
-export async function getSession() {
+export const getSession = async () => {
   const session = cookies().get("if_session")?.value;
   if (!session) return null;
 
@@ -37,8 +37,8 @@ export async function getSession() {
   } catch (_) {
     return null;
   }
-}
+};
 
-export async function deleteSession() {
+export const deleteSession = async () => {
   cookies().delete("if_session");
-}
+};

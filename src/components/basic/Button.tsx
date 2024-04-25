@@ -21,7 +21,7 @@ const colorTable = {
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     { styleType, styleColor = "accent", label, className, ...buttonProps },
-    ref
+    ref,
   ) => (
     <button
       {...buttonProps}
@@ -29,13 +29,13 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         "block rounded-md px-4 py-1.5 text-sm leading-6",
         // "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-800",
         colorTable[styleType][styleColor],
-        className
+        className,
       )}
       ref={ref}
     >
       {label}
     </button>
-  )
+  ),
 );
 
 Button.displayName = "Button";

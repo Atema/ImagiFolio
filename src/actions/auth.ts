@@ -10,17 +10,17 @@ import { SuccessErrorFormAction } from "./types";
 const emailSchema = zfd.text(
   z
     .string({ required_error: "email address is required" })
-    .email({ message: "email address is incorrect" })
+    .email({ message: "email address is incorrect" }),
 );
 
 const nameSchema = zfd.text(
-  z.string({ required_error: "display name is required" })
+  z.string({ required_error: "display name is required" }),
 );
 
 const passwordSchema = zfd.text(
   z
     .string({ required_error: "password is required" })
-    .min(8, { message: "password must be at least 8 characters long" })
+    .min(8, { message: "password must be at least 8 characters long" }),
 );
 
 const loginUserSchema = zfd
@@ -40,7 +40,7 @@ const loginUserSchema = zfd
       })
       .refine((data) => data.password === data.password2, {
         message: "password confirmation doesn't match",
-      })
+      }),
   );
 
 export const loginUser: SuccessErrorFormAction = async (_, formData) => {
@@ -68,7 +68,7 @@ export const loginUser: SuccessErrorFormAction = async (_, formData) => {
   redirect("/");
 };
 
-export async function logoutUser(): Promise<never> {
+export const logoutUser = async (): Promise<never> => {
   await deleteSession();
   redirect("/login");
-}
+};

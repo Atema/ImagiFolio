@@ -43,7 +43,9 @@ const AlbumSettingsDialog: FC<AlbumSettingsDialogProps> = ({ album }) => {
             title="Are you sure?"
             description="The album and all of its photos will be deleted permanently. This cannot be undone."
             confirmText="Yes, delete"
-            trigger={<Button styleType="ghost" styleColor="danger" label="Delete" />}
+            trigger={
+              <Button styleType="ghost" styleColor="danger" label="Delete" />
+            }
             action={deleteAlbum}
             hiddenFormData={{ id: album.id }}
           />

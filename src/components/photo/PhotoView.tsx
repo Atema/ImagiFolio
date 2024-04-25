@@ -40,7 +40,7 @@ const PhotoView: FC<PhotoViewProps> = ({
           <div
             className={cx(
               "absolute z-20 w-full p-4 space-x-6 flex items-center justify-end",
-              "bg-gradient-to-b from-blacka-6 to-transparent"
+              "bg-gradient-to-b from-blacka-6 to-transparent",
             )}
           >
             <HoverIcon white>
