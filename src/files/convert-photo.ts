@@ -83,8 +83,20 @@ export const processPhoto = async (
           exifdata?.Image?.DateTimeOriginal ||
           new Date(),
         color: (dominant.r << 16) + (dominant.g << 8) + dominant.b,
-        camera: exifdata?.Image?.Model,
-        lens: exifdata?.Photo?.LensModel,
+        camera:
+          (exifdata?.Image?.Model &&
+            exifdata?.Image?.Make &&
+            (exifdata.Image.Model.startsWith(exifdata.Image.Make)
+              ? exifdata.Image.Model
+              : `${exifdata.Image.Make} ${exifdata.Image.Model}`)) ||
+          exifdata?.Image?.Model,
+        lens:
+          (exifdata?.Photo?.LensModel &&
+            exifdata?.Photo?.LensMake &&
+            (exifdata.Photo.LensModel.startsWith(exifdata.Photo.LensMake)
+              ? exifdata.Photo.LensModel
+              : `${exifdata.Photo.LensMake} ${exifdata.Photo.LensModel}`)) ||
+          exifdata?.Photo?.LensModel,
         focal: exifdata?.Photo?.FocalLength,
         shutter: exifdata?.Photo?.ExposureTime,
         aperture: exifdata?.Photo?.FNumber,
