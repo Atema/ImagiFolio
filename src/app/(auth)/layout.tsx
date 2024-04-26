@@ -1,12 +1,12 @@
 "use client";
 
 import { loginUser } from "@/actions/auth";
-import { useAction } from "@/actions/types";
 import Button from "@/components/basic/Button";
 import InputField from "@/components/basic/InputField";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { AppLayout } from "../types";
+import { useAction } from "@/utils/actions/action-state";
 
 /**
  * Layout for the auth routing group.

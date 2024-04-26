@@ -1,8 +1,8 @@
 "use client";
 
 import { deleteAlbum, updateAlbum } from "@/actions/album";
-import { useAction } from "@/actions/types";
 import { Album } from "@/db/prisma/generated";
+import { useAction } from "@/utils/actions/action-state";
 import { GearIcon } from "@radix-ui/react-icons";
 import { FC, useRef } from "react";
 import Button from "../basic/Button";

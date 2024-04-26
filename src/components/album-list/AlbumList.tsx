@@ -1,6 +1,6 @@
 import { Album, Photo } from "@/db/prisma/generated";
 import cx from "@/utils/class-names/cx";
-import dateRangeString from "@/utils/date-time/dateRangeString";
+import dateRangeString from "@/utils/friendly-text/date-range";
 import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";

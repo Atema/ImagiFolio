@@ -3,7 +3,7 @@ import AlbumSettingsDialog from "@/components/album/AlbumSettingsDialog";
 import HoverIcon from "@/components/basic/HoverIcon";
 import PhotoList from "@/components/photo-list/PhotoList";
 import { getAlbum } from "@/db/album";
-import dateRangeString from "@/utils/date-time/dateRangeString";
+import dateRangeString from "@/utils/friendly-text/date-range";
 import { UploadIcon } from "@radix-ui/react-icons";
 import { notFound } from "next/navigation";
 

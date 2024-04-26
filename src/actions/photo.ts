@@ -2,7 +2,7 @@
 
 import prisma from "@/db/prisma/client";
 import { redirect } from "next/navigation";
-import { SuccessErrorFormAction } from "./types";
+import { SuccessErrorFormAction } from "../utils/actions/action-state";
 
 export const deletePhoto: SuccessErrorFormAction = async (_, data) => {
   // FIXME: Validate data

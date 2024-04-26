@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { ZodError, z } from "zod";
 import { zfd } from "zod-form-data";
 import { createSession, deleteSession } from "./session";
-import { SuccessErrorFormAction } from "./types";
+import { SuccessErrorFormAction } from "../utils/actions/action-state";
 
 const emailSchema = zfd.text(
   z

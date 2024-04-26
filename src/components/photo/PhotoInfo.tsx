@@ -1,4 +1,5 @@
 import { Photo } from "@/db/prisma/generated";
+import coordinatesString from "@/utils/friendly-text/degree-coordinates";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { FC, ReactNode } from "react";
 import HoverIcon from "../basic/HoverIcon";
@@ -23,31 +24,6 @@ const PhotoInfoItem: FC<PhotoInfoItemProps> = ({ name, children }) => (
     <div className="space-x-4">{children}</div>
   </div>
 );
-
-/**
- * Converts coordinates in decimal degrees to a DMS format
- *
- * @component
- * @param num - Decimal degrees
- * @param type - Latitude ("lat") or longitude ("long")
- * @returns A string with degrees, minutes, and seconds
- */
-const coordToDeg = (num: number, type: "lat" | "long") => {
-  let dir;
-
-  if (num < 0) {
-    num *= -1;
-    dir = type === "lat" ? "S" : "W";
-  } else {
-    dir = type === "lat" ? "N" : "E";
-  }
-
-  const deg = Math.floor(num);
-  const min = Math.floor((num % 1) * 60);
-  const sec = (num - deg) * 3600 - min * 60;
-
-  return `${deg}°${min}'${sec.toFixed(1)}" ${dir}`;
-};
 
 type PhotoInfoProps = {
   /** The photo to show the info of */
@@ -87,8 +63,8 @@ const PhotoInfo: FC<PhotoInfoProps> = ({ photo, onClose }) => (
     </PhotoInfoItem>
     {photo.lat && photo.long && (
       <PhotoInfoItem name="Location">
-        <span>{coordToDeg(photo.lat, "lat")}</span>
-        <span>{coordToDeg(photo.long, "long")}</span>
+        <span>{coordinatesString(photo.lat, "lat")}</span>
+        <span>{coordinatesString(photo.long, "long")}</span>
       </PhotoInfoItem>
     )}
     {photo.camera && (
