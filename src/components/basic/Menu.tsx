@@ -9,7 +9,6 @@ import {
   forwardRef,
   useState,
 } from "react";
-import HoverIcon from "./HoverIcon";
 
 export type MenuProps = {
   /** Element to use as the trigger to open the dialog */

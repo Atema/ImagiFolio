@@ -14,7 +14,7 @@ import { AppLayout } from "../types";
  */
 const AuthGroupLayout: AppLayout = ({ children }) => {
   const signup = useSelectedLayoutSegment() === "signup";
-  let { error, action, pending, resetError } = useAction(loginUser);
+  const { error, action, pending, resetError } = useAction(loginUser);
 
   return (
     <main className="2xl:container mx-auto px-2 md:px-4 mt-16">

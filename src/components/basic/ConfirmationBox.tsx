@@ -5,7 +5,6 @@ import cx from "@/utils/class-names/cx";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { ButtonHTMLAttributes, ReactNode, forwardRef, useState } from "react";
 import Button from "./Button";
-import HoverIcon from "./HoverIcon";
 
 type ConfirmationBoxProps = {
   /** Element to use as the trigger to open the confirmation box */
