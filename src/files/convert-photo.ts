@@ -6,11 +6,20 @@ import { dirname } from "node:path";
 import sharp, { Sharp } from "sharp";
 import { FileVariation, getFilePath, getUploadPath } from "./file-paths";
 
+// eslint-disable-next-line jsdoc/require-param, jsdoc/require-returns
+/** Variations of the input photo to create with {@link sharp} */
 const photoVariations: [FileVariation, (img: Sharp) => Sharp][] = [
   ["preview", (img) => img.resize(2500, 2500, { fit: "inside" })],
   ["thumbnail", (img) => img.resize(400, 300, { fit: "cover" })],
 ];
 
+/**
+ * Create resized variations of an image, based on the variations specified in
+ * {@link photoVariations}
+ *
+ * @param imageIn - Input image to create variations of
+ * @param id - Id of the image
+ */
 const convertPhotoVariations = async (imageIn: Sharp, id: string) => {
   const image = imageIn.rotate().jpeg({ progressive: true });
 
@@ -32,8 +41,47 @@ const convertPhotoVariations = async (imageIn: Sharp, id: string) => {
   }
 };
 
+/**
+ * Combines a make and model for a camera or lens into a single string, ensuring
+ * the make is not duplicated
+ *
+ * @param make - Optional make (brand)
+ * @param model - Optinal model
+ * @returns Combined string of make and model
+ */
+const makeModel = (make?: string, model?: string) => {
+  if (!make || !model) return make || model;
+  if (model.startsWith(make)) return model;
+  return `${make} ${model}`;
+};
+
+/**
+ * Parses a coordinate from the exif data into decimal format
+ *
+ * @param degrees - Degrees, minutes and seconds of the coordinate
+ * @param ref - Direction of the coordinate (N/E/S/W)
+ * @returns Coordinates in decimal format
+ */
+const parseCoord = (degrees?: number[], ref?: string) => {
+  if (!ref || !degrees || degrees.length < 3) return null;
+
+  return (
+    (ref == "S" || ref == "W" ? -1 : 1) *
+    (degrees[0] + degrees[1] / 60 + degrees[2] / 3600)
+  );
+};
+
+/** Photo types allowed as input format, as detected by {@link sharp} */
 const allowedTypes = ["jpeg", "png", "webp", "tiff", "gif", "heif"];
 
+/**
+ * Processes an input photo by reading its metadata, converting it into
+ * variations, and adding it to the database
+ *
+ * @param albumId - Id of the album to add the photo to
+ * @param uploadPath - Path where the input photo was uploaded
+ * @param filename - Original filename of the photo
+ */
 export const processPhoto = async (
   albumId: string,
   uploadPath: string,
@@ -51,23 +99,6 @@ export const processPhoto = async (
     const exifdata = metadata.exif && exif(metadata.exif);
     const { dominant } = await image.stats();
 
-    const exifLat = exifdata?.GPSInfo?.GPSLatitude;
-    const exifLatRef = exifdata?.GPSInfo?.GPSLatitudeRef;
-    const exifLong = exifdata?.GPSInfo?.GPSLongitude;
-    const exifLongRef = exifdata?.GPSInfo?.GPSLongitudeRef;
-    let lat = null,
-      long = null;
-
-    if (exifLat && exifLatRef && exifLong && exifLongRef) {
-      lat =
-        (exifLatRef == "S" ? -1 : 1) *
-        (exifLat[0] + exifLat[1] / 60 + exifLat[2] / 3600);
-
-      long =
-        (exifLongRef == "W" ? -1 : 1) *
-        (exifLong[0] + exifLong[1] / 60 + exifLong[2] / 3600);
-    }
-
     await prisma.photo.create({
       data: {
         id,
@@ -83,26 +114,20 @@ export const processPhoto = async (
           exifdata?.Image?.DateTimeOriginal ||
           new Date(),
         color: (dominant.r << 16) + (dominant.g << 8) + dominant.b,
-        camera:
-          (exifdata?.Image?.Model &&
-            exifdata?.Image?.Make &&
-            (exifdata.Image.Model.startsWith(exifdata.Image.Make)
-              ? exifdata.Image.Model
-              : `${exifdata.Image.Make} ${exifdata.Image.Model}`)) ||
-          exifdata?.Image?.Model,
-        lens:
-          (exifdata?.Photo?.LensModel &&
-            exifdata?.Photo?.LensMake &&
-            (exifdata.Photo.LensModel.startsWith(exifdata.Photo.LensMake)
-              ? exifdata.Photo.LensModel
-              : `${exifdata.Photo.LensMake} ${exifdata.Photo.LensModel}`)) ||
-          exifdata?.Photo?.LensModel,
+        camera: makeModel(exifdata?.Image?.Make, exifdata?.Image?.Model),
+        lens: makeModel(exifdata?.Photo?.LensMake, exifdata?.Photo?.LensModel),
         focal: exifdata?.Photo?.FocalLength,
         shutter: exifdata?.Photo?.ExposureTime,
         aperture: exifdata?.Photo?.FNumber,
         iso: exifdata?.Photo?.ISOSpeedRatings,
-        lat,
-        long,
+        lat: parseCoord(
+          exifdata?.GPSInfo?.GPSLatitude,
+          exifdata?.GPSInfo?.GPSLatitudeRef,
+        ),
+        long: parseCoord(
+          exifdata?.GPSInfo?.GPSLongitude,
+          exifdata?.GPSInfo?.GPSLongitudeRef,
+        ),
       },
     });
 
@@ -113,6 +138,14 @@ export const processPhoto = async (
   }
 };
 
+/**
+ * Copies a photo file as an upload before processing it with
+ * {@link processPhoto}
+ *
+ * @param albumId - Id of the album to add the photo to
+ * @param path - Path of the image to copy
+ * @param filename - Original filename of the photo
+ */
 export const copyAndProcessPhoto = async (
   albumId: string,
   path: string,
