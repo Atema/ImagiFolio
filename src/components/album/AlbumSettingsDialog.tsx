@@ -18,8 +18,9 @@ type AlbumSettingsDialogProps = {
 
 /**
  * Dialog to change the settings (name) of a photo album
+ *
  * @component
- * @param props See {@link AlbumSettingsDialogProps}.
+ * @param props - See {@link AlbumSettingsDialogProps}
  */
 const AlbumSettingsDialog: FC<AlbumSettingsDialogProps> = ({ album }) => {
   const closeRef = useRef(() => {});

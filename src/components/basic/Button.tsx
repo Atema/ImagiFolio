@@ -25,9 +25,10 @@ const colorTable = {
 
 /**
  * A styled button
+ *
  * @component
- * @param props See {@link Buttonprops}.
- * Reference and additional properties will be passed to the internal button element
+ * @param props - See {@link Buttonprops}. Reference and additional properties
+ * will be passed to the internal button element
  */
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (

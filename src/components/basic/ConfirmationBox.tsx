@@ -28,9 +28,10 @@ type ConfirmationBoxProps = {
 
 /**
  * A styled confirmation dialog to show before dangerous actions
+ *
  * @component
- * @param props See {@link ConfirmationBoxProps}.
- * Reference and additional properties will be passed to the trigger element
+ * @param props - See {@link ConfirmationBoxProps}. Reference and additional
+ * properties will be passed to the trigger element
  */
 const ConfirmationBox = forwardRef<HTMLButtonElement, ConfirmationBoxProps>(
   (

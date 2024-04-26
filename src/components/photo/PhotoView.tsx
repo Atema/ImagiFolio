@@ -35,8 +35,9 @@ type PhotoViewProps = {
 
 /**
  * View to show a photo, metadata and navigation to adjacent photos
+ *
  * @component
- * @param props See {@link PhotoViewProps}.
+ * @param props - See {@link PhotoViewProps}.
  */
 const PhotoView: FC<PhotoViewProps> = ({
   photo,

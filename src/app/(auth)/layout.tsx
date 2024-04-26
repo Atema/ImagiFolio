@@ -11,6 +11,9 @@ import { AppLayout } from "../types";
 /**
  * Layout for the auth routing group.
  * Renders a log in or sign up form, depending on the current route.
+ * 
+ * @component
+ * @param props - See {@link AppLayout}
  */
 const AuthGroupLayout: AppLayout = ({ children }) => {
   const signup = useSelectedLayoutSegment() === "signup";

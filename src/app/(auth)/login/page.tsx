@@ -7,6 +7,8 @@ export const metadata: Metadata = {
 
 /**
  * Empty login page to make the route available
+ * 
+ * @component
  */
 const LoginPage: AppPage = () => null;
 

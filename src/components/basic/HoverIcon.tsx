@@ -12,9 +12,10 @@ type HoverIconProps = {
 
 /**
  * A wrapping component for icons to show a background while hovering
+ *
  * @component
- * @param props See {@link HoverIconProps}.
- * Reference and additional properties will be passed to the children element
+ * @param props - See {@link HoverIconProps}. Reference and additional
+ * properties will be passed to the children element
  */
 const HoverIcon = forwardRef<HTMLDivElement, HoverIconProps>(
   ({ children, white, ...buttonProps }, ref) => (

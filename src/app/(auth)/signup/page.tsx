@@ -7,6 +7,8 @@ export const metadata: Metadata = {
 
 /**
  * Empty registration page to make the route available
+ * 
+ * @component
  */
 const SignupPage: AppPage = () => null;
 

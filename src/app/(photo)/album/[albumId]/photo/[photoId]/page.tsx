@@ -1,6 +1,6 @@
 import { AppPage } from "@/app/types";
 import PhotoView from "@/components/photo/PhotoView";
-import { getPhoto } from "@/db/photo";
+import { getPhotoInAlbum } from "@/db/photo";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -15,7 +15,7 @@ type PhotoPageParams = {
 
 const PhotoPage: AppPage<PhotoPageParams> = async ({ params }) => {
   const { photo, prevPhoto, nextPhoto } =
-    (await getPhoto(params.photoId, params.albumId)) ?? notFound();
+    (await getPhotoInAlbum(params.photoId, params.albumId)) ?? notFound();
 
   return (
     <main>

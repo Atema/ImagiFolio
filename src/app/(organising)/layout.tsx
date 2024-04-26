@@ -5,6 +5,11 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AppLayout } from "../types";
 
+/**
+ * Takes the user-id from the session and retrieves the user from the database
+ * 
+ * @returns The active user
+ */
 const getCurrentUser = async () => {
   const userId = (await getSession())?.userId;
   if (!userId) redirect("/login");
@@ -18,6 +23,9 @@ const getCurrentUser = async () => {
 /**
  * Layout for the organising group (overviews of photos and albums).
  * Renders a navigation bar and containerises its children as the main layout
+ * 
+ * @component
+ * @param props - See {@link AppLayout}
  */
 const OrganisingGroupLayout: AppLayout = async ({ children }) => (
   <>

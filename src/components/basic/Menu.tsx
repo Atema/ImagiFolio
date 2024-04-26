@@ -20,9 +20,10 @@ export type MenuProps = {
 
 /**
  * A styled dropdown menu
+ *
  * @component
- * @param props See {@link MenuProps}.
- * Reference and additional properties will be passed to the trigger element
+ * @param props - See {@link MenuProps}. Reference and additional properties
+ * will be passed to the trigger element
  */
 const Menu = forwardRef<HTMLButtonElement, MenuProps>(
   ({ trigger, children, ...buttonProps }, ref) => {

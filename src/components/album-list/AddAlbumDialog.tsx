@@ -10,6 +10,7 @@ import HoverIcon from "../basic/HoverIcon";
 
 /**
  * Dialog box to create a new photo album
+ * 
  * @component
  */
 const AddAlbumDialog: FC = () => (

@@ -11,9 +11,11 @@ type PhotoInfoOpenProviderProps = {
 };
 
 /**
- * Provides information about the open/close state of the photo info to the application
+ * Provides information about the open/close state of the photo info to the
+ * application
+ *
  * @component
- * @param props See {@link PhotoInfoOpenProviderProps}.
+ * @param props - See {@link PhotoInfoOpenProviderProps}
  */
 export const PhotoInfoOpenProvider: FC<PhotoInfoOpenProviderProps> = ({
   children,
@@ -31,6 +33,7 @@ export const PhotoInfoOpenProvider: FC<PhotoInfoOpenProviderProps> = ({
 
 /**
  * Hook to use the information from the {@link PhotoInfoOpenProvider}
+ *
  * @returns Tuple with open value and set open dispatch
  */
 export const usePhotoInfoOpen = () =>

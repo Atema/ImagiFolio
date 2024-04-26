@@ -16,8 +16,9 @@ type ArrowProps = {
 
 /**
  * Arrow that shows on top of image to navigate back or forth
+ *
  * @component
- * @param props See {@link ArrowProps}.
+ * @param props - See {@link ArrowProps}.
  */
 const Arrow: FC<ArrowProps> = ({ type, href }) =>
   href && (
@@ -51,8 +52,9 @@ type PhotoNavigationProps = {
 
 /**
  * Handles navigation between photos in the view using arrows and keyboard
+ *
  * @component
- * @param props See {@link PhotoNavigationProps}
+ * @param props - See {@link PhotoNavigationProps}
  */
 const PhotoNavigation: FC<PhotoNavigationProps> = ({ prevHref, nextHref }) => {
   const router = useRouter();

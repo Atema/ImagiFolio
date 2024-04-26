@@ -29,9 +29,10 @@ type DialogBoxProps = {
 
 /**
  * A style modal window with custom contents
+ *
  * @component
- * @param props See {@link DialogBoxProps}.
- * Reference and additional properties will be passed to the trigger element
+ * @param props - See {@link DialogBoxProps}. Reference and additional properties
+ * will be passed to the trigger element
  */
 const DialogBox = forwardRef<HTMLButtonElement, DialogBoxProps>(
   ({ trigger, title, children, closeRef, ...buttonProps }, ref) => {

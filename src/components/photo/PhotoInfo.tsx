@@ -13,8 +13,9 @@ type PhotoInfoItemProps = {
 
 /**
  * A combination of label and values to show in the info list
+ *
  * @component
- * @param props See {@link PhotoInfoItemProps}.
+ * @param props - See {@link PhotoInfoItemProps}.
  */
 const PhotoInfoItem: FC<PhotoInfoItemProps> = ({ name, children }) => (
   <div>
@@ -25,8 +26,10 @@ const PhotoInfoItem: FC<PhotoInfoItemProps> = ({ name, children }) => (
 
 /**
  * Converts coordinates in decimal degrees to a DMS format
- * @param num Decimal degrees
- * @param type Latitude ("lat") or longitude ("long")
+ *
+ * @component
+ * @param num - Decimal degrees
+ * @param type - Latitude ("lat") or longitude ("long")
  * @returns A string with degrees, minutes, and seconds
  */
 const coordToDeg = (num: number, type: "lat" | "long") => {
@@ -56,8 +59,9 @@ type PhotoInfoProps = {
 
 /**
  * Component to show a list of metadata information about a photo
+ *
  * @component
- * @param props See {@link PhotoInfoProps}.
+ * @param props - See {@link PhotoInfoProps}.
  */
 const PhotoInfo: FC<PhotoInfoProps> = ({ photo, onClose }) => (
   <div className="w-full sm:w-80 text-sm space-y-4 p-6">

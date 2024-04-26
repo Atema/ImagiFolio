@@ -8,9 +8,10 @@ export type InputFieldProps = {
 
 /**
  * A styled input field with label
+ *
  * @component
- * @param props See {@link InputFieldProps}.
- * Reference and additional properties will be passed to the internal input element
+ * @param props - See {@link InputFieldProps}. Reference and additional
+ * properties will be passed to the internal input element
  */
 const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
   ({ label, ...inputProps }, ref) => (
