@@ -1,7 +1,6 @@
 "use client";
 
 import { deletePhoto } from "@/actions/photo";
-import { usePhotoInfoOpen } from "@/context/PhotoInfoOpen";
 import { Photo } from "@/db/prisma/generated";
 import cx from "@/utils/class-names/cx";
 import {
@@ -16,6 +15,7 @@ import { FC } from "react";
 import ConfirmationBox from "../basic/ConfirmationBox";
 import HoverIcon from "../basic/HoverIcon";
 import Menu from "../basic/Menu";
+import { usePhotoInfoOpen } from "../context/GlobalStateProvider";
 import PhotoInfo from "./PhotoInfo";
 import PhotoNavigation from "./PhotoNavigation";
 
