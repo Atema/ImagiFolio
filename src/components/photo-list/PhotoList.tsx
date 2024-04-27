@@ -20,7 +20,7 @@ export type PhotoListProps = {
 const PhotoList: FC<PhotoListProps> = ({ baseUrl, photos }) => (
   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3">
     {photos.map((pic) => (
-      <Link key={pic.id} href={`${baseUrl}/photo/${pic.id}`}>
+      <Link key={pic.id} id={pic.id} href={`${baseUrl}/photo/${pic.id}`}>
         <div
           className="aspect-4/3 relative hover:brightness-90 shadow-md"
           style={{

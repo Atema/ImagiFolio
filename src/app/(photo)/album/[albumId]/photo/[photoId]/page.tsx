@@ -21,7 +21,6 @@ const PhotoPage: AppPage<PhotoPageParams> = async ({ params }) => {
     <main>
       <PhotoView
         photo={photo}
-        backHref={`/album/${photo.albumId}`}
         prevHref={prevPhoto && `/album/${photo.albumId}/photo/${prevPhoto.id}`}
         nextHref={nextPhoto && `/album/${photo.albumId}/photo/${nextPhoto.id}`}
       />

@@ -23,9 +23,6 @@ type PhotoViewProps = {
   /** The photo to show */
   photo: Photo;
 
-  /** URL back to the overview */
-  backHref: string;
-
   /** URL to the previous picture */
   prevHref?: string | null;
 
@@ -39,12 +36,7 @@ type PhotoViewProps = {
  * @component
  * @param props - See {@link PhotoViewProps}.
  */
-const PhotoView: FC<PhotoViewProps> = ({
-  photo,
-  backHref,
-  prevHref,
-  nextHref,
-}) => {
+const PhotoView: FC<PhotoViewProps> = ({ photo, prevHref, nextHref }) => {
   const [infoOpen, setInfoOpen] = usePhotoInfoOpen();
 
   return (
@@ -63,7 +55,7 @@ const PhotoView: FC<PhotoViewProps> = ({
             )}
           >
             <HoverIcon white>
-              <Link href={backHref}>
+              <Link href={{ pathname: "..", hash: photo.id }}>
                 <ArrowLeftIcon className="size-8" />
               </Link>
             </HoverIcon>
