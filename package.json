@@ -11,7 +11,7 @@
     "pretty": "prettier --check src"
   },
   "prisma": {
-    "seed": "node --loader tsx src/db/prisma/seed.ts"
+    "seed": "tsx src/db/prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "5.13.0",
