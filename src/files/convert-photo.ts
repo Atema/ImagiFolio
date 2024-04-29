@@ -1,7 +1,7 @@
 import prisma from "@/db/prisma/client";
 import exif from "exif-reader";
 import { randomUUID } from "node:crypto";
-import { copyFile, mkdir, rename, symlink, unlink } from "node:fs/promises";
+import { copyFile, link, mkdir, rename, symlink, unlink } from "node:fs/promises";
 import { dirname } from "node:path";
 import sharp, { Sharp } from "sharp";
 import { FileVariation, getFilePath, getUploadPath } from "./file-paths";
@@ -158,7 +158,7 @@ export const takeAndProcessPhoto = async (
 
   switch (takeType) {
     case "hardlink":
-      await symlink(path, uploadPath);
+      await link(path, uploadPath);
       break;
 
     case "symlink":
