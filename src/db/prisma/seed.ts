@@ -1,4 +1,4 @@
-import { copyAndProcessPhoto } from "@/files/convert-photo";
+import { takeAndProcessPhoto } from "@/files/convert-photo";
 import { readdir } from "node:fs/promises";
 import { join } from "node:path";
 import { hashPassword } from "../user";
@@ -6,6 +6,15 @@ import prisma from "./client";
 
 const seedDir = process.env.SEED_IMAGE_DIR;
 if (!seedDir) process.exit();
+
+const seedType =
+  process.env.SEED_TYPE == "hardlink"
+    ? "hardlink"
+    : process.env.SEED_TYPE == "symlink"
+      ? "symlink"
+      : process.env.SEED_TYPE == "rename"
+        ? "rename"
+        : "copy";
 
 const admin = await prisma.user.create({
   data: {
@@ -39,7 +48,12 @@ for (const album of albums) {
 
   await Promise.all(
     seedImages.map((image) =>
-      copyAndProcessPhoto(album.id, join(seedDir, album.name, image), image),
+      takeAndProcessPhoto(
+        album.id,
+        join(seedDir, album.name, image),
+        seedType,
+        image,
+      ),
     ),
   );
 }

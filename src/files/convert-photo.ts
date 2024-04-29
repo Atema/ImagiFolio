@@ -1,7 +1,7 @@
 import prisma from "@/db/prisma/client";
 import exif from "exif-reader";
 import { randomUUID } from "node:crypto";
-import { copyFile, mkdir, rename, unlink } from "node:fs/promises";
+import { copyFile, mkdir, rename, symlink, unlink } from "node:fs/promises";
 import { dirname } from "node:path";
 import sharp, { Sharp } from "sharp";
 import { FileVariation, getFilePath, getUploadPath } from "./file-paths";
@@ -139,20 +139,39 @@ export const processPhoto = async (
 };
 
 /**
- * Copies a photo file as an upload before processing it with
+ * Takes an external photo file as an upload before processing it with
  * {@link processPhoto}
  *
  * @param albumId - Id of the album to add the photo to
  * @param path - Path of the image to copy
+ * @param takeType - Whether to hardlink, symlink, rename or copy the file
  * @param filename - Original filename of the photo
  */
-export const copyAndProcessPhoto = async (
+export const takeAndProcessPhoto = async (
   albumId: string,
   path: string,
+  takeType: "hardlink" | "symlink" | "rename" | "copy",
   filename?: string,
 ) => {
   const uploadPath = getUploadPath();
   await mkdir(dirname(uploadPath), { recursive: true });
-  await copyFile(path, uploadPath);
+
+  switch (takeType) {
+    case "hardlink":
+      await symlink(path, uploadPath);
+      break;
+
+    case "symlink":
+      await symlink(path, uploadPath);
+      break;
+
+    case "rename":
+      await rename(path, uploadPath);
+      break;
+
+    case "copy":
+      await copyFile(path, uploadPath);
+      break;
+  }
   await processPhoto(albumId, uploadPath, filename);
 };
