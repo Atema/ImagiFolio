@@ -96,6 +96,6 @@ export const usePhotoInfoOpen = () => {
 
   return [
     state.infoOpen,
-    (open: boolean) => dispatch({ type: "set_photo_info_open", payload: open }),
+    (open: boolean) => dispatch({ type: "set_photo_info_open", open }),
   ] as const;
 };
