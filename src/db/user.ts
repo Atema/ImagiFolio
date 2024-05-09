@@ -1,6 +1,7 @@
 import { randomBytes, scrypt as scryptCb, timingSafeEqual } from "node:crypto";
 import { promisify } from "node:util";
 import prisma from "./prisma/client";
+import { User } from "./prisma/generated";
 const scrypt = promisify(scryptCb);
 
 /**
@@ -29,6 +30,58 @@ export const checkPasswordHash = async (password: string, storedHash: Buffer) =>
     storedHash,
     await hashPassword(password, storedHash.subarray(1, 17)),
   );
+
+/**
+ * Updates the information of a user
+ *
+ * @param id - Id of the user to update
+ * @param data - Updated information of the user
+ * @returns Whether the update was successful
+ */
+export const updateUser = async (
+  id: string,
+  data: Partial<Omit<User, "id">>,
+) => {
+  const user = await prisma.user.update({
+    where: { id },
+    select: { id: true },
+    data,
+  });
+
+  return !!user;
+};
+
+/**
+ * Checks whether a user-provided password is correct
+ *
+ * @param id - User's id
+ * @param password - User-provided password
+ * @returns Whether the check was successful
+ */
+export const checkUserPassword = async (id: string, password: string) => {
+  const user = await prisma.user.findUnique({
+    where: { id },
+    select: { password: true },
+  });
+
+  if (!user || !(await checkPasswordHash(password, user.password)))
+    return false;
+
+  return true;
+};
+
+/**
+ * Updates the password of a user
+ *
+ * @param id - The user's id
+ * @param password - The new password of the user, in text
+ * @returns Whether the update was successful
+ */
+export const updateUserPassword = async (id: string, password: string) => {
+  const hash = await hashPassword(password);
+
+  return await updateUser(id, { password: hash });
+};
 
 /**
  * Checks whether a user-provided login is correct
@@ -87,5 +140,5 @@ export const createUser = async (
 export const getUser = async (id: string) =>
   await prisma.user.findUnique({
     where: { id },
-    select: { displayName: true },
+    select: { id: true, email: true, displayName: true },
   });

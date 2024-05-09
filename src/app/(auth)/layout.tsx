@@ -17,7 +17,7 @@ import { useAction } from "@/utils/actions/action-state";
  */
 const AuthGroupLayout: AppLayout = ({ children }) => {
   const signup = useSelectedLayoutSegment() === "signup";
-  const { error, action, pending, resetError } = useAction(loginUser);
+  const { error, action, pending, reset } = useAction(loginUser);
 
   return (
     <main className="2xl:container mx-auto px-2 md:px-4 mt-16">
@@ -72,7 +72,7 @@ const AuthGroupLayout: AppLayout = ({ children }) => {
             <Link
               href={signup ? "/login" : "/signup"}
               className="text-plum-11 dark:text-plumdark-11"
-              onClick={resetError}
+              onClick={reset}
             >
               {signup ? "Sign in" : "Sign up"}
             </Link>{" "}

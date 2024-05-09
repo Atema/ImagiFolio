@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 
 /**
@@ -45,18 +45,24 @@ export const useAction = (
   const [state, action] = useFormState(actionFunc, {});
   const { pending } = useFormStatus();
 
+  const reset = useCallback(() => {
+    state.success = false;
+    state.error = undefined;
+    state.fullError = undefined;
+  }, [state]);
+
   useEffect(() => {
     if (state.fullError) console.error(state.fullError);
-    if (state.success && onSuccess) onSuccess();
-  }, [state, onSuccess]);
+    if (state.success && onSuccess) {
+      reset();
+      onSuccess();
+    }
+  }, [reset, state, onSuccess]);
 
   return {
     error: state.error,
     action,
     pending,
-    resetError: () => {
-      state.error = "";
-      state.fullError = "";
-    },
+    reset,
   } as const;
 };

@@ -25,6 +25,9 @@ type DialogBoxProps = {
 
   /** Reference; will be set to a function to close the dialog */
   closeRef?: MutableRefObject<() => void>;
+
+  /** Action to perform on closing the dialog */
+  onclose?: () => void;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 /**
@@ -35,11 +38,16 @@ type DialogBoxProps = {
  * will be passed to the trigger element
  */
 const DialogBox = forwardRef<HTMLButtonElement, DialogBoxProps>(
-  ({ trigger, title, children, closeRef, ...buttonProps }, ref) => {
+  ({ trigger, title, children, closeRef, onclose, ...buttonProps }, ref) => {
     const [open, setOpen] = useState(false);
+
     useEffect(() => {
       if (closeRef) closeRef.current = () => setOpen(false);
     }, [closeRef, setOpen]);
+
+    useEffect(() => {
+      if (!open && onclose) onclose();
+    }, [open, onclose]);
 
     return (
       <Dialog.Root open={open} onOpenChange={setOpen}>
