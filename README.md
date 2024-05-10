@@ -2,55 +2,87 @@
 
 <img src="src/app/icon.svg" alt="ImagiFolio icon" width="200" />
 
-A self-hosted photo gallery to store, view, and share your pictures.
+ImagiFolio is a self-hosted photo gallery web application where users can store,
+view and share pictures with each other.
 
-Built as part of a Personal Persuit at the University College Twente. See
+It was built as part of a Personal Persuit at the University College Twente. See
 <https://webtechnologies.atema.one> for more info
 
-## Configuration
+## Installation
 
-The application is configured using the environment variables listed below.
+ImagiFolio can be installed from the source in this repository be following the
+steps below.
 
-### Environment variables
+### Requirements
 
-#### `DATABASE_URL`
+- A server with Node.js 20 (other versions may work, but are untested).
+- The [`pnpm`](https://pnpm.io) package manager (`npm` and `yarn` should work,
+  but the commands below should be changed accordingly)
+- A PostgreSQL database and user that has full permissions on the database.
 
-URL to the database with the format
-`postgresql://{user}:{password}@{host}:{port}/db?schema={schema}`.
+### Getting the source and installing dependencies
 
-#### `SESSION_SECRET`
+```sh
+git clone https://github.com/Atema/ImagiFolio.git
+cd ImagiFolio
+pnpm install
+```
 
-String used for encrypting sessions. Should be kept secret.
+### Configuration
 
-#### `IMAGE_DIR`
+ImagiFolio is configured through environment variables. These can be defined by
+following usual operating system procedures or by creating a `.env` file with
+the following content:
 
-Directory that will be used for storing images. Can instead be defined per image
-type using `IMAGE_DIR_ORIGINALS`, `IMAGE_DIR_PREVIEWS` and
-`IMAGE_DIR_THUMBNAILS`.
+```sh
+DATABASE_URL="postgresql://user:password@host:5432/database"
+SESSION_SECRET="a long unique secret string"
+IMAGE_DIR="/path/to/image/directory"
+```
 
-#### `IMAGE_DIR_ORIGINALS`
+These should be enough for many basic configurations, but additional tweaks are
+possible through the options described in
+[environment variables](docs/environment-variables.md).
 
-Directory that will be used for storing original images. As access is generally
-infrequent, these could be stored on slower storage. Overrides `IMAGE_DIR`.
+### Building
 
-#### `IMAGE_DIR_PREVIEWS`
+```sh
+pnpm build
+```
 
-Directory that will be used for storing large preview images. Overrides
-`IMAGE_DIR`.
+This step can take a while, and will create all neccessary files for running the
+application.
 
-#### `IMAGE_DIR_THUMBNAILS`
+### Creating the database tables
 
-Directory that will be used for storing thumbnail images shown in overviews. As
-access to these is most frequent, these should be stored on faster storage.
-Overrides `IMAGE_DIR`.
+```sh
+pnpm db-push
+```
 
-### Environment variables (development)
+This command will create or update all tables necessary in the database.
 
-These variables are only meant for use during development.
+There is some functionality (generally intended for development purposes) to
+pre-fill an empty database with sample data. See
+[seeding the database](docs/seeding-database.md)
 
-#### `SEED_IMAGE_DIR`
+### Starting
 
-When defined, this directory is used to seed the system with images. The
-directory should contain a structure `{album name}/{photo name}.jpg`. When
-resetting the database, these albums and photos will be imported into the
-database.
+```sh
+pnpm start
+```
+
+By default, this will start the application at `http://localhost:3000`.
+Alternatively, the port can be changed by using the `-p 1234` option flag.
+
+## Updating
+
+To update ImagiFolio to the newest version, stop the application. Then fetch the
+latest source, and follow the installation steps to re-build the application:
+
+```sh
+git pull
+pnpm install
+pnpm build
+pnpm db-push
+pnpm start
+```
