@@ -10,7 +10,7 @@ import { changePassword } from "@/actions/user";
 
 type PasswordChangeDialogProps = {
   // The user to display and change the password of
-  user: User;
+  user: Omit<User, "password">;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 /**

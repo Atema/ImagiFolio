@@ -10,7 +10,7 @@ import { useAction } from "@/utils/actions/action-state";
 
 type ProfileSettingsDialogProps = {
   // The user to display and change the settings of
-  user: User;
+  user: Omit<User, "password">;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 /**
