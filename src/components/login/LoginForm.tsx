@@ -1,11 +1,11 @@
 "use client";
 
 import { loginUser, signupUser } from "@/actions/auth";
-import { useAction } from "@/utils/actions/action-state";
-import { FC } from "react";
-import InputField from "../basic/InputField";
-import Button from "../basic/Button";
+import { useAction } from "@/utils/actions/use-action";
 import Link from "next/link";
+import { FC } from "react";
+import Button from "../basic/Button";
+import InputField from "../basic/InputField";
 
 type LoginFormProps = {
   signup?: boolean;

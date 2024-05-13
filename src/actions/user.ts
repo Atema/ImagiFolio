@@ -1,11 +1,20 @@
 "use server";
 
 import { checkUserPassword, updateUser, updateUserPassword } from "@/db/user";
-import { SuccessErrorFormAction } from "@/utils/actions/action-state";
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { zfd } from "zod-form-data";
-import { uuidSchema } from "./common";
-import { revalidatePath } from "next/cache";
+import { validateSchemaFormAction } from "./common";
+
+const uuidSchema = zfd.text(
+  z
+    .string({
+      required_error: "An unexpected error occurred: no user id found",
+    })
+    .uuid({
+      message: "An unexpected error occurred: incorrect format of user-id.",
+    }),
+);
 
 const changePasswordSchema = zfd
   .formData({
@@ -20,32 +29,22 @@ const changePasswordSchema = zfd
     ),
     passNew2: zfd.text(z.string().default("")),
   })
-  .refine((data) => checkUserPassword(data.id, data.passCurr), {
+  .refine(async (data) => await checkUserPassword(data.id, data.passCurr), {
     message: "The current password is incorrect",
   })
   .refine((data) => data.passNew === data.passNew2, {
     message: "The password confirmation does not match",
   });
 
-export const changePassword: SuccessErrorFormAction = async (_, formData) => {
-  const { data, error } = await changePasswordSchema.safeParseAsync(formData);
+export const changePassword = validateSchemaFormAction(
+  changePasswordSchema,
+  async (_, data) => {
+    if (!(await updateUserPassword(data.id, data.passNew)))
+      throw "An unexpected error occurred: the password could not be updated";
 
-  if (error) {
-    return {
-      error: error.issues[0].message,
-    };
-  }
-
-  const updateResult = await updateUserPassword(data.id, data.passNew);
-
-  if (!updateResult) {
-    return {
-      error: "An unexpected error occurred: the password could not be updated",
-    };
-  }
-
-  return { success: true };
-};
+    return { success: true };
+  },
+);
 
 const changeUserProfileSchema = zfd.formData({
   id: uuidSchema,
@@ -61,31 +60,13 @@ const changeUserProfileSchema = zfd.formData({
   ),
 });
 
-export const changeUserProfile: SuccessErrorFormAction = async (
-  _,
-  formData,
-) => {
-  const { data, error } =
-    await changeUserProfileSchema.safeParseAsync(formData);
+export const changeUserProfile = validateSchemaFormAction(
+  changeUserProfileSchema,
+  async (_, { id, displayName, email }) => {
+    if (!(await updateUser(id, { displayName, email })))
+      throw "An unexpected error occurred: the user could not be updated!";
 
-  if (error) {
-    return {
-      error: error.issues[0].message,
-    };
-  }
-
-  const updateResult = await updateUser(data.id, {
-    displayName: data.displayName,
-    email: data.email,
-  });
-
-  if (!updateResult) {
-    return {
-      error: "An unexpected error occurred: the user could not be updated",
-    };
-  }
-
-  revalidatePath("/");
-
-  return { success: true };
-};
+    revalidatePath("/", "layout");
+    return { success: true };
+  },
+);

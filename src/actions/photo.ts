@@ -2,7 +2,7 @@
 
 import prisma from "@/db/prisma/client";
 import { redirect } from "next/navigation";
-import { SuccessErrorFormAction } from "../utils/actions/action-state";
+import { SuccessErrorFormAction } from "./common";
 
 export const deletePhoto: SuccessErrorFormAction = async (_, data) => {
   // FIXME: Validate data
@@ -26,6 +26,6 @@ export const deletePhoto: SuccessErrorFormAction = async (_, data) => {
   redirect(`/album/${albumId}`);
 };
 
-export const uploadPhoto = async(file: File) => {
+export const uploadPhoto = async (file: File) => {
   console.log(file);
-}
+};

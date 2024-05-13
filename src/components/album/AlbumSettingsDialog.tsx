@@ -2,7 +2,7 @@
 
 import { deleteAlbum, updateAlbum } from "@/actions/album";
 import { Album } from "@/db/prisma/generated";
-import { useAction } from "@/utils/actions/action-state";
+import { useAction } from "@/utils/actions/use-action";
 import { GearIcon } from "@radix-ui/react-icons";
 import { FC, useRef } from "react";
 import Button from "../basic/Button";

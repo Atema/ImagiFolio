@@ -1,12 +1,12 @@
 "use client";
 
+import { changeUserProfile } from "@/actions/user";
 import { User } from "@/db/prisma/generated";
+import { useAction } from "@/utils/actions/use-action";
 import { ButtonHTMLAttributes, forwardRef, useRef } from "react";
 import Button from "../basic/Button";
 import DialogBox from "../basic/DialogBox";
 import InputField from "../basic/InputField";
-import { changeUserProfile } from "@/actions/user";
-import { useAction } from "@/utils/actions/action-state";
 
 type ProfileSettingsDialogProps = {
   // The user to display and change the settings of

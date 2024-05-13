@@ -1,9 +1,7 @@
 "use client";
 
-import {
-  SuccessErrorFormAction,
-  useAction,
-} from "@/utils/actions/action-state";
+import type { SuccessErrorFormAction } from "@/actions/common";
+import { useAction } from "@/utils/actions/use-action";
 import cx from "@/utils/class-names/cx";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { ButtonHTMLAttributes, ReactNode, forwardRef, useState } from "react";

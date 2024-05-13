@@ -1,10 +1,10 @@
 "use server";
 
 import prisma from "@/db/prisma/client";
-import { getSession } from "./session";
-import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { SuccessErrorFormAction } from "../utils/actions/action-state";
+import { redirect } from "next/navigation";
+import { SuccessErrorFormAction } from "./common";
+import { getSession } from "./session";
 
 export const addAlbum = async (data: FormData) => {
   // FIXME: Add validation

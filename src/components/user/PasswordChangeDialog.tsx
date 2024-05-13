@@ -1,12 +1,12 @@
 "use client";
 
+import { changePassword } from "@/actions/user";
 import { User } from "@/db/prisma/generated";
+import { useAction } from "@/utils/actions/use-action";
 import { ButtonHTMLAttributes, forwardRef, useRef } from "react";
+import Button from "../basic/Button";
 import DialogBox from "../basic/DialogBox";
 import InputField from "../basic/InputField";
-import Button from "../basic/Button";
-import { useAction } from "@/utils/actions/action-state";
-import { changePassword } from "@/actions/user";
 
 type PasswordChangeDialogProps = {
   // The user to display and change the password of

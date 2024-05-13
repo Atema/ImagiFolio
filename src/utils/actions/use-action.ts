@@ -1,33 +1,6 @@
+import type { SuccessErrorFormAction } from "@/actions/common";
 import { useCallback, useEffect } from "react";
 import { useFormState, useFormStatus } from "react-dom";
-
-/**
- * Type of form state for server actions used with {@link useAction}
- */
-export type SuccessErrorFormState = {
-  /** Whether the action was executed successfully */
-  success?: boolean;
-
-  /** Error to display to the user */
-  error?: string;
-
-  /** Full error message to log to the console */
-  fullError?: string;
-};
-
-/**
- * Type of server action for use with {@link useAction} to provide state
- * information
- *
- * @returns The new state of the form
- */
-export type SuccessErrorFormAction = (
-  /** The previous state of the form */
-  state: SuccessErrorFormState,
-
-  /** The submitted form data */
-  data: FormData,
-) => Promise<SuccessErrorFormState>;
 
 /**
  * Hook that wraps a server action to provide state information (errors and
