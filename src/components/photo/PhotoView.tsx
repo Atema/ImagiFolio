@@ -14,7 +14,7 @@ import Link from "next/link";
 import { FC } from "react";
 import ConfirmationBox from "../basic/ConfirmationBox";
 import HoverIcon from "../basic/HoverIcon";
-import Menu from "../basic/Menu";
+import Menu, { MenuItem } from "../basic/Menu";
 import { usePhotoInfoOpen } from "../context/GlobalStateProvider";
 import PhotoInfo from "./PhotoInfo";
 import PhotoNavigation from "./PhotoNavigation";
@@ -79,17 +79,19 @@ const PhotoView: FC<PhotoViewProps> = ({ photo, prevHref, nextHref }) => {
                 </HoverIcon>
               }
             >
-              <ConfirmationBox
-                trigger={<button>Delete photo</button>}
-                title="Are you sure?"
-                description="The photo will be deleted permanently. This cannot be undone."
-                confirmText="Yes, delete"
-                action={deletePhoto}
-                hiddenFormData={{
-                  id: photo.id,
-                  albumId: photo.albumId,
-                }}
-              />
+              <MenuItem noCloseOnSelect>
+                <ConfirmationBox
+                  trigger={<button>Delete photo</button>}
+                  title="Are you sure?"
+                  description="The photo will be deleted permanently. This cannot be undone."
+                  confirmText="Yes, delete"
+                  action={deletePhoto}
+                  hiddenFormData={{
+                    id: photo.id,
+                    albumId: photo.albumId,
+                  }}
+                />
+              </MenuItem>
             </Menu>
           </div>
           <PhotoNavigation prevHref={prevHref} nextHref={nextHref} />

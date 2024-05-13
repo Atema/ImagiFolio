@@ -8,11 +8,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  admin
+  editor
+  viewer
+}
+
 model User {
-  id          String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  email       String  @unique
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email       String   @unique
   displayName String
   password    Bytes
+  role        UserRole
   ownAlbums   Album[]
 }
 
@@ -42,4 +49,9 @@ model Photo {
   iso       Float?
   lat       Float?
   long      Float?
+}
+
+model Settings {
+  key   String @id
+  value String
 }

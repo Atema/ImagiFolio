@@ -4,7 +4,7 @@ import cx from "@/utils/class-names/cx";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import {
   ButtonHTMLAttributes,
-  Children,
+  FC,
   ReactNode,
   forwardRef,
   useState,
@@ -14,7 +14,10 @@ export type MenuProps = {
   /** Element to use as the trigger to open the dialog */
   trigger: ReactNode;
 
-  /** Children elements to render as menu items; "---" will render a separator */
+  /**
+   * Children elements to render as menu items. Should use {@link MenuItem} for
+   * items and {@link MenuSeparator} to render a separator.
+   */
   children: ReactNode;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
@@ -44,22 +47,7 @@ const Menu = forwardRef<HTMLButtonElement, MenuProps>(
             )}
           >
             <DropdownMenu.Arrow className="fill-gray-6 dark:fill-graydark-6" />
-            {Children.map(children, (child) => {
-              return child == "---" ? (
-                <DropdownMenu.Separator className="border-b my-2 border-gray-dim" />
-              ) : (
-                <DropdownMenu.Item
-                  asChild
-                  className={cx(
-                    "block w-full text-start px-4 py-2 focus:outline-0",
-                    "hover:bg-plum-3 dark:hover:bg-plumdark-3 focus:bg-plum-3 dark:focus:bg-plumdark-3",
-                  )}
-                  onSelect={(e) => e.preventDefault()}
-                >
-                  {child}
-                </DropdownMenu.Item>
-              );
-            })}
+            {children}
           </DropdownMenu.Content>
         </DropdownMenu.Portal>
       </DropdownMenu.Root>
@@ -69,3 +57,39 @@ const Menu = forwardRef<HTMLButtonElement, MenuProps>(
 
 Menu.displayName = "Menu";
 export default Menu;
+
+/**
+ * A styled separator to show in the {@link Menu}
+ *
+ * @component
+ */
+export const MenuSeparator: FC = () => (
+  <DropdownMenu.Separator className="border-b my-2 border-gray-4 dark:border-graydark-4" />
+);
+
+export type MenuItemProps = {
+  /** Disables closing the menu when the item is selected */
+  noCloseOnSelect?: boolean;
+
+  /** Children element to render in the menu item */
+  children: ReactNode;
+};
+
+/**
+ * A styled menu item to show in the {@link Menu}
+ *
+ * @component
+ * @param props - See {@link MenuItemProps}
+ */
+export const MenuItem: FC<MenuItemProps> = ({ children, noCloseOnSelect }) => (
+  <DropdownMenu.Item
+    asChild
+    className={cx(
+      "block w-full text-start px-4 py-2 focus:outline-0",
+      "hover:bg-plum-3 dark:hover:bg-plumdark-3 focus:bg-plum-3 dark:focus:bg-plumdark-3",
+    )}
+    onSelect={noCloseOnSelect ? (e) => e.preventDefault() : undefined}
+  >
+    {children}
+  </DropdownMenu.Item>
+);

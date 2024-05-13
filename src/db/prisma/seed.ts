@@ -21,6 +21,7 @@ const admin = await prisma.user.create({
     email: "admin@example.com",
     displayName: "Admin user",
     password: await hashPassword("admin admin"),
+    role: "admin",
   },
 });
 
@@ -41,7 +42,7 @@ const albums = await Promise.all(
 
 for (const album of albums) {
   console.info(`Seed - converting: ${album.name}`);
-  
+
   const seedImages = (
     await readdir(join(seedDir, album.name), { withFileTypes: true })
   )

@@ -2,6 +2,7 @@ import { randomBytes, scrypt as scryptCb, timingSafeEqual } from "node:crypto";
 import { promisify } from "node:util";
 import prisma from "./prisma/client";
 import { User } from "./prisma/generated";
+import { getDefaultRole } from "./settings";
 const scrypt = promisify(scryptCb);
 
 /**
@@ -115,12 +116,16 @@ export const createUser = async (
   displayName: string,
   password: string,
 ) => {
+  const userCount = await prisma.user.count();
+  const defaultRole = await getDefaultRole();
+
   try {
     const user = await prisma.user.create({
       data: {
         email,
         displayName,
         password: await hashPassword(password),
+        role: userCount === 0 ? "admin" : defaultRole,
       },
       select: { id: true, password: true },
     });
@@ -140,5 +145,16 @@ export const createUser = async (
 export const getUser = async (id: string) =>
   await prisma.user.findUnique({
     where: { id },
-    select: { id: true, email: true, displayName: true },
+    select: { id: true, email: true, displayName: true, role: true },
+  });
+
+/**
+ * Retrieves all users from the database
+ *
+ * @returns A list of user objects
+ */
+export const getUsers = async () =>
+  await prisma.user.findMany({
+    select: { id: true, email: true, displayName: true, role: true },
+    orderBy: { displayName: "asc" },
   });
