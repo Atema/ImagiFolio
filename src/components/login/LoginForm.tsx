@@ -53,7 +53,7 @@ const LoginForm: FC<LoginFormProps> = ({ signup }) => {
         <InputField
           name="password2"
           type="password"
-          label="Password (confirm)"
+          label="Password (confirmation)"
           placeholder="••••••••••"
           required
           minLength={8}

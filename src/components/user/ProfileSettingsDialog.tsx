@@ -43,13 +43,13 @@ const ProfileSettingsDialog = forwardRef<
       <form action={action} className="space-y-4">
         <input type="hidden" name="id" value={user.id} />
         <InputField
-          label="Name"
+          label="Display name"
           name="displayName"
           required
           defaultValue={user.displayName}
         />
         <InputField
-          label="Email"
+          label="Email address"
           name="email"
           required
           defaultValue={user.email}

@@ -50,7 +50,7 @@ export const validateSchemaFormAction =
 
     if (error)
       return {
-        error: `The entered data is invalid: ${error.issues[0].message}`,
+        error: error.issues[0].message,
       };
 
     try {
@@ -61,3 +61,23 @@ export const validateSchemaFormAction =
       };
     }
   };
+
+export const schemaRequired = (desc: string) =>
+  z
+    .string({ required_error: `${desc} is required` })
+    .min(1, { message: `${desc} is required` });
+
+export const schemaMinLength = (desc: string, minLength: number) =>
+  schemaRequired(desc).min(minLength, {
+    message: `${desc} must be at least ${minLength} characters`,
+  });
+
+export const schemaEmail = (desc: string) =>
+  schemaRequired(desc).email({
+    message: `${desc} does not have a valid format`,
+  });
+
+export const schemaUuid = (desc: string) =>
+  schemaRequired(desc).uuid({
+    message: `${desc} does not have a valid format`,
+  });
