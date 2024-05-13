@@ -1,10 +1,9 @@
 import { AppPage, MetadataGenerator } from "@/app/types";
 import AlbumSettingsDialog from "@/components/album/AlbumSettingsDialog";
-import HoverIcon from "@/components/basic/HoverIcon";
+import UploadDialog from "@/components/album/UploadDialog";
 import PhotoList from "@/components/photo-list/PhotoList";
 import { getAlbum } from "@/db/album";
 import dateRangeString from "@/utils/friendly-text/date-range";
-import { UploadIcon } from "@radix-ui/react-icons";
 import { notFound } from "next/navigation";
 
 type AlbumPageParams = {
@@ -34,10 +33,9 @@ const AlbumPage: AppPage<AlbumPageParams> = async ({ params }) => {
             </p>
           )}
           <h1 className="text-3xl">{album.name}</h1>
+          <p className="text-sm text-gray-dim">{album.photos.length} photos</p>
         </div>
-        <HoverIcon>
-          <UploadIcon className="size-8" />
-        </HoverIcon>
+        <UploadDialog album={album} />
         <AlbumSettingsDialog album={album} />
       </div>
       <PhotoList baseUrl={`/album/${album.id}`} photos={album.photos} />

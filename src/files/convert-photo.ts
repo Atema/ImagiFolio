@@ -1,7 +1,14 @@
 import prisma from "@/db/prisma/client";
 import exif from "exif-reader";
 import { randomUUID } from "node:crypto";
-import { copyFile, link, mkdir, rename, symlink, unlink } from "node:fs/promises";
+import {
+  copyFile,
+  link,
+  mkdir,
+  rename,
+  symlink,
+  unlink,
+} from "node:fs/promises";
 import { dirname } from "node:path";
 import sharp, { Sharp } from "sharp";
 import { FileVariation, getFilePath, getUploadPath } from "./file-paths";
@@ -81,12 +88,13 @@ const allowedTypes = ["jpeg", "png", "webp", "tiff", "gif", "heif"];
  * @param albumId - Id of the album to add the photo to
  * @param uploadPath - Path where the input photo was uploaded
  * @param filename - Original filename of the photo
+ * @returns Promise for the photo's identifier
  */
 export const processPhoto = async (
   albumId: string,
   uploadPath: string,
   filename?: string,
-) => {
+): Promise<string> => {
   try {
     const id = randomUUID();
     const image = sharp(uploadPath);
@@ -132,6 +140,7 @@ export const processPhoto = async (
     });
 
     await rename(uploadPath, getFilePath("original", id));
+    return id;
   } catch (err) {
     await unlink(uploadPath);
     throw err;
