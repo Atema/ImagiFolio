@@ -1,4 +1,5 @@
 import { AppPage } from "@/app/types";
+import LoginForm from "@/components/login/LoginForm";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,10 +7,10 @@ export const metadata: Metadata = {
 };
 
 /**
- * Empty registration page to make the route available
- * 
+ * Page with a registration form
+ *
  * @component
  */
-const SignupPage: AppPage = () => null;
+const SignupPage: AppPage = () => <LoginForm signup />;
 
 export default SignupPage;
