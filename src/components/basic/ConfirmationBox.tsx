@@ -61,7 +61,7 @@ const ConfirmationBox = forwardRef<HTMLButtonElement, ConfirmationBoxProps>(
         </AlertDialog.Trigger>
 
         <AlertDialog.Portal>
-          <AlertDialog.Overlay className="bg-black bg-opacity-40 fixed inset-0 z-40" />
+          <AlertDialog.Overlay className="bg-blacka-6 fixed inset-0 z-40" />
           <AlertDialog.Content
             className={cx(
               "z-50 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",

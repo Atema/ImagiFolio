@@ -5,11 +5,19 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { zfd } from "zod-form-data";
 
+/** Schema to verify formdata sent via a post request */
 const postSchema = zfd.formData({
   albumId: zfd.text(z.string().uuid()),
   file: zfd.file(),
 });
 
+/**
+ * Handles POST requests to the upload route. Processes an uploaded image file
+ * and adds it to the given album
+ *
+ * @param req - The incoming request
+ * @returns JSON response with the id of the added image, or an error otherwise
+ */
 export const POST = async (req: NextRequest) => {
   const { success, data } = await postSchema.safeParseAsync(
     await req.formData(),

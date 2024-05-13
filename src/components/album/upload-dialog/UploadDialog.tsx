@@ -2,13 +2,13 @@
 
 import { Album } from "@/db/prisma/generated";
 import cx from "@/utils/class-names/cx";
-import { useUploadQueue } from "@/utils/upload-queue/upload-queue";
 import { UploadIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { FC, useRef } from "react";
 import { useDropzone } from "react-dropzone";
-import DialogBox from "../basic/DialogBox";
-import HoverIcon from "../basic/HoverIcon";
+import DialogBox from "../../basic/DialogBox";
+import HoverIcon from "../../basic/HoverIcon";
+import { useUploadQueue } from "./upload-queue";
 
 type UploadDialogProps = {
   /** The album to upload images to */
@@ -23,9 +23,8 @@ type UploadDialogProps = {
  */
 const UploadDialog: FC<UploadDialogProps> = ({ album }) => {
   const closeRef = useRef(() => {});
-  // const { action } = useAction(updateAlbum, () => closeRef.current());
 
-  const { files, queueUpload } = useUploadQueue(album.id);
+  const { files, queueUpload, resetQueue } = useUploadQueue(album.id);
 
   const { getRootProps, getInputProps, isDragAccept, isDragReject, open } =
     useDropzone({
@@ -55,6 +54,13 @@ const UploadDialog: FC<UploadDialogProps> = ({ album }) => {
       }
       title="Upload"
       closeRef={closeRef}
+      onclose={resetQueue}
+      disableClose={files.some(
+        (file) =>
+          file.status == "queued" ||
+          file.status == "waiting" ||
+          file.status == "uploading",
+      )}
     >
       <div className="space-y-4">
         <div

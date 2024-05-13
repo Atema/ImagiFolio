@@ -1,6 +1,6 @@
 import { AppPage, MetadataGenerator } from "@/app/types";
 import AlbumSettingsDialog from "@/components/album/AlbumSettingsDialog";
-import UploadDialog from "@/components/album/UploadDialog";
+import UploadDialog from "@/components/album/upload-dialog/UploadDialog";
 import PhotoList from "@/components/photo-list/PhotoList";
 import { getAlbum } from "@/db/album";
 import dateRangeString from "@/utils/friendly-text/date-range";

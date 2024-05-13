@@ -28,6 +28,9 @@ type DialogBoxProps = {
 
   /** Action to perform on closing the dialog */
   onclose?: () => void;
+
+  /** Disallow the user to close the dialog */
+  disableClose?: boolean;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 /**
@@ -38,7 +41,18 @@ type DialogBoxProps = {
  * will be passed to the trigger element
  */
 const DialogBox = forwardRef<HTMLButtonElement, DialogBoxProps>(
-  ({ trigger, title, children, closeRef, onclose, ...buttonProps }, ref) => {
+  (
+    {
+      trigger,
+      title,
+      children,
+      closeRef,
+      onclose,
+      disableClose,
+      ...buttonProps
+    },
+    ref,
+  ) => {
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
@@ -50,13 +64,18 @@ const DialogBox = forwardRef<HTMLButtonElement, DialogBoxProps>(
     }, [open, onclose]);
 
     return (
-      <Dialog.Root open={open} onOpenChange={setOpen}>
+      <Dialog.Root
+        open={open}
+        onOpenChange={(newOpen) => {
+          !disableClose && setOpen(newOpen);
+        }}
+      >
         <Dialog.Trigger asChild ref={ref} {...buttonProps}>
           {trigger}
         </Dialog.Trigger>
 
         <Dialog.Portal>
-          <Dialog.Overlay className="bg-black bg-opacity-40 fixed inset-0 z-30" />
+          <Dialog.Overlay className="bg-blacka-6 fixed inset-0 z-30" />
 
           <Dialog.Content
             className={cx(
@@ -68,8 +87,8 @@ const DialogBox = forwardRef<HTMLButtonElement, DialogBoxProps>(
             <div className="flex items-center">
               <Dialog.Title className="text-xl flex-grow">{title}</Dialog.Title>
               <Dialog.Close tabIndex={-1} asChild>
-                <HoverIcon>
-                  <button>
+                <HoverIcon disabled={disableClose}>
+                  <button className="disabled:text-gray-6 dark:disabled:text-graydark-6">
                     <Cross2Icon className="size-6" />
                   </button>
                 </HoverIcon>
