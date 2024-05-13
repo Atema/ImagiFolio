@@ -25,7 +25,3 @@ export const deletePhoto: SuccessErrorFormAction = async (_, data) => {
 
   redirect(`/album/${albumId}`);
 };
-
-export const uploadPhoto = async (file: File) => {
-  console.log(file);
-};

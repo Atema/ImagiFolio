@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { SuccessErrorFormAction } from "./common";
 import { getSession } from "./session";
 
-export const addAlbum = async (data: FormData) => {
+export const addAlbum: SuccessErrorFormAction = async (_, data) => {
   // FIXME: Add validation
   const name = data.get("name") as string;
 

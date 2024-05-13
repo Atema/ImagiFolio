@@ -24,7 +24,9 @@ type AlbumSettingsDialogProps = {
  */
 const AlbumSettingsDialog: FC<AlbumSettingsDialogProps> = ({ album }) => {
   const closeRef = useRef(() => {});
-  const { action } = useAction(updateAlbum, () => closeRef.current());
+  const { action, error, pending } = useAction(updateAlbum, () =>
+    closeRef.current(),
+  );
 
   return (
     <DialogBox
@@ -46,8 +48,14 @@ const AlbumSettingsDialog: FC<AlbumSettingsDialogProps> = ({ album }) => {
           required
           defaultValue={album.name}
         />
+        {error && <p className="text-sm leading-6 text-red-dim">{error}</p>}
         <div className="flex flex-row-reverse space-x-2 space-x-reverse">
-          <Button styleType="primary" label="Save" type="submit" />
+          <Button
+            styleType="primary"
+            label="Save"
+            type="submit"
+            disabled={pending}
+          />
           <ConfirmationBox
             title="Are you sure?"
             description="The album and all of its photos will be deleted permanently. This cannot be undone."
