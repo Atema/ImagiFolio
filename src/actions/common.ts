@@ -31,7 +31,7 @@ export type SuccessErrorFormAction = (
 /**
  * Factory function for form actions that validates and parses the data using a
  * schema before handing it over to the defined function, and performs error
- * handling
+ * handling (for string-type errors)
  *
  * @param schema - The zod schema to parse the formdata with
  * @param func - The function to pass the parsed data to
@@ -56,9 +56,8 @@ export const validateSchemaFormAction =
     try {
       return await func(state, data);
     } catch (err) {
-      return {
-        error: "" + err,
-      };
+      if (typeof err == "string") return { error: err };
+      throw err;
     }
   };
 
