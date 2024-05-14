@@ -1,10 +1,19 @@
+import { checkSession } from "@/actions/session";
 import { AppPage, MetadataGenerator } from "@/app/types";
 import AlbumSettingsDialog from "@/components/album/AlbumSettingsDialog";
 import UploadDialog from "@/components/album/upload-dialog/UploadDialog";
 import PhotoList from "@/components/photo-list/PhotoList";
 import { getAlbum } from "@/db/album";
+import { checkAlbumPermission } from "@/db/permissions";
 import dateRangeString from "@/utils/friendly-text/date-range";
 import { notFound } from "next/navigation";
+import { cache } from "react";
+
+const getData = cache(async (albumId: string) => {
+  const userId = await checkSession();
+  (await checkAlbumPermission(userId, albumId)) || notFound();
+  return (await getAlbum(albumId)) || notFound();
+});
 
 type AlbumPageParams = {
   albumId: string;
@@ -13,11 +22,11 @@ type AlbumPageParams = {
 export const generateMetadata: MetadataGenerator<AlbumPageParams> = async ({
   params,
 }) => ({
-  title: `${((await getAlbum(params.albumId)) ?? notFound()).name} - ImagiFolio`,
+  title: `${(await getData(params.albumId)).name} - ImagiFolio`,
 });
 
 const AlbumPage: AppPage<AlbumPageParams> = async ({ params }) => {
-  const album = (await getAlbum(params.albumId)) ?? notFound();
+  const album = await getData(params.albumId);
 
   return (
     <>

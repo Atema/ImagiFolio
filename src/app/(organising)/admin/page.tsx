@@ -1,10 +1,19 @@
+import { checkSession } from "@/actions/session";
 import { AppPage } from "@/app/types";
 import Button from "@/components/basic/Button";
 import SelectField from "@/components/basic/SelectField";
+import { checkAdminPermission } from "@/db/permissions";
 import { DefaultRole, getDefaultRole, setDefaultRole } from "@/db/settings";
 import { getUsers, updateUser } from "@/db/user";
 import { Metadata } from "next";
 import { revalidatePath } from "next/cache";
+import { notFound } from "next/navigation";
+
+const getData = async () => {
+  const userId = await checkSession();
+  (await checkAdminPermission(userId)) || notFound();
+  return await Promise.all([getUsers(), getDefaultRole()]);
+};
 
 const changeGlobalSettings = async (formdata: FormData) => {
   "use server";
@@ -32,10 +41,7 @@ export const metadata: Metadata = {
 };
 
 const AdminPage: AppPage = async () => {
-  const [users, defaultRole] = await Promise.all([
-    getUsers(),
-    getDefaultRole(),
-  ]);
+  const [users, defaultRole] = await getData();
 
   return (
     <div className="space-y-16 mb-16">

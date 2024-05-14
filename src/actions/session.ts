@@ -1,6 +1,7 @@
 import { getEnv } from "@/utils/environment/get-env";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 const secretKey = Buffer.from(getEnv("SESSION_SECRET"), "utf-8");
 
@@ -18,7 +19,7 @@ export const createSession = async (payload: SessionData) => {
   cookies().set("if_session", jwt, {
     httpOnly: true,
     secure: true,
-    expires: new Date(Date.now() + 7 * 24 * 3600 * 1000),
+    expires: new Date(Date.now() + 30 * 24 * 3600 * 1000),
     sameSite: "lax",
     path: "/",
   });
@@ -37,6 +38,12 @@ export const getSession = async () => {
   } catch (_) {
     return null;
   }
+};
+
+export const checkSession = async () => {
+  const session = await getSession();
+  if (!session || !session.userId) redirect("/login");
+  return session.userId;
 };
 
 export const deleteSession = async () => {
